@@ -2,15 +2,18 @@ package br.org.ici.saude.geradorcodigo;
 
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.Arrays;
 import java.util.List;
 import br.org.ici.saude.geradorcodigo.common.ArquivoUtil;
 import br.org.ici.saude.geradorcodigo.configuracao.ArquivoConfiguracao;
 import br.org.ici.saude.geradorcodigo.configuracao.ArquivoFonte;
 import br.org.ici.saude.geradorcodigo.entidade.EntidadeModel;
-import br.org.ici.saude.geradorcodigo.entidade.GeradorBuilder;
-import br.org.ici.saude.geradorcodigo.entidade.GeradorEntidade;
 import br.org.ici.saude.geradorcodigo.entidade.PesquisaViewModel;
 import br.org.ici.saude.geradorcodigo.entidade.TypeModel;
+import br.org.ici.saude.geradorcodigo.geradores.GeradorBuilder;
+import br.org.ici.saude.geradorcodigo.geradores.GeradorConverter;
+import br.org.ici.saude.geradorcodigo.geradores.GeradorEntidade;
+import br.org.ici.saude.geradorcodigo.geradores.GeradorType;
 import br.org.ici.saude.geradorcodigo.repositorio.RepositorioModel;
 import br.org.ici.saude.geradorcodigo.repositorio.ServiceModel;
 import freemarker.template.Configuration;
@@ -31,11 +34,19 @@ public class Main {
     GeradorBuilder geradorBuilder = new GeradorBuilder(cfg, arquivoConfiguracao);
     arquivos.addAll(geradorBuilder.gerarArquvos());
 
+    GeradorType geradorType = new GeradorType(cfg, arquivoConfiguracao);
+    arquivos.addAll(geradorType.gerarArquvos());
+
+    GeradorConverter geradorConverter = new GeradorConverter(cfg, arquivoConfiguracao);
+    arquivos.addAll(geradorConverter.gerarArquvos());
+
+
 
     arquivos.stream().forEach(arquivoFonte -> {
       try {
         ArquivoUtil.escreverCodigoFonte(
-            arquivoConfiguracao.getDiretorioProjeto() + arquivoFonte.getCaminho(),
+            arquivoConfiguracao.getDiretorioProjetoJava() + "/src/main/java"
+                + arquivoFonte.getCaminho(),
             arquivoFonte.getNomeArquivo(), arquivoFonte.getArquivo());
       } catch (Exception e) {
         e.printStackTrace();
@@ -45,11 +56,8 @@ public class Main {
 
     // gerarType(cfg);
     // gerarConverter(cfg);
-
     // gerarEntidade(cfg);
     // gerarBuilder(cfg);
-
-
     // gerarRepositorio(cfg);
 
     // gerarPesquisaView(cfg);
@@ -77,8 +85,8 @@ public class Main {
   private static void gerarConverter(Configuration cfg) throws Exception {
     Template typeTemplate = cfg.getTemplate("converterTemplate");
 
-    TypeModel model = new TypeModel("Sexo", "br.com.saude.usuario");
-    model.addValores(new String[] {"1;MASCULINO;Masculino", "2;FEMININO;Feminino"});
+    TypeModel model = new TypeModel("Sexo", "br.com.saude.usuario",
+        Arrays.asList((new String[] {"1;MASCULINO;Masculino", "2;FEMININO;Feminino"})));
 
 
 
@@ -89,12 +97,8 @@ public class Main {
 
   private static void gerarType(Configuration cfg) throws Exception {
     Template typeTemplate = cfg.getTemplate("typeTemplate");
-
-    TypeModel model = new TypeModel("Sexo", "br.com.saude.usuario");
-    model.addValores(new String[] {"1;MASCULINO;Masculino", "2;FEMININO;Feminino"});
-
-
-
+    TypeModel model = new TypeModel("Sexo", "br.com.saude.usuario",
+        Arrays.asList(new String[] {"1;MASCULINO;Masculino", "2;FEMININO;Feminino"}));
     Writer out = new OutputStreamWriter(System.out);
 
     typeTemplate.process(model, out);

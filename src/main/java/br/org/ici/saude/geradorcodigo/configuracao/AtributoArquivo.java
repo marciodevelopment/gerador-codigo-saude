@@ -38,7 +38,7 @@ public class AtributoArquivo {
           "converter = " + this.getNomeConverter() + ".class"));
     }
 
-    if (this.isWebGet()) {
+    if (this.isWebGet() || this.isPesquisa()) {
       anotacoes.add(new AnotacaoModel("@Getter", "lombok.Getter"));
     }
 
@@ -68,7 +68,11 @@ public class AtributoArquivo {
   }
 
   private boolean isWebGet() {
-    return this.web.stream().filter(item -> item.toLowerCase().contains("get")).count() > 0l;
+    return this.web.stream().anyMatch(item -> item.toLowerCase().contains("get"));
+  }
+
+  public boolean isPesquisa() {
+    return this.web.stream().anyMatch(item -> item.toLowerCase().contains("pesquisa"));
   }
 
   private String getNomeConverter() {

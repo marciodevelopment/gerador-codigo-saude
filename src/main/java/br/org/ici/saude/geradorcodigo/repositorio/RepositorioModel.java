@@ -17,6 +17,14 @@ public class RepositorioModel extends BaseModel {
     super(nome, pacote);
   }
 
+  public RepositorioModel(String nome, String pacote, boolean existePesquisa,
+      List<String> colunasQuery, String query) {
+    super(nome, pacote);
+    this.existePesquisa = existePesquisa;
+    this.colunasQuery = colunasQuery;
+    this.query = query;
+  }
+
   public RepositorioModel addColunaQuery(String... coluna) {
     this.colunasQuery.addAll(List.of(coluna));
     return this;

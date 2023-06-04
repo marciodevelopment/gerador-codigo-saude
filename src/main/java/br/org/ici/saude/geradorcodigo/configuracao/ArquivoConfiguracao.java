@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Data
 public class ArquivoConfiguracao {
-  private String diretorioProjeto;
+  private String diretorioProjetoJava;
   private List<EntidadeArquivo> entidades;
 }

@@ -43,13 +43,13 @@ public class AtributosModel {
   private Set<String> getImportsMapeamento() {
     Set<String> imports = new HashSet<>();
     if (this.mapeamento == null)
-      return imports;
-    if (this.mapeamento.getExisteManyToOne().booleanValue())
-      imports.add(GeradorImports.getImport("manytoone"));
-    if (this.mapeamento.getExisteOneToMany().booleanValue())
-      imports.add(GeradorImports.getImport("onetomany"));
-    if (this.mapeamento.getExisteOneToOne().booleanValue())
-      imports.add(GeradorImports.getImport("onetoone"));
+      return new HashSet<>();
+
+    if (this.tipo.toLowerCase().contains(".") && this.tipo.toLowerCase().contains("entity")) {
+      imports.add(tipo);
+    }
+
+    imports.addAll(this.mapeamento.getImports());
     return imports;
   }
 
@@ -58,8 +58,8 @@ public class AtributosModel {
     if (isNotEnum()) {
       return imports;
     }
-    imports.add(pacote + ".type." + tipo);
-    imports.add(pacote + ".type." + tipo.replace("Type", "Converter"));
+    imports.add(pacote + ".entity.type." + tipo);
+    imports.add(pacote + ".entity.type." + tipo.replace("Type", "Converter"));
     return imports;
   }
 

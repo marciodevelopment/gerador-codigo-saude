@@ -1,6 +1,9 @@
 package br.org.ici.saude.geradorcodigo.entidade;
 
+import java.util.HashSet;
+import java.util.Set;
 import br.org.ici.saude.geradorcodigo.common.PadraNomes;
+import br.org.ici.saude.geradorcodigo.imports.GeradorImports;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -67,6 +70,24 @@ public class MapeamentoModel {
       return cascade.toUpperCase();
     }
     return "";
+  }
+
+  public Set<String> getImports() {
+    Set<String> imports = new HashSet<>();
+    if (this.getExisteManyToOne().booleanValue())
+      imports.add(GeradorImports.getImport("manytoone"));
+    if (this.getExisteOneToMany().booleanValue())
+      imports.add(GeradorImports.getImport("onetomany"));
+    if (this.getExisteOneToOne().booleanValue())
+      imports.add(GeradorImports.getImport("onetoone"));
+    if (this.getUsaCascade())
+      imports.add(GeradorImports.getImport("CascadeType"));
+    if (this.getUsaJoinColumn().booleanValue())
+      imports.add(GeradorImports.getImport("JoinColumn"));
+    imports.add(GeradorImports.getImport("FetchType"));
+
+    return imports;
+
   }
 
 }
