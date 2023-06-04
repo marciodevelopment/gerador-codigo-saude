@@ -1,0 +1,18 @@
+package ${pacote}.entity.type;
+
+import jakarta.persistence.AttributeConverter;
+
+public class ${nome}Converter implements AttributeConverter<${nome}Type, Integer> {
+
+  @Override
+  public Integer convertToDatabaseColumn(${nome}Type type) {
+    if (type == null)
+      return null;
+    return type.getId();
+  }
+
+  @Override
+  public ${nome}Type convertToEntityAttribute(Integer id) {
+    return ${nome}Type.toType(id);
+  }
+}

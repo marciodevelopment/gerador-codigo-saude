@@ -1,0 +1,17 @@
+package ${pacote}.entity;
+
+<#list imports as import>
+import ${import};
+</#list>
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
+public class ${nome}PesquisaView {
+<#list atributos as atributo>
+  private ${atributo.tipo} ${atributo.nome};
+</#list>
+ 
+}

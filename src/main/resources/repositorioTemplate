@@ -1,0 +1,26 @@
+package ${pacote}.repository;
+
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import ${pacote}.entity.${nome}Entity;
+
+<#if existePesquisa>
+import java.util.Map;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import br.org.curitiba.ici.saude.usuario.common.query.QuerySearch;
+import br.org.curitiba.ici.saude.usuario.common.query.SearchRepository;
+import br.org.curitiba.ici.saude.usuario.entity.view.${nome}PesquisaView;
+</#if>
+
+public interface ${nome}Repository extends JpaRepository<${nome}Entity, Integer><#if existePesquisa>, SearchRepository<${nome}PesquisaView></#if> {
+
+<#if existePesquisa>
+  @QuerySearch(columns = "<#list colunasQuery as coluna>${coluna}<#if coluna_has_next>, </#if></#list>",
+      query = """
+          ${query}
+          """, viewResult = ${nome}PesquisaView.class)
+  @Override
+  public Page<${nome}PesquisaView> search(Map<String, Object> parameters, Pageable pageable);
+</#if>  
+}

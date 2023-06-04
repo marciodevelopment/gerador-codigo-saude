@@ -1,0 +1,77 @@
+<#import "./mapeamento.ftl" as map>
+<#import "./anotacao.ftl" as anot>
+
+
+
+package ${pacote}.entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+<#list imports as import>
+import ${import};
+</#list>
+
+@Accessors(chain = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
+@Table(name = "${nome}")
+public class ${nome}Entity {
+
+  @Id
+  @SequenceGenerator(name = "${nome}", sequenceName = "${nome}_sq", allocationSize = 1)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "${nome}")
+  private Integer cd${nome};
+<#list atributos as atributo>
+
+<#list atributo.anotacoes as anotacao>
+  <@anot.anotacao anotacao/>	
+</#list>
+<#if atributo.existeMapeamento>
+  <@map.mapeamento atributo.mapeamento/>
+</#if>
+<#if atributo.tipoCollection>  
+  private Set<${atributo.tipo}> ${atributo.nome} = new HashSet<>();
+<#else>  
+  private ${atributo.tipo} ${atributo.nome};
+</#if>	
+</#list>
+
+<#if existeConstrutor>
+  public ${nome}Entity(<#list atributosConstrutor as atributo><#list atributo.anotacoesConstrutor as anotacao>${anotacao}</#list> ${atributo.tipo} ${atributo.nome}<#if atributo_has_next>, </#if></#list>) {
+    super();
+  <#list atributosConstrutor as atributo>
+    this.${atributo.nome} = ${atributo.nome};
+  </#list>
+  }
+</#if>
+<#if existeBuilderConstrutor>
+  public UsuarioEntity(@NotNull UsuarioNovoBuilder usuarioNovoBuider) {
+    super();
+   <#list atributosConstrutor as atributo>
+    this.${atributo.nome} = ${nomeVariavel}NovaBuilder.${atributo.nome}();
+   </#list>
+  }
+  
+   public static ${nome}NovoBuilder builder() {
+    return new ${nome}NovoBuilder();
+  }
+  
+</#if>
+
+<#list atributos as atributo>
+<#if atributo.tipoCollection>
+  <#if atributo.existeAnotacaoGet>
+  public Collection<${atributo.tipo}> ${atributo.nomeGet}() {
+    return Collections.unmodifiableCollection(this.${atributo.nome});
+  }
+  </#if>
+</#if>	
+</#list>
+
+}

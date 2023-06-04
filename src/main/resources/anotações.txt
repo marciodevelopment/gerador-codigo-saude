@@ -1,0 +1,19 @@
+Não enviar informação de id;
+apenas indicar se vai estar no get e pesquisa.
+
+- Construtor
+- Criar lista apenas para construtor devido a builder e relacionamento de objetos
+
+
+
+
+RoadMap
+- Criar construtor para os objetos not null
+
+ 
+ 
+ 
+
+  
+  
+  

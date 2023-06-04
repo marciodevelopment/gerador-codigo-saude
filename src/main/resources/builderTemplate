@@ -1,0 +1,21 @@
+package ${pacote}.entity;
+
+import lombok.Builder;
+import lombok.Getter;
+
+<#list imports as import>
+import ${import};
+</#list>
+
+@Accessors(chain = true, fluent = true)
+@Data
+public class ${nome}ValoresObrigatoriosBuilder {
+<#list atributosConstrutor as atributo>
+  <#list atributo.anotacoesConstrutor as anotacao>${anotacao}</#list> 
+  private ${atributo.tipo} ${atributo.nome};
+</#list>
+
+  public ${nome}Entity build() {
+    return new ${nome}Entity(this);
+  }
+}

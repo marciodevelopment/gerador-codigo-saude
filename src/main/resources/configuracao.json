@@ -1,0 +1,183 @@
+{
+	"diretorioProjeto": "/home/marcio/Desktop/arquivos-gerador/usuario",
+	"entidades": [
+	{
+			"pacote": "br.org.ici.saude.endereco",
+			"path": "cidades",
+			"nome": "Cidade",
+			"mensagem": "Cidade",
+			"metodos": [
+				"pesquisa"
+			],
+			"atributos": [
+				{
+					"nome": "cdCidade",
+					"mensagem": "Código Cidade",
+					"id": true,
+					"tipo": "Integer",
+					"validadores": [
+						"notNull"
+					],
+					"web": ["get"]
+				},
+				{
+					"nome": "nmCidade",
+					"mensagem": "Nome Cidade",
+					"tipo": "String",
+					"validadores": [
+						"notEmpty"
+					],
+					"web": ["pesquisa"]
+				}
+			]
+		},
+		{
+			"pacote": "br.org.ici.saude.usuario",
+			"nome": "DocumentoCpf",
+			"mensagem": "Documento CPF",
+			"gerarAuditoria": true,
+			"atributos": [
+				{
+					"nome": "cdDocumentoCpf",
+					"mensagem": "Código Documento CPF",
+					"tipo": "Integer",
+					"validadores": [
+						"notNull"
+					],
+					"web": ["get"]
+				},
+				{
+					"nome": "nrCpf",
+					"mensagem": "Número CPF",
+					"tipo": "String",
+					"validadores": [
+						"notEmpty",
+						"cpf",
+						"size;max=255"
+					],
+					"web": ["post" , "pesquisa"]
+				},
+				{
+					"nome": "dtEmissao",
+					"mensagem": "Data emissão",
+					"tipo": "LocalDate",
+					"validadores": [
+						"notEmpty",
+						"pastOrPresent"
+					],
+					"web": ["post"]
+				}
+			]
+		},
+		{
+			"pacote": "br.org.ici.saude.usuario",
+			"path": "usuarios",
+			"mensagem": "Usuário",
+			"nome": "Usuario",
+			"gerarAuditoria": true,
+			"metodos": [
+				"post",
+				"put",
+				"get",
+				"delete",
+				"pesquisa"
+			],
+			"atributos": [
+				{
+					"nome": "cdUsuario",
+					"mensagem": "Código usuário",
+					"id": true,
+					"tipo": "Integer",
+					"validadores": [
+						"notNull"
+					],
+					"web": ["get","put","post","pesquisa"]
+				},
+				{
+					"nome": "nmUsuario",
+					"mensagem": "Nome usuário",
+					"tipo": "String",
+					"validadores": [
+						"notEmpty",
+						"min;size=10"
+					],
+					"web": ["get","put","post","pesquisa"]
+				},
+				{
+					"nome": "nmMae",
+					"mensagem": "Nome mãe",
+					"tipo": "String",
+					"validadores": [
+						"notEmpty",
+						"min;size=10"
+					],
+					"web": ["get","put","post","pesquisa"]
+				},
+				{
+					"nome": "nmPai",
+					"mensagem": "Nome pai",
+					"tipo": "String",
+					"validadores": [
+						"notEmpty",
+						"min;size=10"
+					],
+					"web": ["get","put","post","pesquisa"]
+				},
+				{
+					"nome": "nmSocial",
+					"mensagem": "Nome Social",
+					"tipo": "String",
+					"validadores": [
+						"notNull"
+					],
+					"web": ["get","put","post","pesquisa"]
+				},
+				{
+					"nome": "sexo",
+					"mensagem": "Sexo",
+					"tipo": "SexoType",
+					"type": ["1;MASCULINO;Masculino", "2;FEMININO;Feminino"],
+					"validadores": [
+						"notNull"
+					],
+					"web": ["get","put","post"]
+				},
+				{
+					"nome": "dtNascimento",
+					"mensagem": "Data de nascimento",
+					"tipo": "LocalDate",
+					"validadores": [
+						"notNull"
+					],
+					"web": ["get","put","post"]
+				},
+				{
+					"nome": "documentoCpf",
+					"mensagem": "Documento CPF",
+					"tipo": "DocumentoEntity",
+					"validadores": [
+						"notNull"
+					],
+					"mapeamento": {
+						"tipoMapeamento": "oneToOne",
+						"cascade": "ALL"
+						},
+					"web": ["get","post"]
+				},
+				{
+					"nome": "cidadeNascimento",
+					"mensagem": "Cidade Nascimento",
+					"tipo": "br.org.ici.saude.usuario.endereco.CidadeEntity",
+					"mapeamento": {
+						"tipoMapeamento": "oneToOne",
+						"joinColumn": true
+						},
+					"validadores": [
+						"notNull"
+					],
+					"web": ["get","post","put"]
+				}
+			]
+		}
+	]
+}
