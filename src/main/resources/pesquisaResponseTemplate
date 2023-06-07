@@ -1,0 +1,16 @@
+package ${pacote}.web.response;
+
+<#list imports as import>
+import ${import};
+</#list>
+
+
+import lombok.Data;
+
+@Data
+public class ${nome}PesquisaResponse {
+<#list atributos as atributo>
+  private ${atributo.tipo} ${atributo.nome};
+</#list>
+
+}

@@ -27,3 +27,8 @@ Data;lombok.Data
 PastOrPresent;jakarta.validation.constraints.PastOrPresent
 Size;jakarta.validation.constraints.Size
 AllArgsConstructor;lombok.AllArgsConstructor
+Min;jakarta.validation.constraints.Min
+CPF;org.hibernate.validator.constraints.br.CPF
+FetchType;jakarta.persistence.FetchType
+CascadeType;jakarta.persistence.CascadeType
+JoinColumn;jakarta.persistence.JoinColumn

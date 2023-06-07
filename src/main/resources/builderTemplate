@@ -1,7 +1,8 @@
 package ${pacote}.entity;
 
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
 <#list imports as import>
 import ${import};
@@ -9,7 +10,7 @@ import ${import};
 
 @Accessors(chain = true, fluent = true)
 @Data
-public class ${nome}ValoresObrigatoriosBuilder {
+public class ${nome}NovoBuilder {
 <#list atributosConstrutor as atributo>
   <#list atributo.anotacoesConstrutor as anotacao>${anotacao}</#list> 
   private ${atributo.tipo} ${atributo.nome};

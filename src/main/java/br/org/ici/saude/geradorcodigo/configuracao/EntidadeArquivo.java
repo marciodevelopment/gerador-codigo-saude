@@ -18,6 +18,12 @@ public class EntidadeArquivo {
 
 
 
+  public EntidadeModel toEntidadeModelView() {
+    EntidadeModel entidade = new EntidadeModel(this.getNome(), this.getPacote());
+    entidade.addAtributos(getAtributosPesquisa());
+    return entidade;
+  }
+
   public EntidadeModel toEntidadeModel() {
     EntidadeModel entidade = new EntidadeModel(this.getNome(), this.getPacote());
     entidade.addAtributos(getAtributosModel());
@@ -26,6 +32,20 @@ public class EntidadeArquivo {
 
   private String getNomeVariavel() {
     return this.nome.substring(0, 1).toLowerCase() + this.nome.substring(1, this.nome.length());
+  }
+
+  private List<AtributosModel> getAtributosPesquisa() {
+    return this.atributos.stream().filter(atr -> atr.isPesquisa()).map(atributoArq -> {
+      AtributosModel atributo = new AtributosModel(atributoArq.getNome(), atributoArq.getMensagem(),
+          atributoArq.getTipo(), atributoArq.getAnotacoes());
+      if (atributoArq.existeMapeamento()) {
+        atributo.setNomeVariavel(getNomeVariavel());
+        atributo.addMapeamento(
+            GeradorImports.get(atributoArq.getMapeamento().getTipoMapeamento()).getAnotacao(),
+            atributoArq.getMapeamento().isJoinColumn(), atributoArq.getMapeamento().getCascade());
+      }
+      return atributo;
+    }).toList();
   }
 
   private List<AtributosModel> getAtributosModel() {
@@ -47,7 +67,9 @@ public class EntidadeArquivo {
   }
 
   public boolean existePesquisa() {
-    return this.metodos.stream().anyMatch(met -> met.toUpperCase().contains("pesquisa"));
+    if (this.metodos == null)
+      return false;
+    return this.metodos.stream().anyMatch(met -> met.toLowerCase().contains("pesquisa"));
   }
 
   public List<String> getColunasPesquisa() {
@@ -64,5 +86,9 @@ public class EntidadeArquivo {
     query.append(" from ").append(this.nome + "Entity e").append(" where  ").append(queryAnd);
 
     return query.toString();
+  }
+
+  public boolean existeMetodos() {
+    return metodos != null && !metodos.isEmpty();
   }
 }

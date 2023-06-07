@@ -7,9 +7,9 @@ import org.springframework.data.domain.Pageable;
 </#if>
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ${pacote}.${nome}.entity.${nome}Entity;
-import ${pacote}.${nome}.entity.view.${nome}PesquisaView;
-import ${pacote}.${nome}.repository.${nome}Repository;
+import ${pacote}.entity.${nome}Entity;
+import ${pacote}.entity.view.${nome}PesquisaView;
+import ${pacote}.repository.${nome}Repository;
 <#if gerarBuscarPorId>
 import jakarta.persistence.EntityNotFoundException;
 </#if>
@@ -20,25 +20,25 @@ import lombok.RequiredArgsConstructor;
 @Transactional(readOnly = true)
 @Service
 public class ${nome}Service {
-  private final ${nome}Repository ${nome}Repository;
+  private final ${nome}Repository ${nomeVariavel}Repository;
 
 <#if gerarSalvar>	
   @Transactional
-  public ${nome}Entity salvar(${nome}Entity ${nome}) {
-    return ${nome}Repository.save(${nome});
+  public ${nome}Entity salvar(${nome}Entity ${nomeVariavel}) {
+    return ${nomeVariavel}Repository.save(${nomeVariavel});
   }
 </#if>
 
 <#if gerarDelete>
   @Transactional
   public void deletarPorId(Integer cd${nome}) {
-    ${nome}Repository.deleteById(cd${nome});
+    ${nomeVariavel}Repository.deleteById(cd${nome});
   }
 </#if>
 
 <#if gerarBuscarPorId>
   public ${nome}Entity buscarPorIdOuThrow(Integer cd${nome}) {
-    return ${nome}Repository.findById(cd${nome}).orElseThrow(() -> new EntityNotFoundException(
+    return ${nomeVariavel}Repository.findById(cd${nome}).orElseThrow(() -> new EntityNotFoundException(
         "${mensagem} não encontrado para o código enviado %s".formatted(cd${nome})));
   }
 </#if>
@@ -46,7 +46,7 @@ public class ${nome}Service {
 <#if gerarPesquisar>
   public Page<${nome}PesquisaView> pesquisarView(Pageable pageable,
       Map<String, Object> parametros) {
-    return ${nome}Repository.search(parametros, pageable);
+    return ${nomeVariavel}Repository.search(parametros, pageable);
   }
 </#if>  
 }

@@ -29,7 +29,8 @@ class ArquivoUtilTest {
     String path =
         "/home/marcio/eclipse-workspace/geradorcodigo/src/main/resources/configuracao.json";
     ArquivoConfiguracao arquivo = ArquivoUtil.lerJson(path, ArquivoConfiguracao.class);
-    assertEquals(arquivo.getDiretorioProjeto(), "/home/marcio/Desktop/arquivos-gerador/usuario");
+    assertEquals(arquivo.getDiretorioProjetoJava(),
+        "/home/marcio/Desktop/arquivos-gerador/usuario");
     EntidadeArquivo classe = arquivo.getEntidades().get(2);
     assertEquals("br.org.ici.saude.usuario", classe.getPacote());
     assertEquals("usuarios", classe.getPath());

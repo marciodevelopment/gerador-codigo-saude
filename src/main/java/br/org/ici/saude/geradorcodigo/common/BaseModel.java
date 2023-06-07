@@ -33,7 +33,6 @@ public class BaseModel {
   public BaseModel addAtributos(List<AtributosModel> atributos) {
     this.atributos.addAll(atributos);
     this.atributos.stream().forEach(atr -> this.imports.addAll(atr.getImports(pacote)));
-
     return this;
   }
 

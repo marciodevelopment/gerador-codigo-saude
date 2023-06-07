@@ -1,5 +1,6 @@
 package br.org.ici.saude.geradorcodigo.repositorio;
 
+import java.util.List;
 import br.org.ici.saude.geradorcodigo.common.BaseModel;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +19,18 @@ public class ServiceModel extends BaseModel {
   public ServiceModel(String nome, String pacote, String mensagem) {
     super(nome, pacote);
     this.mensagem = mensagem;
+  }
+
+  public ServiceModel(String nome, String pacote, String mensagem, List<String> metodos) {
+    super(nome, pacote);
+    this.mensagem = mensagem;
+    if (metodos == null)
+      return;
+    this.existePost = metodos.toString().toLowerCase().contains("post");
+    this.existePut = metodos.toString().toLowerCase().contains("put");
+    this.existeGet = metodos.toString().toLowerCase().contains("get");
+    this.existeDelete = metodos.toString().toLowerCase().contains("delete");
+    this.existePesquisa = metodos.toString().toLowerCase().contains("pesquisa");
   }
 
   public Boolean getGerarSalvar() {

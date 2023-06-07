@@ -1,9 +1,9 @@
 package ${pacote}.entity.type;
 
-import br.org.curitiba.ici.saude.usuario.common.BaseEnum;
-import br.org.curitiba.ici.saude.usuario.common.EnumUtil;
+import ${pacote}.common.BaseEnum;
+import ${pacote}.common.EnumUtil;
 import lombok.Getter;
-
+import br.org.curitiba.ici.saude.usuario.common;
 @Getter
 public enum ${nome}Type implements BaseEnum {
 <#list valores as valor>

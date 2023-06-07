@@ -9,11 +9,19 @@ apenas indicar se vai estar no get e pesquisa.
 
 RoadMap
 - Criar construtor para os objetos not null
-
+- Colocar inteligencia no mapper
  
  
  
 
-  
-  
+Problemas:
+Geração de erro ao gerar a view. Problema de importação de entidades.
+Refatorar o código com melhorias na main
+
+
+PesquisaResponse  
+ - Retirar imports desnecessários no pesquisaResponse
+ - Colocar inteligencia para gerar os atributos de pesquisa dentro do objeto.
+    usuario -> documento.nrDocumento
+ 
   

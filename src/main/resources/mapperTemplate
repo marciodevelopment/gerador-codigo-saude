@@ -1,0 +1,33 @@
+package ${pacote}.web.mapper;
+
+import java.util.Collection;
+import java.util.stream.Stream;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+<#list imports as import>
+import ${import};
+</#list>
+
+@Mapper(componentModel = "spring",
+    implementationPackage = "${pacote}.web.mapper.impl")
+public abstract class ${nome}Mapper {
+  @Autowired
+  private ${nome}Service ${nomeVariavel}Sevice;
+  
+
+  public abstract ${nome}Entity toEntity(${nome}NovoRequest request);
+    
+  public abstract ${nome}Response toResponse(${nome}Entity buscarPorId);
+
+  public abstract ${nome}Entity toEntity(${nome}Entity usuario, @Valid ${nome}AtualizacaoRequest request);
+    
+
+  public abstract Collection<${nome}PesquisaResponse> toResponse(Stream<${nome}Entity> ${nomeVariavel}s);
+
+
+  public PageResponse<${nome}PesquisaView> toResponse(Page<${nome}PesquisaView> resultado) {
+    return new PageResponse<${nome}PesquisaView>(resultado);
+  }
+}

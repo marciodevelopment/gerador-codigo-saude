@@ -1,5 +1,6 @@
 package br.org.ici.saude.geradorcodigo.entidade;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,7 +35,7 @@ public class AtributosModel {
     imports.add(GeradorImports.getImport(this.getTipo()));
     imports.addAll(this.getImportsEnum(pacote));
     imports.addAll(this.getImportsMapeamento());
-    imports.addAll(this.anotacoes.stream().filter(an -> an.existeImport())
+    imports.addAll(this.getAnotacoes().stream().filter(an -> an.existeImport())
         .map(an -> an.getCodigoImport()).toList());
     return imports.stream().filter(imp -> imp != null && !imp.isBlank())
         .collect(Collectors.toSet());
@@ -120,31 +121,9 @@ public class AtributosModel {
 
   }
 
-
-
-  /*
-   * public boolean deveEstarNoConstrutor() { return
-   * this.anotacoes.stream().anyMatch(this::anotacaoDeAtributoConstrutor); }
-   * 
-   */
-
-  /*
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   * public String getTipo() { if (tipo.contains(".")) { return tipo.substring(tipo.lastIndexOf(".")
-   * + 1, tipo.length()); } return tipo; }
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   * 
-   */
+  public List<AnotacaoModel> getAnotacoes() {
+    if (this.anotacoes == null)
+      return new ArrayList<>();
+    return this.anotacoes;
+  }
 }

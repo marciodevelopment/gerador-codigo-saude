@@ -11,8 +11,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.AccessLevel;
+import lombok.experimental.Accessors;
 <#list imports as import>
 import ${import};
 </#list>
@@ -26,9 +27,7 @@ public class ${nome}Entity {
   @Id
   @SequenceGenerator(name = "${nome}", sequenceName = "${nome}_sq", allocationSize = 1)
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "${nome}")
-  private Integer cd${nome};
 <#list atributos as atributo>
-
 <#list atributo.anotacoes as anotacao>
   <@anot.anotacao anotacao/>	
 </#list>
@@ -39,7 +38,8 @@ public class ${nome}Entity {
   private Set<${atributo.tipo}> ${atributo.nome} = new HashSet<>();
 <#else>  
   private ${atributo.tipo} ${atributo.nome};
-</#if>	
+</#if>
+	
 </#list>
 
 <#if existeConstrutor>
@@ -51,10 +51,10 @@ public class ${nome}Entity {
   }
 </#if>
 <#if existeBuilderConstrutor>
-  public UsuarioEntity(@NotNull UsuarioNovoBuilder usuarioNovoBuider) {
+  public UsuarioEntity(@NotNull ${nome}NovoBuilder builder) {
     super();
    <#list atributosConstrutor as atributo>
-    this.${atributo.nome} = ${nomeVariavel}NovaBuilder.${atributo.nome}();
+    this.${atributo.nome} = builder.${atributo.nome}();
    </#list>
   }
   

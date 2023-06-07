@@ -27,4 +27,16 @@ public class EntidadeModel extends BaseModel {
     return this.getAtributosConstrutor().size() > 7;
   }
 
+  public List<AtributosModel> getAtributosView() {
+    return this.getAtributos().stream().map(atr -> {
+      if (atr.getExisteMapeamento().booleanValue()) {
+        return new AtributosModel(
+            "cd" + atr.getNome().substring(0, 1).toUpperCase()
+                + atr.getNome().substring(1, atr.getNome().length()),
+            atr.getMensagem(), "Integer", null);
+      }
+      return atr;
+    }).toList();
+  }
+
 }

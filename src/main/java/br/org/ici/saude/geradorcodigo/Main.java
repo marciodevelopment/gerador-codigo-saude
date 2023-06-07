@@ -10,12 +10,13 @@ import br.org.ici.saude.geradorcodigo.configuracao.ArquivoFonte;
 import br.org.ici.saude.geradorcodigo.entidade.EntidadeModel;
 import br.org.ici.saude.geradorcodigo.entidade.PesquisaViewModel;
 import br.org.ici.saude.geradorcodigo.entidade.TypeModel;
-import br.org.ici.saude.geradorcodigo.geradores.GeradorBuilder;
-import br.org.ici.saude.geradorcodigo.geradores.GeradorConverter;
 import br.org.ici.saude.geradorcodigo.geradores.GeradorEntidade;
-import br.org.ici.saude.geradorcodigo.geradores.GeradorType;
+import br.org.ici.saude.geradorcodigo.geradores.GeradorPesquisaResponse;
+import br.org.ici.saude.geradorcodigo.geradores.GeradorViewPesquisa;
 import br.org.ici.saude.geradorcodigo.repositorio.RepositorioModel;
 import br.org.ici.saude.geradorcodigo.repositorio.ServiceModel;
+import br.org.ici.saude.geradorcodigo.web.MapperModel;
+import br.org.ici.saude.geradorcodigo.web.PesquisaResponseModel;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 
@@ -31,16 +32,36 @@ public class Main {
 
     GeradorEntidade geradorEntidade = new GeradorEntidade(cfg, arquivoConfiguracao);
     List<ArquivoFonte> arquivos = geradorEntidade.gerarArquvos();
-    GeradorBuilder geradorBuilder = new GeradorBuilder(cfg, arquivoConfiguracao);
-    arquivos.addAll(geradorBuilder.gerarArquvos());
+    // GeradorBuilder geradorBuilder = new GeradorBuilder(cfg, arquivoConfiguracao);
+    // arquivos.addAll(geradorBuilder.gerarArquvos());
+    //
+    // GeradorType geradorType = new GeradorType(cfg, arquivoConfiguracao);
+    // arquivos.addAll(geradorType.gerarArquvos());
+    //
+    // GeradorConverter geradorConverter = new GeradorConverter(cfg, arquivoConfiguracao);
+    // arquivos.addAll(geradorConverter.gerarArquvos());
+    //
+    //
+    // GeradorRepository geradorRepository = new GeradorRepository(cfg, arquivoConfiguracao);
+    // arquivos.addAll(geradorRepository.gerarArquvos());
+    //
 
-    GeradorType geradorType = new GeradorType(cfg, arquivoConfiguracao);
-    arquivos.addAll(geradorType.gerarArquvos());
+    //
+    //
+    // GeradorService geradorService = new GeradorService(cfg, arquivoConfiguracao);
+    // arquivos.addAll(geradorService.gerarArquvos());
+    //
+    //
 
-    GeradorConverter geradorConverter = new GeradorConverter(cfg, arquivoConfiguracao);
-    arquivos.addAll(geradorConverter.gerarArquvos());
+    // GeradorMapper geradorMapper = new GeradorMapper(cfg, arquivoConfiguracao);
+    // arquivos.addAll(geradorMapper.gerarArquvos());
 
+    GeradorViewPesquisa geradorView = new GeradorViewPesquisa(cfg, arquivoConfiguracao);
+    arquivos.addAll(geradorView.gerarArquvos());
 
+    GeradorPesquisaResponse geradorPesquisaResponse =
+        new GeradorPesquisaResponse(cfg, arquivoConfiguracao);
+    arquivos.addAll(geradorPesquisaResponse.gerarArquvos());
 
     arquivos.stream().forEach(arquivoFonte -> {
       try {
@@ -59,14 +80,43 @@ public class Main {
     // gerarEntidade(cfg);
     // gerarBuilder(cfg);
     // gerarRepositorio(cfg);
-
     // gerarPesquisaView(cfg);
     // gerarService(cfg);
+    // gerar o request e response
+    // gerar mapstruct
+    // gerar o controller
 
+    // gerarMappeer(cfg, arquivoConfiguracao);
+
+    // gerarResponsePesquisa(cfg, arquivoConfiguracao);
 
   }
 
 
+  private static void gerarResponsePesquisa(Configuration cfg,
+      ArquivoConfiguracao arquivoConfiguracao) throws Exception {
+    Template template = cfg.getTemplate("pesquisaResponseTemplate");
+
+    PesquisaResponseModel model =
+        new PesquisaResponseModel(arquivoConfiguracao.getEntidades().get(2).getNome(),
+            arquivoConfiguracao.getEntidades().get(2).getPacote(),
+            arquivoConfiguracao.getEntidades().get(2).toEntidadeModel().getAtributosView());
+
+    Writer out = new OutputStreamWriter(System.out);
+    template.process(model, out);
+
+  }
+
+
+  private static void gerarMappeer(Configuration cfg, ArquivoConfiguracao arquivoConfiguracao)
+      throws Exception {
+    Template template = cfg.getTemplate("mapperTemplate");
+
+    MapperModel model = new MapperModel(arquivoConfiguracao.getEntidades().get(2).getNome(),
+        arquivoConfiguracao.getEntidades().get(2).getPacote());
+    Writer out = new OutputStreamWriter(System.out);
+    template.process(model, out);
+  }
 
   private static void gerarService(Configuration cfg) throws Exception {
     Template serviceTemplate = cfg.getTemplate("serviceTemplate");
