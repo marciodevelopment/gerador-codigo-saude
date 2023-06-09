@@ -102,4 +102,8 @@ public class AtributoArquivo {
     return new AtributosModel(nome, mensagem, tipo, List.of());
   }
 
+  public AtributosModel toAtributoDesnormalizadoComAnotacoesModel() {
+    return new AtributosModel(nome, mensagem, tipo, this.getAnotacoes());
+  }
+
 }

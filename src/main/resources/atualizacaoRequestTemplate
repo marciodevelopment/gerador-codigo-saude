@@ -7,7 +7,6 @@ package ${pacote}.web.request;
 import ${import};
   </#if>
 </#list>
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,8 +14,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Data
-public class ${nome}NovoRequest {
-  <#list atributos as atributo>
+public class ${nome}AtualizacaoRequest {
+<#list atributos as atributo>
 <#list atributo.anotacoes as anotacao>
   <@anot.anotacao anotacao/>	
 </#list>
@@ -30,4 +29,5 @@ public class ${nome}NovoRequest {
 </#if>
 	
 </#list>
+
 }

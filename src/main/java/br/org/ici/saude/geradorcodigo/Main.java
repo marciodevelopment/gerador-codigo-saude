@@ -7,16 +7,18 @@ import java.util.List;
 import br.org.ici.saude.geradorcodigo.common.ArquivoUtil;
 import br.org.ici.saude.geradorcodigo.configuracao.ArquivoConfiguracao;
 import br.org.ici.saude.geradorcodigo.configuracao.ArquivoFonte;
+import br.org.ici.saude.geradorcodigo.configuracao.FiltroAtributos;
+import br.org.ici.saude.geradorcodigo.configuracao.MetodoType;
+import br.org.ici.saude.geradorcodigo.entidade.AtributosModel;
 import br.org.ici.saude.geradorcodigo.entidade.EntidadeModel;
 import br.org.ici.saude.geradorcodigo.entidade.PesquisaViewModel;
 import br.org.ici.saude.geradorcodigo.entidade.TypeModel;
 import br.org.ici.saude.geradorcodigo.geradores.GeradorEntidade;
-import br.org.ici.saude.geradorcodigo.geradores.GeradorPesquisaResponse;
-import br.org.ici.saude.geradorcodigo.geradores.GeradorViewPesquisa;
 import br.org.ici.saude.geradorcodigo.repositorio.RepositorioModel;
 import br.org.ici.saude.geradorcodigo.repositorio.ServiceModel;
 import br.org.ici.saude.geradorcodigo.web.MapperModel;
 import br.org.ici.saude.geradorcodigo.web.PesquisaResponseModel;
+import br.org.ici.saude.geradorcodigo.web.ResponseRequestModel;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 
@@ -56,12 +58,16 @@ public class Main {
     // GeradorMapper geradorMapper = new GeradorMapper(cfg, arquivoConfiguracao);
     // arquivos.addAll(geradorMapper.gerarArquvos());
 
-    GeradorViewPesquisa geradorView = new GeradorViewPesquisa(cfg, arquivoConfiguracao);
-    arquivos.addAll(geradorView.gerarArquvos());
+    // GeradorViewPesquisa geradorView = new GeradorViewPesquisa(cfg, arquivoConfiguracao);
+    // arquivos.addAll(geradorView.gerarArquvos());
 
-    GeradorPesquisaResponse geradorPesquisaResponse =
-        new GeradorPesquisaResponse(cfg, arquivoConfiguracao);
-    arquivos.addAll(geradorPesquisaResponse.gerarArquvos());
+    // GeradorPesquisaResponse geradorPesquisaResponse = new GeradorPesquisaResponse(cfg,
+    // arquivoConfiguracao);
+    // arquivos.addAll(geradorPesquisaResponse.gerarArquvos());
+
+
+    // GeradorGetResponse getResponseGerador = new GeradorGetResponse(cfg, arquivoConfiguracao);
+    // arquivos.addAll(getResponseGerador.gerarArquvos());
 
     arquivos.stream().forEach(arquivoFonte -> {
       try {
@@ -91,6 +97,66 @@ public class Main {
     // gerarResponsePesquisa(cfg, arquivoConfiguracao);
 
 
+    // gerarAtualizacaoRequest(cfg, arquivoConfiguracao);
+    // gerarAtualizacaoRequest(cfg, arquivoConfiguracao);
+    // gerarNovoRequest(cfg, arquivoConfiguracao);
+
+    // gerarPesquisaRequest(cfg, arquivoConfiguracao);
+  }
+
+
+  private static void gerarPesquisaRequest(Configuration cfg,
+      ArquivoConfiguracao arquivoConfiguracao) throws Exception {
+    Template template = cfg.getTemplate("pesquisaRequestTemplate");
+    FiltroAtributos filtroAtributos = new FiltroAtributos(arquivoConfiguracao);
+
+    List<AtributosModel> atributos = filtroAtributos.getAtributosDesnormalizadosModel(
+        arquivoConfiguracao.getEntidades().get(2).getNome(), MetodoType.POST);
+
+    ResponseRequestModel model =
+        new ResponseRequestModel(arquivoConfiguracao.getEntidades().get(2).getNome(),
+            arquivoConfiguracao.getEntidades().get(2).getPacote(), atributos);
+
+    Writer out = new OutputStreamWriter(System.out);
+    template.process(model, out);
+
+  }
+
+
+  private static void gerarNovoRequest(Configuration cfg, ArquivoConfiguracao arquivoConfiguracao)
+      throws Exception {
+    Template template = cfg.getTemplate("novoRequestTemplate");
+    FiltroAtributos filtroAtributos = new FiltroAtributos(arquivoConfiguracao);
+
+    List<AtributosModel> atributos = filtroAtributos.getAtributosDesnormalizadosParaRequest(
+        arquivoConfiguracao.getEntidades().get(2).getNome(),
+        arquivoConfiguracao.getEntidades().get(2).getMensagem(), MetodoType.POST);
+
+    ResponseRequestModel model =
+        new ResponseRequestModel(arquivoConfiguracao.getEntidades().get(2).getNome(),
+            arquivoConfiguracao.getEntidades().get(2).getPacote(), atributos);
+
+    Writer out = new OutputStreamWriter(System.out);
+    template.process(model, out);
+
+  }
+
+
+  private static void gerarAtualizacaoRequest(Configuration cfg,
+      ArquivoConfiguracao arquivoConfiguracao) throws Exception {
+    Template template = cfg.getTemplate("atualizacaoRequestTemplate");
+    FiltroAtributos filtroAtributos = new FiltroAtributos(arquivoConfiguracao);
+
+    List<AtributosModel> atributos = filtroAtributos.getAtributosDesnormalizadosParaRequest(
+        arquivoConfiguracao.getEntidades().get(2).getNome(),
+        arquivoConfiguracao.getEntidades().get(2).getMensagem(), MetodoType.POST);
+
+    ResponseRequestModel model =
+        new ResponseRequestModel(arquivoConfiguracao.getEntidades().get(2).getNome(),
+            arquivoConfiguracao.getEntidades().get(2).getPacote(), atributos);
+
+    Writer out = new OutputStreamWriter(System.out);
+    template.process(model, out);
 
   }
 

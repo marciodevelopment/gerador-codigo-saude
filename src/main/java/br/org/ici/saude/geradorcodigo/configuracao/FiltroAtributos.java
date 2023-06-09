@@ -3,7 +3,10 @@ package br.org.ici.saude.geradorcodigo.configuracao;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import br.org.ici.saude.geradorcodigo.entidade.AnotacaoModel;
 import br.org.ici.saude.geradorcodigo.entidade.AtributosModel;
+import br.org.ici.saude.geradorcodigo.imports.AnotacaoImport;
+import br.org.ici.saude.geradorcodigo.imports.GeradorImports;
 
 public class FiltroAtributos {
 
@@ -16,8 +19,34 @@ public class FiltroAtributos {
 
   public List<AtributosModel> getAtributosDesnormalizadosModel(String nomeEntidade,
       MetodoType metodo) {
-    return this.getAtributosDesnormalizados(nomeEntidade, metodo).stream()
+    List<AtributosModel> atributos = this.getAtributosDesnormalizados(nomeEntidade, metodo).stream()
         .map(atr -> atr.toAtributoDesnormalizadoModel()).toList();
+
+    atributos.forEach(
+        atributo -> atributo.getAnotacoes().removeIf(ant -> ant.isGetter() || ant.isConverter()));
+
+    return atributos;
+  }
+
+
+  public List<AtributosModel> getAtributosDesnormalizadosParaRequest(String nomeEntidade,
+      String mensagem, MetodoType metodo) {
+    List<AtributosModel> atributos = this.getAtributosDesnormalizados(nomeEntidade, metodo).stream()
+        .map(atr -> atr.toAtributoDesnormalizadoComAnotacoesModel()).toList();
+    atributos.forEach(
+        atributo -> atributo.getAnotacoes().removeIf(ant -> ant.isGetter() || ant.isConverter()));
+
+    AnotacaoImport importAnotacao = GeradorImports.get("notnull");
+    AnotacaoModel notNullAnotacao = new AnotacaoModel(importAnotacao.getAnotacao(),
+        importAnotacao.getNomeImport(), mensagem, null);
+
+    atributos.forEach(atributo -> {
+      if (atributo.isId(nomeEntidade)) {
+        atributo.addAnotacao(notNullAnotacao);
+      }
+    });
+
+    return atributos;
   }
 
   public Collection<AtributoArquivo> getAtributosDesnormalizados(String nomeEntidade,

@@ -121,9 +121,18 @@ public class AtributosModel {
 
   }
 
+  public void addAnotacao(AnotacaoModel anotacao) {
+    this.anotacoes.add(anotacao);
+
+  }
+
   public List<AnotacaoModel> getAnotacoes() {
     if (this.anotacoes == null)
       return new ArrayList<>();
-    return this.anotacoes;
+    return new ArrayList<>(this.anotacoes);
+  }
+
+  public boolean isId(String nomeClasse) {
+    return this.nome.equalsIgnoreCase("cd" + nomeClasse);
   }
 }

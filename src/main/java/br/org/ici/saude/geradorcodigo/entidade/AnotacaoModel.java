@@ -79,4 +79,15 @@ public class AnotacaoModel {
   }
 
 
+  public boolean isGetter() {
+    return this.anotacao.toLowerCase().contains("getter");
+  }
+
+
+  public boolean isConverter() {
+    return this.anotacao.toLowerCase().contains("convert");
+  }
+
+
+
 }

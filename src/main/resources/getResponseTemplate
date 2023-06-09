@@ -1,18 +1,14 @@
 package ${pacote}.web.response;
 
 <#list imports as import>
-  <#if import?contains("Converter")>
-  <#else>
 import ${import};
-  </#if>
 </#list>
-
 
 import lombok.Data;
 
 @Data
-public class ${nome}PesquisaResponse {
-<#list atributos as atributo>
+public class  ${nome}Response {
+ <#list atributos as atributo>
   private ${atributo.tipo} ${atributo.nome};
 </#list>
 
