@@ -1,6 +1,7 @@
 package br.org.ici.saude.geradorcodigo.common;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -28,6 +29,12 @@ public class BaseModel {
 
   public String getNomeVariavel() {
     return this.nome.substring(0, 1).toLowerCase() + this.nome.substring(1, this.nome.length());
+  }
+
+  public BaseModel addAtributos(Collection<AtributosModel> atributos) {
+    this.atributos.addAll(atributos);
+    this.atributos.stream().forEach(atr -> this.imports.addAll(atr.getImports(pacote)));
+    return this;
   }
 
   public BaseModel addAtributos(List<AtributosModel> atributos) {

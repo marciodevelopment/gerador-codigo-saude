@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import br.org.ici.saude.geradorcodigo.common.ArquivoUtil;
 import br.org.ici.saude.geradorcodigo.configuracao.ArquivoConfiguracao;
 import br.org.ici.saude.geradorcodigo.configuracao.ArquivoFonte;
 import br.org.ici.saude.geradorcodigo.configuracao.EntidadeArquivo;
-import br.org.ici.saude.geradorcodigo.entidade.EntidadeModel;
+import br.org.ici.saude.geradorcodigo.configuracao.FiltroAtributos;
+import br.org.ici.saude.geradorcodigo.configuracao.MetodoType;
+import br.org.ici.saude.geradorcodigo.entidade.AtributosModel;
 import br.org.ici.saude.geradorcodigo.entidade.PesquisaViewModel;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -30,13 +33,18 @@ public class GeradorViewPesquisa {
       ArquivoConfiguracao arquivoConfiguracao) throws Exception {
     Template builderTemplate = cfg.getTemplate("pesquisaViewTemplate");
     List<ArquivoFonte> arquivos = new ArrayList<>();
+
     for (EntidadeArquivo entidadeArq : arquivoConfiguracao.getEntidades().stream()
         .filter(ent -> ent.existePesquisa()).toList()) {
 
-      EntidadeModel entidade = entidadeArq.toEntidadeModelView();
+      FiltroAtributos filtroAtributos = new FiltroAtributos(arquivoConfiguracao);
+      Collection<AtributosModel> atributosFiltratos = filtroAtributos
+          .getAtributosDesnormalizadosModel(entidadeArq.getNome(), MetodoType.PESQUISA);
+
+
       PesquisaViewModel pesquisaView =
           new PesquisaViewModel(entidadeArq.getNome(), entidadeArq.getPacote());
-      pesquisaView.addAtributos(entidade.getAtributosView());
+      pesquisaView.addAtributos(atributosFiltratos);
 
       arquivos.add(new ArquivoFonte(entidadeArq.getNome() + "PesquisaView.java",
           ArquivoUtil.converterPacoteParaPathArquivo(entidadeArq.getPacote() + ".entity.view"),

@@ -4,12 +4,16 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import br.org.ici.saude.geradorcodigo.common.ArquivoUtil;
 import br.org.ici.saude.geradorcodigo.common.BaseModel;
 import br.org.ici.saude.geradorcodigo.configuracao.ArquivoConfiguracao;
 import br.org.ici.saude.geradorcodigo.configuracao.ArquivoFonte;
 import br.org.ici.saude.geradorcodigo.configuracao.EntidadeArquivo;
+import br.org.ici.saude.geradorcodigo.configuracao.FiltroAtributos;
+import br.org.ici.saude.geradorcodigo.configuracao.MetodoType;
+import br.org.ici.saude.geradorcodigo.entidade.AtributosModel;
 import br.org.ici.saude.geradorcodigo.web.PesquisaResponseModel;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -33,8 +37,13 @@ public class GeradorPesquisaResponse {
     for (EntidadeArquivo entidadeArq : arquivoConfiguracao.getEntidades().stream()
         .filter(ent -> ent.existePesquisa()).toList()) {
 
+      FiltroAtributos filtroAtributos = new FiltroAtributos(arquivoConfiguracao);
+      Collection<AtributosModel> atributosFiltratos = filtroAtributos
+          .getAtributosDesnormalizadosModel(entidadeArq.getNome(), MetodoType.PESQUISA);
+
+
       PesquisaResponseModel model = new PesquisaResponseModel(entidadeArq.getNome(),
-          entidadeArq.getPacote(), entidadeArq.toEntidadeModelView().getAtributosView());
+          entidadeArq.getPacote(), atributosFiltratos);
 
       arquivos.add(new ArquivoFonte(entidadeArq.getNome() + "PesquisaResponse.java",
           ArquivoUtil.converterPacoteParaPathArquivo(entidadeArq.getPacote() + ".web.response"),

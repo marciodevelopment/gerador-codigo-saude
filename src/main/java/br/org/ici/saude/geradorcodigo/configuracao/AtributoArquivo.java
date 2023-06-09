@@ -3,6 +3,7 @@ package br.org.ici.saude.geradorcodigo.configuracao;
 import java.util.ArrayList;
 import java.util.List;
 import br.org.ici.saude.geradorcodigo.entidade.AnotacaoModel;
+import br.org.ici.saude.geradorcodigo.entidade.AtributosModel;
 import br.org.ici.saude.geradorcodigo.imports.AnotacaoImport;
 import br.org.ici.saude.geradorcodigo.imports.GeradorImports;
 import lombok.Data;
@@ -82,6 +83,23 @@ public class AtributoArquivo {
 
   public boolean existeMapeamento() {
     return this.mapeamento != null;
+  }
+
+  public boolean existeMetodo(MetodoType metodo) {
+    return this.web.stream().anyMatch(met -> metodo.getNome().equals(met.toLowerCase()));
+
+  }
+
+  public boolean isEntity() {
+    return this.tipo.toLowerCase().contains("entity");
+  }
+
+  public AtributosModel toAtributoModel() {
+    return new AtributosModel(nome, mensagem, tipo, getAnotacoes());
+  }
+
+  public AtributosModel toAtributoDesnormalizadoModel() {
+    return new AtributosModel(nome, mensagem, tipo, List.of());
   }
 
 }
