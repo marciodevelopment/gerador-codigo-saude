@@ -85,64 +85,6 @@
 					"web": ["get","put","post","pesquisa"]
 				},
 				{
-					"nome": "nmUsuario",
-					"mensagem": "Nome usuário",
-					"tipo": "String",
-					"validadores": [
-						"notEmpty",
-						"min;value=10"
-					],
-					"web": ["get","put","post","pesquisa"]
-				},
-				{
-					"nome": "nmMae",
-					"mensagem": "Nome mãe",
-					"tipo": "String",
-					"validadores": [
-						"notEmpty",
-						"min;value=10"
-					],
-					"web": ["get","put","post","pesquisa"]
-				},
-				{
-					"nome": "nmPai",
-					"mensagem": "Nome pai",
-					"tipo": "String",
-					"validadores": [
-						"notEmpty",
-						"min;value=10"
-					],
-					"web": ["get","put","post","pesquisa"]
-				},
-				{
-					"nome": "nmSocial",
-					"mensagem": "Nome Social",
-					"tipo": "String",
-					"validadores": [
-						"notNull"
-					],
-					"web": ["get","put","post","pesquisa"]
-				},
-				{
-					"nome": "sexo",
-					"mensagem": "Sexo",
-					"tipo": "SexoType",
-					"type": ["1;MASCULINO;Masculino", "2;FEMININO;Feminino"],
-					"validadores": [
-						"notNull"
-					],
-					"web": ["get","put","post"]
-				},
-				{
-					"nome": "dtNascimento",
-					"mensagem": "Data de nascimento",
-					"tipo": "LocalDate",
-					"validadores": [
-						"notNull"
-					],
-					"web": ["get","put","post"]
-				},
-				{
 					"nome": "documentoCpf",
 					"mensagem": "Documento CPF",
 					"tipo": "DocumentoCpfEntity",
@@ -166,7 +108,7 @@
 					"validadores": [
 						"notNull"
 					],
-					"web": ["get","post","put", "pesquisa"]
+					"web": ["get","post","put"]
 				}
 			]
 		}
