@@ -8,6 +8,7 @@ import br.org.ici.saude.geradorcodigo.geradores.GeradorBuilder;
 import br.org.ici.saude.geradorcodigo.repositorio.GeradorRepository;
 import br.org.ici.saude.geradorcodigo.service.GeradorService;
 import br.org.ici.saude.geradorcodigo.web.GeradorAtualizacaoRequest;
+import br.org.ici.saude.geradorcodigo.web.GeradorController;
 import br.org.ici.saude.geradorcodigo.web.GeradorGetResponse;
 import br.org.ici.saude.geradorcodigo.web.GeradorMapper;
 import br.org.ici.saude.geradorcodigo.web.GeradorNovoRequest;
@@ -30,6 +31,8 @@ public enum ArquivoType {
   REPOSITORY("Repository", ".repository", "repositorioTemplate", new GeradorRepository()),
 
   SERVICE("Service", ".service", "serviceTemplate", new GeradorService()),
+
+  CONTROLLER("Controller", ".web", "controllerTemplate", new GeradorController()),
 
   ATUALIZACAO_REQUEST("AtualizacaoRequest", ".web.request", "atualizacaoRequestTemplate",
       new GeradorAtualizacaoRequest()),
@@ -62,7 +65,7 @@ public enum ArquivoType {
     return nomeEntidade + this.sufixo + ".java";
   }
 
-  public String getCaminhoArquivo(String nomePacote) {
+  public String getPacoteArquivo(String nomePacote) {
     return ArquivoUtil.converterPacoteParaPathArquivo(nomePacote + this.pacote);
   }
 

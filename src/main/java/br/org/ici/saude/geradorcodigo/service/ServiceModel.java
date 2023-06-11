@@ -1,6 +1,7 @@
 package br.org.ici.saude.geradorcodigo.service;
 
 import java.util.List;
+import br.org.ici.saude.geradorcodigo.common.ArquivoType;
 import br.org.ici.saude.geradorcodigo.common.BaseModel;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,12 +18,12 @@ public class ServiceModel extends BaseModel {
 
 
   public ServiceModel(String nome, String pacote, String mensagem) {
-    super(nome, pacote);
+    super(nome, pacote, ArquivoType.SERVICE.getPacoteArquivo(pacote));
     this.mensagem = mensagem;
   }
 
   public ServiceModel(String nome, String pacote, String mensagem, List<String> metodos) {
-    super(nome, pacote);
+    super(nome, pacote, ArquivoType.ENTITY.getPacoteArquivo(pacote));
     this.mensagem = mensagem;
     if (metodos == null)
       return;

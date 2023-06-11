@@ -1,4 +1,4 @@
-package ${pacote}.web.response;
+package ${pacoteArquivo};
 
 <#list imports as import>
   <#if !import?contains("Converter")>

@@ -1,6 +1,7 @@
 package br.org.ici.saude.geradorcodigo.web;
 
 import java.util.List;
+import br.org.ici.saude.geradorcodigo.common.ArquivoType;
 import br.org.ici.saude.geradorcodigo.common.BaseModel;
 
 public class MapperModel extends BaseModel {
@@ -12,7 +13,7 @@ public class MapperModel extends BaseModel {
   private Boolean existePesquisa = false;
 
   public MapperModel(String nome, String pacote, List<String> metodos) {
-    super(nome, pacote);
+    super(nome, pacote, ArquivoType.MAPPER.getPacoteArquivo(pacote));
     if (metodos == null)
       return;
     this.existePost = metodos.toString().toLowerCase().contains("post");

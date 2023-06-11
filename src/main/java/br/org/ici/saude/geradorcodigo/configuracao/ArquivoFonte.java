@@ -21,7 +21,7 @@ public class ArquivoFonte {
 
   public ArquivoFonte(ArquivoModel arqModel, ArquivoType arquivoType, String arquivo) {
     this(arquivoType.getNomeArquivo(arqModel.getNome()),
-        arquivoType.getCaminhoArquivo(arqModel.getPacote()), arquivo);
+        arquivoType.getPacoteArquivo(arqModel.getPacote()), arquivo);
   }
 
 }

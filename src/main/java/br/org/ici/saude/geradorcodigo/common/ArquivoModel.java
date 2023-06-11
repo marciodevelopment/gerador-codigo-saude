@@ -6,4 +6,6 @@ public interface ArquivoModel {
 
   String getPacote();
 
+  String getPacoteArquivo();
+
 }

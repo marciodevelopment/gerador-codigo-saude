@@ -1,6 +1,7 @@
 package br.org.ici.saude.geradorcodigo.web;
 
 import java.util.List;
+import br.org.ici.saude.geradorcodigo.common.ArquivoType;
 import br.org.ici.saude.geradorcodigo.common.BaseModel;
 import lombok.Getter;
 
@@ -15,11 +16,11 @@ public class ControllerModel extends BaseModel {
   private String path;
 
   public ControllerModel(String nome, String pacote) {
-    super(nome, pacote);
+    super(nome, pacote, ArquivoType.CONTROLLER.getPacoteArquivo(pacote));
   }
 
   public ControllerModel(String nome, String pacote, List<String> metodos, String path) {
-    super(nome, pacote);
+    super(nome, pacote, ArquivoType.CONTROLLER.getPacoteArquivo(pacote));
     if (metodos == null)
       return;
     this.path = path;

@@ -7,13 +7,14 @@ import java.util.List;
 import java.util.Set;
 import br.org.ici.saude.geradorcodigo.entidade.AtributosModel;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
+
 @Getter
 public class BaseModel implements ArquivoModel {
   private final String nome;
   private final String pacote;
+
+  private final String pacoteArquivo;
   private Set<String> imports = new HashSet<>();
   private List<AtributosModel> atributos = new ArrayList<>();
 
@@ -45,6 +46,14 @@ public class BaseModel implements ArquivoModel {
 
   public void setImports(Set<String> imports) {
     this.imports = imports;
+  }
+
+  public BaseModel(String nome, String pacote, String pacoteArquivo) {
+    super();
+    this.nome = nome;
+    this.pacote = pacote;
+    this.pacoteArquivo =
+        pacoteArquivo.substring(1, pacoteArquivo.length() - 1).replaceAll("/", ".");
   }
 
 }
