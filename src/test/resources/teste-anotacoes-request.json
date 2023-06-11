@@ -1,0 +1,52 @@
+{
+	"diretorioProjetoJava": "/home/marcio/eclipse-workspace/gc-teste-service",
+	"entidades": [
+	{
+			"pacote": "br.org.ici.saude.endereco",
+			"path": "cidades",
+			"nome": "Cidade",
+			"mensagem": "Cidade",
+			"metodos": [
+				"pesquisa", "put"
+			],
+			"atributos": [
+				{
+					"nome": "cdCidade",
+					"mensagem": "Código Cidade",
+					"id": true,
+					"tipo": "Integer",
+					"web": ["get"]
+				},
+				{
+					"nome": "nmCidade",
+					"mensagem": "Nome Cidade",
+					"tipo": "String",
+					"validadores": [
+						"notEmpty"
+					],
+					"web": ["pesquisa"]
+				},
+				{
+					"nome": "sexo",
+					"mensagem": "Sexo",
+					"tipo": "SexoType",
+					"type": ["1;MASCULINO;Masculino", "2;FEMININO;Feminino"],
+					"validadores": [
+						"notNull"
+					],
+					"web": ["get","put","post"]
+				},
+				{
+					"nome": "idSituacao",
+					"mensagem": "Situacao",
+					"tipo": "SexoType",
+					"type": ["1;MASCULINO;Masculino", "2;FEMININO;Feminino"],
+					"validadores": [
+						"notNull"
+					],
+					"web": ["get","put","post"]
+				}
+			]
+		}
+	]
+}

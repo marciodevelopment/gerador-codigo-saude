@@ -8,7 +8,9 @@ import java.util.stream.Collectors;
 import br.org.ici.saude.geradorcodigo.imports.GeradorImports;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
+@ToString
 @Getter
 @RequiredArgsConstructor
 public class AtributosModel {
@@ -121,6 +123,11 @@ public class AtributosModel {
 
   }
 
+  public void setAnatcoes(List<AnotacaoModel> anotacoes) {
+    this.anotacoes.clear();
+    this.anotacoes.addAll(anotacoes);
+  }
+
   public void addAnotacao(AnotacaoModel anotacao) {
     this.anotacoes.add(anotacao);
 
@@ -134,5 +141,14 @@ public class AtributosModel {
 
   public boolean isId(String nomeClasse) {
     return this.nome.equalsIgnoreCase("cd" + nomeClasse);
+  }
+
+  public boolean isNotNull() {
+    return this.anotacoes.stream().anyMatch(AnotacaoModel::isNotNull);
+  }
+
+  public boolean getExisteAnotacaoConverter() {
+    return this.anotacoes.stream().anyMatch(AnotacaoModel::isConverter);
+
   }
 }

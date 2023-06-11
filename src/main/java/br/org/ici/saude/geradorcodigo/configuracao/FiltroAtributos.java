@@ -33,15 +33,19 @@ public class FiltroAtributos {
       String mensagem, MetodoType metodo) {
     List<AtributosModel> atributos = this.getAtributosDesnormalizados(nomeEntidade, metodo).stream()
         .map(atr -> atr.toAtributoDesnormalizadoComAnotacoesModel()).toList();
-    atributos.forEach(
-        atributo -> atributo.getAnotacoes().removeIf(ant -> ant.isGetter() || ant.isConverter()));
+
+    atributos.forEach(atr -> {
+      List<AnotacaoModel> anotacoesFiltradas =
+          atr.getAnotacoes().stream().filter(ant -> !ant.isGetter() && !ant.isConverter()).toList();
+      atr.setAnatcoes(anotacoesFiltradas);
+    });
 
     AnotacaoImport importAnotacao = GeradorImports.get("notnull");
     AnotacaoModel notNullAnotacao = new AnotacaoModel(importAnotacao.getAnotacao(),
         importAnotacao.getNomeImport(), mensagem, null);
 
     atributos.forEach(atributo -> {
-      if (atributo.isId(nomeEntidade)) {
+      if (atributo.isId(nomeEntidade) && atributo.isNotNull()) {
         atributo.addAnotacao(notNullAnotacao);
       }
     });
@@ -49,8 +53,11 @@ public class FiltroAtributos {
     return atributos;
   }
 
+
   public Collection<AtributoArquivo> getAtributosDesnormalizados(String nomeEntidade,
-      MetodoType metodo) {
+      MetodoType metodo, int nivel) {
+    if (nivel > 1)
+      return new ArrayList<>();
     EntidadeArquivo entidadeParaDesnormalizacao = arquivoConfiguracao.getEntidades().stream()
         .filter(ent -> ent.getNome().equals(nomeEntidade)).findFirst().orElseThrow();
 
@@ -60,23 +67,36 @@ public class FiltroAtributos {
     List<AtributoArquivo> atributosDeEntidade =
         atributos.stream().filter(AtributoArquivo::isEntity).toList();
 
+
+    List<AtributoArquivo> atributosSemCascade = atributosDeEntidade.stream()
+        .filter(atributo -> !atributo.isCascade() && atributo.existeMetodo(metodo)).toList();
+
     atributos = atributos.stream().filter(atr -> !atr.isEntity()).toList();
 
-    List<EntidadeArquivo> entidades = arquivoConfiguracao.getEntidades().stream().filter(ent -> {
-      return atributosDeEntidade.stream().anyMatch(atrEntidade -> {
-        return atrEntidade.getTipo().contains(ent.getNome());
-      });
-    }).toList();
+    List<EntidadeArquivo> entidadesParaDesnomalizacao = arquivoConfiguracao.getEntidades().stream()
+        .filter(ent -> atributosDeEntidade.stream().anyMatch(atrEntidade -> atrEntidade.isCascade()
+            && atrEntidade.getTipo().contains(ent.getNome())))
+        .toList();
 
-    List<AtributoArquivo> entidadesDesnormalizadas = new ArrayList<>();
-    entidadesDesnormalizadas.addAll(atributos);
+    List<AtributoArquivo> atributosDesnormalizados = new ArrayList<>();
+    atributosDesnormalizados.addAll(atributos);
 
-    entidadesDesnormalizadas
-        .addAll(entidades.stream().map(ent -> getAtributosDesnormalizados(ent.getNome(), metodo))
-            .flatMap(Collection::stream).distinct().toList());
+    atributosDesnormalizados
+        .addAll(atributosSemCascade.stream().map(atr -> new AtributoArquivo(atr.getNomeAtributoId(),
+            atr.getMensagem(), "Integer", List.of(atr.isNotNull() ? "notnull" : null))).toList());
 
-    return entidadesDesnormalizadas;
 
+    atributosDesnormalizados.addAll(entidadesParaDesnomalizacao.stream()
+        .map(ent -> getAtributosDesnormalizados(ent.getNome(), metodo)).flatMap(Collection::stream)
+        .distinct().toList());
+
+    return atributosDesnormalizados;
+
+  }
+
+  public Collection<AtributoArquivo> getAtributosDesnormalizados(String nomeEntidade,
+      MetodoType metodo) {
+    return this.getAtributosDesnormalizados(nomeEntidade, metodo, 0);
   }
 
 }

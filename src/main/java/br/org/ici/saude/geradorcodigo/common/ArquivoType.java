@@ -34,6 +34,9 @@ public enum ArquivoType {
   ATUALIZACAO_REQUEST("AtualizacaoRequest", ".web.request", "atualizacaoRequestTemplate",
       new GeradorAtualizacaoRequest()),
 
+  PESQUISA_REQUEST("PesquisaRequest", ".web.request", "pesquisaRequestTemplate",
+      new GeradorPesquisaResponse()),
+
   NOVO_REQUEST("NovoRequest", ".web.request", "novoRequestTemplate", new GeradorNovoRequest()),
 
   GET_RESPONSE("Response", ".web.response", "getResponseTemplate", new GeradorGetResponse()),

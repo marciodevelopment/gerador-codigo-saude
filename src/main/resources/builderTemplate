@@ -1,11 +1,12 @@
 package ${pacote}.entity;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 <#list imports as import>
+  <#if !import?contains("Converter")>
 import ${import};
+  </#if>
 </#list>
 
 @Accessors(chain = true, fluent = true)

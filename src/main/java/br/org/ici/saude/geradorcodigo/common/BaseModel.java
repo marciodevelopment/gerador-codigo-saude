@@ -43,4 +43,8 @@ public class BaseModel implements ArquivoModel {
     return this;
   }
 
+  public void setImports(Set<String> imports) {
+    this.imports = imports;
+  }
+
 }

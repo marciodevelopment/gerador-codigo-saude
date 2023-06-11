@@ -2,8 +2,7 @@ package ${pacote}.web.request;
 
 import br.org.curitiba.ici.saude.usuario.common.ParametrosPesquisaRequest;
 <#list imports as import>
-  <#if import?contains("Converter")>
-  <#else>
+  <#if !import?contains("Converter")>
 import ${import};
   </#if>
 </#list>
@@ -14,9 +13,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class ${nome}PesquisaRequest extends ParametrosPesquisaRequest {
-  private Integer cdUsuario;
-  private String nmUsuario;
-  private String nmMae;
-  private SexoType sexo;
-  private String nrCpf;
+<#list atributos as atributo>
+  private ${atributo.tipo} ${atributo.nome};
+</#list>
 }

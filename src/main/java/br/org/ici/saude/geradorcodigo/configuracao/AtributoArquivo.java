@@ -7,8 +7,12 @@ import br.org.ici.saude.geradorcodigo.entidade.AtributosModel;
 import br.org.ici.saude.geradorcodigo.imports.AnotacaoImport;
 import br.org.ici.saude.geradorcodigo.imports.GeradorImports;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
+@NoArgsConstructor
+@ToString
 public class AtributoArquivo {
   private String nome;
   private String mensagem;
@@ -69,7 +73,13 @@ public class AtributoArquivo {
   }
 
   private boolean isWebGet() {
-    return this.web.stream().anyMatch(item -> item.toLowerCase().contains("get"));
+    return this.getWeb().stream().anyMatch(item -> item.toLowerCase().contains("get"));
+  }
+
+  public List<String> getWeb() {
+    if (this.web == null)
+      this.web = new ArrayList<>();
+    return this.web;
   }
 
   public boolean isPesquisa() {
@@ -106,4 +116,25 @@ public class AtributoArquivo {
     return new AtributosModel(nome, mensagem, tipo, this.getAnotacoes());
   }
 
+  public boolean isCascade() {
+    return this.mapeamento != null && this.mapeamento.isCascade();
+  }
+
+  public String getNomeAtributoId() {
+    return "cd" + this.getNome().substring(0, 1).toUpperCase()
+        + this.getNome().substring(1, this.getNome().length());
+  }
+
+
+  public AtributoArquivo(String nome, String mensagem, String tipo, List<String> validadores) {
+    super();
+    this.nome = nome;
+    this.mensagem = mensagem;
+    this.tipo = tipo;
+    this.validadores = validadores;
+  }
+
+  public boolean isNotNull() {
+    return this.getValidadores().stream().anyMatch(vl -> vl.toLowerCase().contains("notnull"));
+  }
 }

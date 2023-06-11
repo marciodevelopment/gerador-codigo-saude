@@ -1,7 +1,9 @@
 package br.org.ici.saude.geradorcodigo.entidade;
 
 import lombok.Getter;
+import lombok.ToString;
 
+@ToString
 @Getter
 public class AnotacaoModel {
   private String anotacao;
@@ -86,6 +88,11 @@ public class AnotacaoModel {
 
   public boolean isConverter() {
     return this.anotacao.toLowerCase().contains("convert");
+  }
+
+
+  public boolean isNotNull() {
+    return this.anotacao.toLowerCase().contains("notnull");
   }
 
 

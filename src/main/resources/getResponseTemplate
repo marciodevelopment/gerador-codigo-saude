@@ -1,7 +1,9 @@
 package ${pacote}.web.response;
 
 <#list imports as import>
+  <#if !import?contains("Converter")>
 import ${import};
+  </#if>
 </#list>
 
 import lombok.Data;

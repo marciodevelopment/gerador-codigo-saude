@@ -5,7 +5,7 @@ import br.org.ici.saude.geradorcodigo.common.ArquivoType;
 import lombok.Getter;
 
 @Getter
-public class ArquivoFonte implements ArquivoModel {
+public class ArquivoFonte {
   private String caminho;
   private String arquivo;
   private String nomeArquivo;
@@ -24,17 +24,4 @@ public class ArquivoFonte implements ArquivoModel {
         arquivoType.getCaminhoArquivo(arqModel.getPacote()), arquivo);
   }
 
-
-  @Override
-  public String getNome() {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-
-  @Override
-  public String getPacote() {
-    // TODO Auto-generated method stub
-    return null;
-  }
 }

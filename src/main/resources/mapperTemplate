@@ -3,37 +3,51 @@ package ${pacote}.web.mapper;
 import java.util.Collection;
 import java.util.stream.Stream;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.springframework.beans.factory.annotation.Autowired;
-import jakarta.validation.Valid;
-<#list imports as import>
-import ${import};
-</#list>
+import br.org.curitiba.ici.saude.usuario.common.PageResponse;
+<#if gerarAtualizar>
+import ${pacote}.web.request.${nome}AtualizacaoRequest;
+</#if>
+<#if gerarSalvar>
+import ${pacote}.web.request.${nome}NovoRequest;
+</#if>
+<#if gerarPesquisar>
+import ${pacote}.web.response.${nome}PesquisaResponse;
+import ${pacote}.entity.view.${nome}PesquisaView;
+import org.springframework.data.domain.Page;
+</#if>
+<#if gerarBuscarPorId>
+import ${pacote}.web.response.${nome}Response;
+</#if>
+<#if gerarSalvar || gerarAtualizar || gerarBuscarPorId>
+import ${pacote}.entity.${nome}Entity;
+</#if>
+
 
 @Mapper(componentModel = "spring",
     implementationPackage = "${pacote}.web.mapper.impl")
 public abstract class ${nome}Mapper {
-  @Autowired
-  private ${nome}Service ${nomeVariavel}Sevice;
 
 <#if gerarSalvar>  
   public abstract ${nome}Entity toEntity(${nome}NovoRequest request);
+  
 </#if>
-
 <#if gerarAtualizar>
-  public abstract ${nome}Entity toEntity(${nome}Entity {nomeVariavel}, @Valid ${nome}AtualizacaoRequest request);
+  public ${nome}Entity toEntity(${nome}Entity ${nomeVariavel}, ${nome}AtualizacaoRequest request) {
+    return null;
+  }
+  
 </#if>
- 
 <#if gerarBuscarPorId>
   public abstract ${nome}Response toResponse(${nome}Entity ${nomeVariavel});
-</#if>
   
+</#if>
 <#if gerarPesquisar>
   public abstract Collection<${nome}PesquisaResponse> toResponse(
       Stream<${nome}PesquisaView> ${nomeVariavel}s);
       
   public PageResponse<${nome}PesquisaResponse> toResponse(Page<${nome}PesquisaView> resultadosPesquisa) {
-    return new PageResponse<>(this.toResponse(resultado.get()), resultadosPesquisa);
+    return new PageResponse<>(this.toResponse(resultadosPesquisa.get()), resultadosPesquisa);
   }
+  
 </#if>  
 }

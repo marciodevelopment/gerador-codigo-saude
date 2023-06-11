@@ -24,4 +24,11 @@ PesquisaResponse
  - Colocar inteligencia para gerar os atributos de pesquisa dentro do objeto.
     usuario -> documento.nrDocumento
  
+ 
+ Melhorias:
+ Ao gerar uma pesquisa simples como da cidade: 
+ - gerar querymetodo
+ - Não gerar view
+ *Dificuldade: Média
+ 
   

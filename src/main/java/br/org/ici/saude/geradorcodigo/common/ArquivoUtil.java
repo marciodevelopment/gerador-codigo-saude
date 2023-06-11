@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import com.google.gson.Gson;
+import br.org.ici.saude.geradorcodigo.common.exception.ArquivoUtilException;
 
 public class ArquivoUtil {
 
@@ -23,16 +24,19 @@ public class ArquivoUtil {
     return Files.readAllLines(Paths.get(ClassLoader.getSystemResource(nomeArquivo).getPath()));
   }
 
-  public static void escreverCodigoFonte(String caminho, String nomeArquivo, String arquivo)
-      throws Exception {
-    Path path = Paths.get(caminho);
-    if (!Files.exists(path))
-      Files.createDirectories(path);
-    Path pathArquivo = Paths.get(caminho + nomeArquivo);
-    if (Files.exists(pathArquivo))
-      return;
-    Files.createFile(pathArquivo);
-    Files.writeString(pathArquivo, arquivo);
+  public static void escreverCodigoFonte(String caminho, String nomeArquivo, String arquivo) {
+    try {
+      Path path = Paths.get(caminho);
+      if (!Files.exists(path))
+        Files.createDirectories(path);
+      Path pathArquivo = Paths.get(caminho + nomeArquivo);
+      if (Files.exists(pathArquivo))
+        return;
+      Files.createFile(pathArquivo);
+      Files.writeString(pathArquivo, arquivo);
+    } catch (IOException e) {
+      throw new ArquivoUtilException(e);
+    }
   }
 
 }

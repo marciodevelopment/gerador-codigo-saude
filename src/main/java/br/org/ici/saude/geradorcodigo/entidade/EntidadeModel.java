@@ -1,6 +1,7 @@
 package br.org.ici.saude.geradorcodigo.entidade;
 
 import java.util.List;
+import java.util.Set;
 import br.org.ici.saude.geradorcodigo.common.BaseModel;
 import lombok.Getter;
 
@@ -37,6 +38,11 @@ public class EntidadeModel extends BaseModel {
       }
       return atr;
     }).toList();
+  }
+
+  @Override
+  public void setImports(Set<String> imports) {
+    super.setImports(imports);
   }
 
 }

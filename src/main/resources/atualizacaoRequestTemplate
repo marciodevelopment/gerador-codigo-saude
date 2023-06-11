@@ -2,8 +2,7 @@
 package ${pacote}.web.request;
 
 <#list imports as import>
-  <#if import?contains("Converter")>
-  <#else>
+  <#if !import?contains("Converter")>
 import ${import};
   </#if>
 </#list>

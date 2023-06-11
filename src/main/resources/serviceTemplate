@@ -7,7 +7,9 @@ import org.springframework.data.domain.Pageable;
 </#if>
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+<#if gerarBuscarPorId || gerarSalvar>
 import ${pacote}.entity.${nome}Entity;
+</#if>
 import ${pacote}.entity.view.${nome}PesquisaView;
 import ${pacote}.repository.${nome}Repository;
 <#if gerarBuscarPorId>
@@ -21,32 +23,33 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class ${nome}Service {
   private final ${nome}Repository ${nomeVariavel}Repository;
-
-<#if gerarSalvar>	
+  
+<#if gerarSalvar>
   @Transactional
   public ${nome}Entity salvar(${nome}Entity ${nomeVariavel}) {
     return ${nomeVariavel}Repository.save(${nomeVariavel});
   }
+  
 </#if>
-
 <#if gerarDelete>
   @Transactional
   public void deletarPorId(Integer cd${nome}) {
     ${nomeVariavel}Repository.deleteById(cd${nome});
   }
+  
 </#if>
-
 <#if gerarBuscarPorId>
   public ${nome}Entity buscarPorIdOuThrow(Integer cd${nome}) {
     return ${nomeVariavel}Repository.findById(cd${nome}).orElseThrow(() -> new EntityNotFoundException(
         "${mensagem} não encontrado para o código enviado %s".formatted(cd${nome})));
   }
+  
 </#if>
-
 <#if gerarPesquisar>
   public Page<${nome}PesquisaView> pesquisarView(Pageable pageable,
       Map<String, Object> parametros) {
     return ${nomeVariavel}Repository.search(parametros, pageable);
   }
+  
 </#if>  
 }
