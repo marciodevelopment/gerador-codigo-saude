@@ -1,0 +1,108 @@
+package ${pacoteArquivo};
+
+import static io.restassured.RestAssured.given;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.time.LocalDate;
+import java.util.List;
+import org.instancio.Instancio;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
+import org.springframework.test.context.ActiveProfiles;
+<#if gerarPesquisar>
+import br.org.curitiba.ici.saude.usuario.entity.view.${nome}PesquisaView;
+</#if>
+<#if gerarAtualizar>
+import br.org.curitiba.ici.saude.usuario.web.request.${nome}AtualizacaoRequest;
+</#if>
+<#if gerarSalvar>
+import br.org.curitiba.ici.saude.usuario.web.request.${nome}NovoRequest;
+</#if>
+<#if gerarBuscarPorId>
+import br.org.curitiba.ici.saude.usuario.web.response.${nome}Response;
+</#if>
+
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+
+
+
+@ActiveProfiles("test")
+@SpringBootTest(classes = NomeDaAplicacaoServiceApplication.class,
+    webEnvironment = WebEnvironment.RANDOM_PORT)
+class ${nome}ControllerIntegarionTest {
+  @LocalServerPort
+  private int port;
+
+  private String url = "http://localhost:%s/${path}";
+<#if gerarSalvar>
+  private static Integer cd${nome}Criado = null;
+</#if>
+  @BeforeEach
+  void beforeEach() {
+    url = String.format(url, port);
+  }
+
+<#if gerarSalvar>
+  @Order(1)
+  @Test
+  void deveSalvarUmNovo${nome}() throws Exception {
+    ${nome}NovoRequest request = Instancio.create(${nome}NovoRequest.class);
+    
+    Response httpResponse = given().contentType(ContentType.JSON).body(request).when().post(url);
+    httpResponse.then().statusCode(HttpStatus.CREATED.value()).log().ifError();
+
+    cd${nome}Criado = httpResponse.getBody().as(Integer.class).intValue();
+
+  }
+  
+</#if>
+<#if gerarBuscarPorId>
+  @Order(2)
+  @Test
+  void deveRetornarUm${nome}() throws Exception {
+    String urlGet = url + "/" + cd${nome}Criado;
+    Response httpResponse = given().contentType(ContentType.JSON).when().get(urlGet);
+    httpResponse.then().statusCode(HttpStatus.OK.value()).log().ifError();
+    ${nome}Response ${nomeVariavel}Response = httpResponse.getBody().as(${nome}Response.class);
+    assertEquals(cd${nome}Criado, ${nomeVariavel}Response.getCd${nome}());
+  }
+  
+</#if>
+<#if gerarAtualizar>
+  @Order(3)
+  @Test
+  void deveAtualizarUm${nome}() throws Exception {
+    ${nome}AtualizacaoRequest request = Instancio.create(${nome}AtualizacaoRequest.class);
+    
+    String urlPut = url + "/" + cd${nome}Criado;
+    given().contentType(ContentType.JSON).body(request).when().put(urlPut).then()
+        .statusCode(HttpStatus.OK.value()).log().ifError();
+  }
+  
+</#if>
+<#if gerarPesquisar>
+  @Order(4)
+  @Test
+  void deveEncontrarUmaPessoaParaPrimeiraPaginaDeTamanho1() {
+    List<${nome}PesquisaView> request =
+        given().contentType(ContentType.JSON).when().queryParam("page", 0).queryParam("size", 1)
+            .get(url).then().extract().jsonPath().get("content");
+    Assertions.assertEquals(1, request.size());
+  }
+</#if>
+<#if gerarDelete>
+  @Order(5)
+  @Test
+  void deveDeletarUm${nome}() throws Exception {
+    String urlDelete = url + "/" + cd${nome}Criado;
+    given().contentType(ContentType.JSON).when().delete(urlDelete).then()
+        .statusCode(HttpStatus.OK.value()).log().ifError();
+  }
+</#if>
+}

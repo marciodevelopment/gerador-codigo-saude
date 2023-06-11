@@ -24,4 +24,9 @@ public class ArquivoFonte {
         arquivoType.getPacoteArquivo(arqModel.getPacote()), arquivo);
   }
 
+
+  public boolean isTest() {
+    return this.nomeArquivo.toLowerCase().contains("test");
+  }
+
 }

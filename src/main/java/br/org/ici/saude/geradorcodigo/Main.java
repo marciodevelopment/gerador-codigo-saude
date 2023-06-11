@@ -23,10 +23,15 @@ public class Main {
             .gerarArquivos())
         .flatMap(List::stream).toList();
 
-    arquivos.stream()
-        .forEach(arquivoFonte -> ArquivoUtil.escreverCodigoFonte(
-            arquivoConfiguracao.getDiretorioProjetoJava() + "/src/main/java"
-                + arquivoFonte.getCaminho(),
-            arquivoFonte.getNomeArquivo(), arquivoFonte.getArquivo()));
+    arquivos.stream().forEach(arquivoFonte -> {
+      String diretorioClasse = "/src/main/java";
+      if (arquivoFonte.isTest()) {
+        diretorioClasse = "/src/test/java";
+      }
+      ArquivoUtil.escreverCodigoFonte(
+          arquivoConfiguracao.getDiretorioProjetoJava() + diretorioClasse
+              + arquivoFonte.getCaminho(),
+          arquivoFonte.getNomeArquivo(), arquivoFonte.getArquivo());
+    });
   }
 }

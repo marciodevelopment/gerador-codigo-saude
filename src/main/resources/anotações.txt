@@ -31,4 +31,7 @@ PesquisaResponse
  - Não gerar view
  *Dificuldade: Média
  
+ 
+ No teste colocar datas conforme antocaoes @past, @future
+ 
   

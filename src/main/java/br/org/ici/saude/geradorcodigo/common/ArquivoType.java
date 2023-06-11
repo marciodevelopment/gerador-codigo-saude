@@ -35,6 +35,9 @@ public enum ArquivoType {
 
   CONTROLLER("Controller", ".rest.web", "controllerTemplate", new GeradorController()),
 
+  CONTROLLER_TESTE("ControllerIntegarionTest", ".rest.web", "controllerIntegrationTestTemplate",
+      new GeradorController()),
+
   ATUALIZACAO_REQUEST("AtualizacaoRequest", ".rest.web.request", "atualizacaoRequestTemplate",
       new GeradorAtualizacaoRequest()),
 

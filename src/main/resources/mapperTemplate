@@ -28,7 +28,9 @@ import ${pacote}.entity.${nome}Entity;
 public abstract class ${nome}Mapper {
 
 <#if gerarSalvar>  
-  public abstract ${nome}Entity toEntity(${nome}NovoRequest request);
+  public ${nome}Entity toEntity(${nome}NovoRequest request) {
+    return null;
+  }
   
 </#if>
 <#if gerarAtualizar>
