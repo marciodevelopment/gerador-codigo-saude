@@ -70,6 +70,7 @@ public class FiltroAtributos {
 
     List<AtributoArquivo> entidadesDesnormalizadas = new ArrayList<>();
     entidadesDesnormalizadas.addAll(atributos);
+
     entidadesDesnormalizadas
         .addAll(entidades.stream().map(ent -> getAtributosDesnormalizados(ent.getNome(), metodo))
             .flatMap(Collection::stream).distinct().toList());

@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public class BaseModel {
+public class BaseModel implements ArquivoModel {
   private final String nome;
   private final String pacote;
   private Set<String> imports = new HashSet<>();
@@ -43,13 +43,4 @@ public class BaseModel {
     return this;
   }
 
-
-  // public BaseModel addAtributo(AtributosModel atributo) {
-  // if (atributo.temImport(this.getPacote())) {
-  // this.addImport(atributo.getImport());
-  // }
-  // atributo.setNomeVariavel(getNomeVariavel());
-  // this.atributos.add(atributo);
-  // return this;
-  // }
 }

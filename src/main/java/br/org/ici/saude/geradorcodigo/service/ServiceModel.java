@@ -1,18 +1,29 @@
-package br.org.ici.saude.geradorcodigo.web;
+package br.org.ici.saude.geradorcodigo.service;
 
 import java.util.List;
 import br.org.ici.saude.geradorcodigo.common.BaseModel;
+import lombok.Getter;
+import lombok.Setter;
 
-public class MapperModel extends BaseModel {
-
+@Setter
+@Getter
+public class ServiceModel extends BaseModel {
   private Boolean existePost = false;
   private Boolean existePut = false;
   private Boolean existeGet = false;
   private Boolean existeDelete = false;
   private Boolean existePesquisa = false;
+  private String mensagem;
 
-  public MapperModel(String nome, String pacote, List<String> metodos) {
+
+  public ServiceModel(String nome, String pacote, String mensagem) {
     super(nome, pacote);
+    this.mensagem = mensagem;
+  }
+
+  public ServiceModel(String nome, String pacote, String mensagem, List<String> metodos) {
+    super(nome, pacote);
+    this.mensagem = mensagem;
     if (metodos == null)
       return;
     this.existePost = metodos.toString().toLowerCase().contains("post");
@@ -37,10 +48,4 @@ public class MapperModel extends BaseModel {
   public Boolean getGerarPesquisar() {
     return this.existePesquisa;
   }
-
-  public Boolean getGerarAtualizar() {
-    return this.existePut;
-  }
-
-
 }

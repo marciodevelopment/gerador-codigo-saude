@@ -1,9 +1,12 @@
 package br.org.ici.saude.geradorcodigo;
 
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
+import br.org.ici.saude.geradorcodigo.common.ArquivoType;
 import br.org.ici.saude.geradorcodigo.common.ArquivoUtil;
 import br.org.ici.saude.geradorcodigo.configuracao.ArquivoConfiguracao;
 import br.org.ici.saude.geradorcodigo.configuracao.ArquivoFonte;
@@ -13,14 +16,19 @@ import br.org.ici.saude.geradorcodigo.entidade.AtributosModel;
 import br.org.ici.saude.geradorcodigo.entidade.EntidadeModel;
 import br.org.ici.saude.geradorcodigo.entidade.PesquisaViewModel;
 import br.org.ici.saude.geradorcodigo.entidade.TypeModel;
-import br.org.ici.saude.geradorcodigo.geradores.GeradorEntidade;
+import br.org.ici.saude.geradorcodigo.geradores.ProcessadorArquivo;
 import br.org.ici.saude.geradorcodigo.repositorio.RepositorioModel;
-import br.org.ici.saude.geradorcodigo.repositorio.ServiceModel;
+import br.org.ici.saude.geradorcodigo.service.ServiceModel;
+import br.org.ici.saude.geradorcodigo.web.ControllerModel;
 import br.org.ici.saude.geradorcodigo.web.MapperModel;
 import br.org.ici.saude.geradorcodigo.web.PesquisaResponseModel;
 import br.org.ici.saude.geradorcodigo.web.ResponseRequestModel;
+import freemarker.core.ParseException;
 import freemarker.template.Configuration;
+import freemarker.template.MalformedTemplateNameException;
 import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateNotFoundException;
 
 public class Main {
   public static void main(String[] args) throws Exception {
@@ -31,43 +39,10 @@ public class Main {
         "/home/marcio/eclipse-workspace/geradorcodigo/src/main/resources/configuracao.json";
     ArquivoConfiguracao arquivoConfiguracao = ArquivoUtil.lerJson(path, ArquivoConfiguracao.class);
 
-
-    GeradorEntidade geradorEntidade = new GeradorEntidade(cfg, arquivoConfiguracao);
-    List<ArquivoFonte> arquivos = geradorEntidade.gerarArquvos();
-    // GeradorBuilder geradorBuilder = new GeradorBuilder(cfg, arquivoConfiguracao);
-    // arquivos.addAll(geradorBuilder.gerarArquvos());
-    //
-    // GeradorType geradorType = new GeradorType(cfg, arquivoConfiguracao);
-    // arquivos.addAll(geradorType.gerarArquvos());
-    //
-    // GeradorConverter geradorConverter = new GeradorConverter(cfg, arquivoConfiguracao);
-    // arquivos.addAll(geradorConverter.gerarArquvos());
-    //
-    //
-    // GeradorRepository geradorRepository = new GeradorRepository(cfg, arquivoConfiguracao);
-    // arquivos.addAll(geradorRepository.gerarArquvos());
-    //
-
-    //
-    //
-    // GeradorService geradorService = new GeradorService(cfg, arquivoConfiguracao);
-    // arquivos.addAll(geradorService.gerarArquvos());
-    //
-    //
-
-    // GeradorMapper geradorMapper = new GeradorMapper(cfg, arquivoConfiguracao);
-    // arquivos.addAll(geradorMapper.gerarArquvos());
-
-    // GeradorViewPesquisa geradorView = new GeradorViewPesquisa(cfg, arquivoConfiguracao);
-    // arquivos.addAll(geradorView.gerarArquvos());
-
-    // GeradorPesquisaResponse geradorPesquisaResponse = new GeradorPesquisaResponse(cfg,
-    // arquivoConfiguracao);
-    // arquivos.addAll(geradorPesquisaResponse.gerarArquvos());
-
-
-    // GeradorGetResponse getResponseGerador = new GeradorGetResponse(cfg, arquivoConfiguracao);
-    // arquivos.addAll(getResponseGerador.gerarArquvos());
+    List<ArquivoFonte> arquivos = Stream.of(ArquivoType.values())
+        .map(arquivoType -> new ProcessadorArquivo(cfg, arquivoConfiguracao, arquivoType)
+            .gerarArquivos())
+        .flatMap(List::stream).toList();
 
     arquivos.stream().forEach(arquivoFonte -> {
       try {
@@ -99,9 +74,27 @@ public class Main {
 
     // gerarAtualizacaoRequest(cfg, arquivoConfiguracao);
     // gerarAtualizacaoRequest(cfg, arquivoConfiguracao);
+
+
     // gerarNovoRequest(cfg, arquivoConfiguracao);
 
     // gerarPesquisaRequest(cfg, arquivoConfiguracao);
+
+    // gerarController(cfg, arquivoConfiguracao);
+    // gerarMappeer(cfg, arquivoConfiguracao);
+  }
+
+
+  private static void gerarController(Configuration cfg, ArquivoConfiguracao arquivoConfiguracao)
+      throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException,
+      TemplateException {
+    Template template = cfg.getTemplate("controllerTemplate");
+    ControllerModel model = new ControllerModel("Usuario", "br.org.ici.saude.usuario",
+        arquivoConfiguracao.getEntidades().get(2).getMetodos(),
+        arquivoConfiguracao.getEntidades().get(2).getPath());
+    Writer out = new OutputStreamWriter(System.out);
+    template.process(model, out);
+
   }
 
 
@@ -181,7 +174,8 @@ public class Main {
     Template template = cfg.getTemplate("mapperTemplate");
 
     MapperModel model = new MapperModel(arquivoConfiguracao.getEntidades().get(2).getNome(),
-        arquivoConfiguracao.getEntidades().get(2).getPacote());
+        arquivoConfiguracao.getEntidades().get(2).getPacote(),
+        arquivoConfiguracao.getEntidades().get(2).getMetodos());
     Writer out = new OutputStreamWriter(System.out);
     template.process(model, out);
   }

@@ -1,31 +1,28 @@
-package br.org.ici.saude.geradorcodigo.repositorio;
+package br.org.ici.saude.geradorcodigo.web;
 
 import java.util.List;
 import br.org.ici.saude.geradorcodigo.common.BaseModel;
 import lombok.Getter;
-import lombok.Setter;
 
-@Setter
-@Getter
-public class ServiceModel extends BaseModel {
+public class ControllerModel extends BaseModel {
+
   private Boolean existePost = false;
   private Boolean existePut = false;
   private Boolean existeGet = false;
   private Boolean existeDelete = false;
   private Boolean existePesquisa = false;
-  private String mensagem;
+  @Getter
+  private String path;
 
-
-  public ServiceModel(String nome, String pacote, String mensagem) {
+  public ControllerModel(String nome, String pacote) {
     super(nome, pacote);
-    this.mensagem = mensagem;
   }
 
-  public ServiceModel(String nome, String pacote, String mensagem, List<String> metodos) {
+  public ControllerModel(String nome, String pacote, List<String> metodos, String path) {
     super(nome, pacote);
-    this.mensagem = mensagem;
     if (metodos == null)
       return;
+    this.path = path;
     this.existePost = metodos.toString().toLowerCase().contains("post");
     this.existePut = metodos.toString().toLowerCase().contains("put");
     this.existeGet = metodos.toString().toLowerCase().contains("get");
@@ -33,8 +30,12 @@ public class ServiceModel extends BaseModel {
     this.existePesquisa = metodos.toString().toLowerCase().contains("pesquisa");
   }
 
+  public Boolean getGerarAtualizar() {
+    return this.existePut;
+  }
+
   public Boolean getGerarSalvar() {
-    return this.existePost || this.existePut;
+    return this.existePost;
   }
 
   public Boolean getGerarDelete() {
@@ -48,7 +49,6 @@ public class ServiceModel extends BaseModel {
   public Boolean getGerarPesquisar() {
     return this.existePesquisa;
   }
-
 
 
 }

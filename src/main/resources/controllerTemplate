@@ -1,0 +1,98 @@
+package ${pacote}.web;
+
+<#if gerarSalvar>
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+</#if>
+<#if gerarDelete>
+import org.springframework.web.bind.annotation.DeleteMapping;
+</#if>
+<#if gerarBuscarPorId>
+import org.springframework.web.bind.annotation.GetMapping;
+import jakarta.validation.constraints.NotNull;
+</#if>
+<#if gerarSalvar>
+import org.springframework.web.bind.annotation.PostMapping;
+</#if>
+<#if gerarAtualizar>
+import org.springframework.web.bind.annotation.PutMapping;
+</#if>
+<#if (gerarAtualizar) || (gerarBuscarPorId) || (gerarPesquisar)>
+import org.springframework.web.bind.annotation.PathVariable;
+</#if>
+<#if (gerarAtualizar) || (gerarSalvar)>
+import org.springframework.web.bind.annotation.RequestBody;
+</#if>
+<#if (gerarAtualizar) || (gerarSalvar)>
+import org.springframework.web.bind.annotation.RequestMapping;
+</#if>
+import org.springframework.web.bind.annotation.RestController;
+
+
+<#if gerarPesquisar>
+import br.org.curitiba.ici.saude.usuario.common.PageResponse;
+import br.org.curitiba.ici.saude.usuario.common.PaginationRequest;
+</#if>
+
+import ${pacote}.entity.view.${nome}PesquisaView;
+import ${pacote}.service.${nome}Service;
+import ${pacote}.web.mapper.${nome}Mapper;
+import ${pacote}.web.request.${nome}AtualizacaoRequest;
+import ${pacote}.web.request.${nome}NovoRequest;
+import ${pacote}.web.request.${nome}PesquisaRequest;
+import ${pacote}.web.response.${nome}Response;
+
+<#if (gerarSalvar) || (gerarAtualizar)>
+import jakarta.validation.Valid;
+</#if>
+import lombok.RequiredArgsConstructor;
+
+
+@RequiredArgsConstructor
+@RestController
+@RequestMapping("/${path}")
+public class ${nome}Controller {
+  private final ${nome}Service usuarioService;
+  private final ${nome}Mapper usuarioMapper;
+
+
+<#if gerarSalvar>
+  @ResponseStatus(value = HttpStatus.CREATED)
+  @PostMapping
+  public Integer salvar(@RequestBody @Valid ${nome}NovoRequest request) {
+    return ${nomeVariavel}Service.salvar(${nomeVariavel}Mapper.toEntity(request)).getCd${nome}();
+  }
+</#if>
+
+<#if gerarAtualizar>
+  @PutMapping(path = "/{id}")
+  public void atualizar(@RequestBody @Valid ${nome}AtualizacaoRequest request,
+      @NotNull @PathVariable("id") Integer id) {
+    ${nomeVariavel}Service.atualizar(${nomeVariavel}Mapper.toEntity(${nomeVariavel}Service.buscarPorId(id), request));
+  }
+</#if>
+
+<#if gerarBuscarPorId>
+  @GetMapping(path = "/{id}")
+  public UsuarioResponse buscarPorId(@NotNull @PathVariable("id") Integer id) {
+    return ${nomeVariavel}Mapper.toResponse(${nomeVariavel}Service.buscarPorId(id));
+  }
+</#if>
+
+<#if gerarDelete>
+  @DeleteMapping(path = "/{id}")
+  public void deletar(@NotNull @PathVariable("id") Integer id) {
+    ${nomeVariavel}Service.deletarPorId(id);
+  }
+</#if>
+
+<#if gerarPesquisar>
+  @GetMapping
+  public PageResponse<${nome}PesquisaResponse> pesquisar(${nome}PesquisaRequest request,
+      PaginationRequest paginationRequest) {
+    return ${nomeVariavel}Mapper.toResponse(
+        ${nomeVariavel}Service.pesquisarView(paginationRequest.toPageable(), request.toParametros()));
+  }
+</#if>  
+
+}

@@ -72,6 +72,18 @@ public class EntidadeArquivo {
     return this.metodos.stream().anyMatch(met -> met.toLowerCase().contains("pesquisa"));
   }
 
+  public boolean existeAtualizacao() {
+    if (this.metodos == null)
+      return false;
+    return this.metodos.stream().anyMatch(met -> met.toLowerCase().contains("put"));
+  }
+
+  public boolean existeNovo() {
+    if (this.metodos == null)
+      return false;
+    return this.metodos.stream().anyMatch(met -> met.toLowerCase().contains("post"));
+  }
+
   public List<String> getColunasPesquisa() {
     return this.atributos.stream().filter(atr -> atr.isPesquisa()).map(atr -> atr.getNome())
         .toList();

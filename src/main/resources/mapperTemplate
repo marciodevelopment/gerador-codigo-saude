@@ -15,19 +15,25 @@ import ${import};
 public abstract class ${nome}Mapper {
   @Autowired
   private ${nome}Service ${nomeVariavel}Sevice;
-  
 
+<#if gerarSalvar>  
   public abstract ${nome}Entity toEntity(${nome}NovoRequest request);
-    
-  public abstract ${nome}Response toResponse(${nome}Entity buscarPorId);
+</#if>
 
-  public abstract ${nome}Entity toEntity(${nome}Entity usuario, @Valid ${nome}AtualizacaoRequest request);
-    
-
-  public abstract Collection<${nome}PesquisaResponse> toResponse(Stream<${nome}Entity> ${nomeVariavel}s);
-
-
-  public PageResponse<${nome}PesquisaView> toResponse(Page<${nome}PesquisaView> resultado) {
-    return new PageResponse<${nome}PesquisaView>(resultado);
+<#if gerarAtualizar>
+  public abstract ${nome}Entity toEntity(${nome}Entity {nomeVariavel}, @Valid ${nome}AtualizacaoRequest request);
+</#if>
+ 
+<#if gerarBuscarPorId>
+  public abstract ${nome}Response toResponse(${nome}Entity ${nomeVariavel});
+</#if>
+  
+<#if gerarPesquisar>
+  public abstract Collection<${nome}PesquisaResponse> toResponse(
+      Stream<${nome}PesquisaView> ${nomeVariavel}s);
+      
+  public PageResponse<${nome}PesquisaResponse> toResponse(Page<${nome}PesquisaView> resultadosPesquisa) {
+    return new PageResponse<>(this.toResponse(resultado.get()), resultadosPesquisa);
   }
+</#if>  
 }
