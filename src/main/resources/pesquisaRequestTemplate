@@ -1,4 +1,4 @@
-package ${pacote}.web.request;
+package ${pacoteArquivo};
 
 import br.org.curitiba.ici.saude.usuario.common.ParametrosPesquisaRequest;
 <#list imports as import>

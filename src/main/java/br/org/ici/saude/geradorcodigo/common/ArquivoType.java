@@ -12,6 +12,7 @@ import br.org.ici.saude.geradorcodigo.web.GeradorController;
 import br.org.ici.saude.geradorcodigo.web.GeradorGetResponse;
 import br.org.ici.saude.geradorcodigo.web.GeradorMapper;
 import br.org.ici.saude.geradorcodigo.web.GeradorNovoRequest;
+import br.org.ici.saude.geradorcodigo.web.GeradorPesquisaRequest;
 import br.org.ici.saude.geradorcodigo.web.GeradorPesquisaResponse;
 import br.org.ici.saude.geradorcodigo.web.GeradorViewPesquisa;
 import lombok.Getter;
@@ -32,22 +33,22 @@ public enum ArquivoType {
 
   SERVICE("Service", ".service", "serviceTemplate", new GeradorService()),
 
-  CONTROLLER("Controller", ".web", "controllerTemplate", new GeradorController()),
+  CONTROLLER("Controller", ".rest.web", "controllerTemplate", new GeradorController()),
 
-  ATUALIZACAO_REQUEST("AtualizacaoRequest", ".web.request", "atualizacaoRequestTemplate",
+  ATUALIZACAO_REQUEST("AtualizacaoRequest", ".rest.web.request", "atualizacaoRequestTemplate",
       new GeradorAtualizacaoRequest()),
 
-  PESQUISA_REQUEST("PesquisaRequest", ".web.request", "pesquisaRequestTemplate",
+  PESQUISA_REQUEST("PesquisaRequest", ".rest.web.request", "pesquisaRequestTemplate",
+      new GeradorPesquisaRequest()),
+
+  NOVO_REQUEST("NovoRequest", ".rest.web.request", "novoRequestTemplate", new GeradorNovoRequest()),
+
+  GET_RESPONSE("Response", ".rest.web.response", "getResponseTemplate", new GeradorGetResponse()),
+
+  PESQUISA_RESPONSE("PesquisaResponse", ".rest.web.response", "pesquisaResponseTemplate",
       new GeradorPesquisaResponse()),
 
-  NOVO_REQUEST("NovoRequest", ".web.request", "novoRequestTemplate", new GeradorNovoRequest()),
-
-  GET_RESPONSE("Response", ".web.response", "getResponseTemplate", new GeradorGetResponse()),
-
-  PESQUISA_RESPONSE("PesquisaResponse", ".web.response", "pesquisaResponseTemplate",
-      new GeradorPesquisaResponse()),
-
-  MAPPER("Mapper", ".web.mapper", "mapperTemplate", new GeradorMapper());
+  MAPPER("Mapper", ".rest.mapper", "mapperTemplate", new GeradorMapper());
 
   private String sufixo;
   private String pacote;

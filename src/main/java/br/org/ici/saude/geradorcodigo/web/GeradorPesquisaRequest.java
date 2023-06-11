@@ -21,7 +21,7 @@ public class GeradorPesquisaRequest implements GeradorArquivo {
           FiltroAtributos filtroAtributos = new FiltroAtributos(arquivoConfiguracao);
           Collection<AtributosModel> atributosFiltratos = filtroAtributos
               .getAtributosDesnormalizadosModel(entidadeArq.getNome(), MetodoType.PESQUISA);
-          return new PesquisaResponseModel(entidadeArq.getNome(), entidadeArq.getPacote(),
+          return new PesquisaRequestModel(entidadeArq.getNome(), entidadeArq.getPacote(),
               atributosFiltratos);
         }).toList();
   }

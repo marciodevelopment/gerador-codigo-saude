@@ -1,22 +1,22 @@
-package ${pacote}.web.mapper;
+package ${pacoteArquivo};
 
 import java.util.Collection;
 import java.util.stream.Stream;
 import org.mapstruct.Mapper;
 import br.org.curitiba.ici.saude.usuario.common.PageResponse;
 <#if gerarAtualizar>
-import ${pacote}.web.request.${nome}AtualizacaoRequest;
+import ${pacote}.rest.web.request.${nome}AtualizacaoRequest;
 </#if>
 <#if gerarSalvar>
-import ${pacote}.web.request.${nome}NovoRequest;
+import ${pacote}.rest.web.request.${nome}NovoRequest;
 </#if>
 <#if gerarPesquisar>
-import ${pacote}.web.response.${nome}PesquisaResponse;
+import ${pacote}.rest.web.response.${nome}PesquisaResponse;
 import ${pacote}.entity.view.${nome}PesquisaView;
 import org.springframework.data.domain.Page;
 </#if>
 <#if gerarBuscarPorId>
-import ${pacote}.web.response.${nome}Response;
+import ${pacote}.rest.web.response.${nome}Response;
 </#if>
 <#if gerarSalvar || gerarAtualizar || gerarBuscarPorId>
 import ${pacote}.entity.${nome}Entity;
@@ -24,7 +24,7 @@ import ${pacote}.entity.${nome}Entity;
 
 
 @Mapper(componentModel = "spring",
-    implementationPackage = "${pacote}.web.mapper.impl")
+    implementationPackage = "${pacote}.rest.web.mapper.impl")
 public abstract class ${nome}Mapper {
 
 <#if gerarSalvar>  

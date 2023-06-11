@@ -5,10 +5,10 @@ import br.org.ici.saude.geradorcodigo.common.ArquivoType;
 import br.org.ici.saude.geradorcodigo.common.BaseModel;
 import br.org.ici.saude.geradorcodigo.entidade.AtributosModel;
 
-public class ResponseRequestModel extends BaseModel {
+public class PesquisaRequestModel extends BaseModel {
 
-  public ResponseRequestModel(String nome, String pacote, Collection<AtributosModel> atributos) {
-    super(nome, pacote, ArquivoType.ATUALIZACAO_REQUEST.getPacoteArquivo(pacote));
+  public PesquisaRequestModel(String nome, String pacote, Collection<AtributosModel> atributos) {
+    super(nome, pacote, ArquivoType.PESQUISA_REQUEST.getPacoteArquivo(pacote));
     super.addAtributos(atributos);
   }
 

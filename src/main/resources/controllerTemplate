@@ -1,4 +1,4 @@
-package ${pacote}.web;
+package ${pacoteArquivo};
 
 <#if gerarSalvar>
 import org.springframework.http.HttpStatus;
@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 </#if>
 <#if gerarBuscarPorId>
 import jakarta.validation.constraints.NotNull;
-import ${pacote}.web.response.${nome}Response;
+import ${pacoteArquivo}.response.${nome}Response;
 </#if>
 <#if gerarSalvar>
 import org.springframework.web.bind.annotation.PostMapping;
-import ${pacote}.web.request.${nome}NovoRequest;
+import ${pacoteArquivo}.request.${nome}NovoRequest;
 </#if>
 <#if gerarAtualizar>
 import org.springframework.web.bind.annotation.PutMapping;
@@ -26,18 +26,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 </#if>
 <#if (gerarAtualizar) || (gerarSalvar)>
 import org.springframework.web.bind.annotation.RequestBody;
-import ${pacote}.web.request.${nome}AtualizacaoRequest;
+import ${pacoteArquivo}.request.${nome}AtualizacaoRequest;
 </#if>
 import org.springframework.web.bind.annotation.RestController;
 
 <#if gerarPesquisar>
 import br.org.curitiba.ici.saude.usuario.common.PageResponse;
 import br.org.curitiba.ici.saude.usuario.common.PaginationRequest;
-import ${pacote}.web.request.${nome}PesquisaRequest;
-import ${pacote}.web.response.${nome}PesquisaResponse;
+import ${pacoteArquivo}.request.${nome}PesquisaRequest;
+import ${pacoteArquivo}.response.${nome}PesquisaResponse;
 </#if>
 import ${pacote}.service.${nome}Service;
-import ${pacote}.web.mapper.${nome}Mapper;
+import ${pacote}.rest.mapper.${nome}Mapper;
 <#if (gerarSalvar) || (gerarAtualizar)>
 import jakarta.validation.Valid;
 </#if>
