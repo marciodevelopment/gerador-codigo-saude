@@ -1,0 +1,24 @@
+package ${pacote}.entity.type;
+
+import ${pacote}.common.BaseEnum;
+import ${pacote}.common.EnumUtil;
+import lombok.Getter;
+
+@Getter
+public enum ${nome}Type implements BaseEnum {
+<#list valores as valor>
+   ${valor.nome}(${valor.id}, "${valor.descricao}")<#if valor_has_next>,<#else>;</#if>
+</#list>
+
+  private Integer id;
+  private String description;
+
+  ${nome}Type(Integer id, String description) {
+    this.id = id;
+    this.description = description;
+  }
+
+  public static ${nome}Type toType(Integer id) {
+    return EnumUtil.toType(id, ${nome}Type.class);
+  }
+}

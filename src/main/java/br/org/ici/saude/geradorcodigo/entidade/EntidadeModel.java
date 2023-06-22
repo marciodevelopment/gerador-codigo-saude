@@ -2,7 +2,7 @@ package br.org.ici.saude.geradorcodigo.entidade;
 
 import java.util.List;
 import java.util.Set;
-import br.org.ici.saude.geradorcodigo.common.ArquivoType;
+import br.org.ici.saude.geradorcodigo.common.ArquivoJavaType;
 import br.org.ici.saude.geradorcodigo.common.BaseModel;
 import lombok.Getter;
 
@@ -12,7 +12,7 @@ import lombok.Getter;
 public class EntidadeModel extends BaseModel {
 
   public EntidadeModel(String nome, String pacote) {
-    super(nome, pacote, ArquivoType.ENTITY.getPacoteArquivo(pacote));
+    super(nome, pacote, ArquivoJavaType.ENTITY.getPacoteArquivo(pacote));
   }
 
   public Boolean getExisteConstrutor() {

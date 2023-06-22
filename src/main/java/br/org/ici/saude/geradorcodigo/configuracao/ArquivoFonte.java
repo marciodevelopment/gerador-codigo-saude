@@ -1,7 +1,7 @@
 package br.org.ici.saude.geradorcodigo.configuracao;
 
 import br.org.ici.saude.geradorcodigo.common.ArquivoModel;
-import br.org.ici.saude.geradorcodigo.common.ArquivoType;
+import br.org.ici.saude.geradorcodigo.common.ArquivoJavaType;
 import lombok.Getter;
 
 @Getter
@@ -19,7 +19,7 @@ public class ArquivoFonte {
   }
 
 
-  public ArquivoFonte(ArquivoModel arqModel, ArquivoType arquivoType, String arquivo) {
+  public ArquivoFonte(ArquivoModel arqModel, ArquivoJavaType arquivoType, String arquivo) {
     this(arquivoType.getNomeArquivo(arqModel.getNome()),
         arquivoType.getPacoteArquivo(arqModel.getPacote()), arquivo);
   }

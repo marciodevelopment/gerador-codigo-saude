@@ -5,7 +5,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.List;
 import br.org.ici.saude.geradorcodigo.common.ArquivoModel;
-import br.org.ici.saude.geradorcodigo.common.ArquivoType;
+import br.org.ici.saude.geradorcodigo.common.ArquivoJavaType;
 import br.org.ici.saude.geradorcodigo.common.exception.ProcessadorException;
 import br.org.ici.saude.geradorcodigo.configuracao.ArquivoConfiguracao;
 import br.org.ici.saude.geradorcodigo.configuracao.ArquivoFonte;
@@ -19,7 +19,7 @@ public class ProcessadorArquivo {
 
   private final Configuration cfg;
   private final ArquivoConfiguracao arquivoConfiguracao;
-  private final ArquivoType arquivoType;
+  private final ArquivoJavaType arquivoType;
 
   public List<ArquivoFonte> gerarArquivos() throws ProcessadorException {
     return this.gerarArquivo(cfg, arquivoConfiguracao);

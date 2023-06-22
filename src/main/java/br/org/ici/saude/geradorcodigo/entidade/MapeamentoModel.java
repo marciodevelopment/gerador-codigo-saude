@@ -2,7 +2,7 @@ package br.org.ici.saude.geradorcodigo.entidade;
 
 import java.util.HashSet;
 import java.util.Set;
-import br.org.ici.saude.geradorcodigo.common.ArquivoType;
+import br.org.ici.saude.geradorcodigo.common.ArquivoJavaType;
 import br.org.ici.saude.geradorcodigo.imports.GeradorImports;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -58,7 +58,7 @@ public class MapeamentoModel {
   }
 
   public String getTipo() {
-    return this.tipo.replace(ArquivoType.ENTITY.getSufixo(), "");
+    return this.tipo.replace(ArquivoJavaType.ENTITY.getSufixo(), "");
   }
 
   public boolean getUsaCascade() {
