@@ -1,34 +1,47 @@
 package br.org.ici.saude.geradorcodigo.common;
 
-import br.org.ici.saude.geradorcodigo.entidade.GeradorType;
+import br.org.ici.saude.geradorcodigo.angular.GeradorAngularType;
+import br.org.ici.saude.geradorcodigo.angular.GeradorAtualizacaoAngularRequest;
+import br.org.ici.saude.geradorcodigo.angular.GeradorGetAngularResponse;
+import br.org.ici.saude.geradorcodigo.angular.GeradorModuleAngular;
+import br.org.ici.saude.geradorcodigo.angular.GeradorNovoAngularRequest;
+import br.org.ici.saude.geradorcodigo.angular.GeradorPesquisaAngularRequest;
+import br.org.ici.saude.geradorcodigo.angular.GeradorPesquisaAngularResponse;
+import br.org.ici.saude.geradorcodigo.angular.GeradorRotasAngular;
+import br.org.ici.saude.geradorcodigo.angular.GeradorServiceAngular;
 import br.org.ici.saude.geradorcodigo.geradores.GeradorArquivo;
-import br.org.ici.saude.geradorcodigo.service.GeradorService;
-import br.org.ici.saude.geradorcodigo.web.GeradorAtualizacaoRequest;
-import br.org.ici.saude.geradorcodigo.web.GeradorGetResponse;
-import br.org.ici.saude.geradorcodigo.web.GeradorNovoRequest;
-import br.org.ici.saude.geradorcodigo.web.GeradorPesquisaRequest;
-import br.org.ici.saude.geradorcodigo.web.GeradorPesquisaResponse;
 import lombok.Getter;
 
 @Getter
 public enum ArquivoAngularType {
-  TYPE("Type", "types", "typeAngularTemplate", new GeradorType()),
 
-  SERVICE("Service", ".service", "serviceTemplate", new GeradorService()),
 
-  ATUALIZACAO_REQUEST("AtualizacaoRequest", ".rest.web.request", "atualizacaoRequestTemplate",
-      new GeradorAtualizacaoRequest()),
+  MODULE(".module", "", "angular/moduleAngularTemplate", new GeradorModuleAngular()),
 
-  PESQUISA_REQUEST("PesquisaRequest", ".rest.web.request", "pesquisaRequestTemplate",
-      new GeradorPesquisaRequest()),
+  ROUTES(".routing", "", "angular/routingAngularTemplate", new GeradorRotasAngular()),
 
-  NOVO_REQUEST("NovoRequest", ".rest.web.request", "novoRequestTemplate", new GeradorNovoRequest()),
+  TYPE("Type", ".types", "angular/typeAngularTemplate", new GeradorAngularType()),
 
-  GET_RESPONSE("Response", ".rest.web.response", "getResponseTemplate", new GeradorGetResponse()),
+  GET_RESPONSE("Response", ArquivoAngularType.INTERFACES_RESPONSE,
+      "angular/interfaceAngularTemplate", new GeradorGetAngularResponse()),
 
-  PESQUISA_RESPONSE("PesquisaResponse", ".rest.web.response", "pesquisaResponseTemplate",
-      new GeradorPesquisaResponse());
+  PESQUISA_RESPONSE("PesquisaResponse", ArquivoAngularType.INTERFACES_RESPONSE,
+      "angular/interfaceAngularTemplate", new GeradorPesquisaAngularResponse()),
 
+  NOVO_REQUEST("NovoRequest", ArquivoAngularType.INTERFACES_REQUEST,
+      "angular/interfaceAngularTemplate", new GeradorNovoAngularRequest()),
+
+  ATUALIZACAO_REQUEST("AtualizacaoRequest", ArquivoAngularType.INTERFACES_REQUEST,
+      "angular/interfaceAngularTemplate", new GeradorAtualizacaoAngularRequest()),
+
+  PESQUISA_REQUEST("PesquisaRequest", ArquivoAngularType.INTERFACES_REQUEST,
+      "angular/interfaceAngularTemplate", new GeradorPesquisaAngularRequest()),
+
+  SERVICE("Service", ".service", "angular/serviceAngularTemplate", new GeradorServiceAngular());
+
+
+  private static final String INTERFACES_RESPONSE = ".interfaces.response";
+  private static final String INTERFACES_REQUEST = ".interfaces.request";
   private String sufixo;
   private String pacote;
   private String nomeTemplate;
@@ -43,11 +56,14 @@ public enum ArquivoAngularType {
   }
 
   public String getNomeArquivo(String nomeEntidade) {
-    return nomeEntidade + this.sufixo + ".java";
+    return nomeEntidade + this.sufixo + ".ts";
   }
 
-  public String getPacoteArquivo(String nomePacote) {
-    return ArquivoUtil.converterPacoteParaPathArquivo(nomePacote + this.pacote);
+  public String getPacoteArquivo(String pacoteProjeto, String pacote) {
+    String modulo = "";
+    if (!pacote.isBlank())
+      modulo = pacote.replace(pacoteProjeto + ".", "");
+    return ArquivoUtil.converterPacoteParaPathArquivo(modulo + this.pacote);
   }
 
 }

@@ -49,4 +49,8 @@ public class ServiceModel extends BaseModel {
   public Boolean getGerarPesquisar() {
     return this.existePesquisa;
   }
+
+  public Boolean getGerarAtualizar() {
+    return this.existePut;
+  }
 }

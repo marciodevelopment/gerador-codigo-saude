@@ -1,0 +1,44 @@
+import { Injectable } from '@angular/core';
+<#if gerarPesquisar>
+import { ${nome}PesquisaResponse } from '../interfaces/response/${nome}PesquisaResponse';
+</#if>  
+<#if gerarBuscarPorId>
+import { ${nome}Response } from '../interfaces/response/${nome}Response';
+</#if>
+<#if gerarAtualizar>  
+import { ${nome}AtualizacaoRequest } from '../interfaces/request/${nome}AtualizacaoRequest';
+</#if>
+<#if gerarSalvar>
+import { ${nome}NovoRequest } from '../interfaces/request/${nome}NovoRequest';
+</#if>
+import { CrudService } from 'src/app/shared/services/CrudService';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ${nome}Service extends CrudService<
+  <#if gerarPesquisar>
+  ${nome}PesquisaResponse,
+  <#else>
+  null,
+  </#if>
+  <#if gerarBuscarPorId>
+  ${nome}Response,
+  <#else>
+  null,
+  </#if>
+  <#if gerarSalvar>
+  ${nome}NovoRequest,
+  <#else>
+  null,
+  </#if>
+  <#if gerarAtualizar>  
+  ${nome}AtualizacaoRequest,
+  <#else>
+  null,
+  </#if>
+> {
+  constructor() {
+    super('${path}');
+  }
+}

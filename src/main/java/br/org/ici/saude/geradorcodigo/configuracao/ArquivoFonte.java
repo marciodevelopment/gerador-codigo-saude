@@ -1,7 +1,8 @@
 package br.org.ici.saude.geradorcodigo.configuracao;
 
-import br.org.ici.saude.geradorcodigo.common.ArquivoModel;
+import br.org.ici.saude.geradorcodigo.common.ArquivoAngularType;
 import br.org.ici.saude.geradorcodigo.common.ArquivoJavaType;
+import br.org.ici.saude.geradorcodigo.common.ArquivoModel;
 import lombok.Getter;
 
 @Getter
@@ -22,6 +23,13 @@ public class ArquivoFonte {
   public ArquivoFonte(ArquivoModel arqModel, ArquivoJavaType arquivoType, String arquivo) {
     this(arquivoType.getNomeArquivo(arqModel.getNome()),
         arquivoType.getPacoteArquivo(arqModel.getPacote()), arquivo);
+  }
+
+
+  public ArquivoFonte(ArquivoModel arqModel, ArquivoAngularType arquivoType, String arquivo,
+      String pacoteProjeto) {
+    this(arquivoType.getNomeArquivo(arqModel.getNome()),
+        arquivoType.getPacoteArquivo(pacoteProjeto, arqModel.getPacote()), arquivo);
   }
 
 

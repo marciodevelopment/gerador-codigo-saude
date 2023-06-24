@@ -103,4 +103,8 @@ public class EntidadeArquivo {
   public boolean existeMetodos() {
     return metodos != null && !metodos.isEmpty();
   }
+
+  public boolean existePath() {
+    return this.path != null && !this.path.isBlank();
+  }
 }

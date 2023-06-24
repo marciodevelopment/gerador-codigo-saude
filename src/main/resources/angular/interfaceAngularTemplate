@@ -1,0 +1,10 @@
+<#list imports as import>
+import { ${import} } from '../../types/${import}';
+</#list>
+
+
+export interface ${nome}${sufixo} {
+<#list atributos as atributo>
+   ${atributo.nome}: ${atributo.tipo};
+</#list>
+}

@@ -1,0 +1,130 @@
+{
+	"diretorioProjetoJava": "/home/marcio/eclipse-workspace/gc-teste-service",
+	"diretorioProjetoAngular": "/home/marcio/poc-gerador-angular",
+	"pacoteProjeto": "br.org.ici.saude.usuarioservice",
+	"entidades": [
+	{
+			"pacote": "br.org.ici.saude.usuarioservice.endereco",
+			"path": "cidades",
+			"nome": "Cidade",
+			"mensagem": "Cidade",
+			"metodos": [
+				"pesquisa"
+			],
+			"atributos": [
+				{
+					"nome": "cdCidade",
+					"mensagem": "Código Cidade",
+					"id": true,
+					"tipo": "Integer",
+					"web": ["get"]
+				}
+			]
+		},
+		{
+			"pacote": "br.org.ici.saude.usuarioservice.endereco",
+			"path": "estados",
+			"nome": "Estado",
+			"mensagem": "Estado",
+			"gerarAuditoria": true,
+			"metodos": [
+				"pesquisa"
+			],
+			"atributos": [
+				{
+					"nome": "cdEstado",
+					"mensagem": "Código do Estado",
+					"tipo": "Integer",
+					"web": ["pesquisa"]
+				},
+				{
+					"nome": "documentoCpf",
+					"mensagem": "Documento CPF",
+					"tipo": "DocumentoCpfEntity",
+					"validadores": [
+						"notNull"
+					],
+					"mapeamento": {
+						"tipoMapeamento": "oneToOne",
+						"cascade": "ALL"
+						},
+					"web": ["get","post", "pesquisa"]
+				},
+			]
+		},
+		{
+			"pacote": "br.org.ici.saude.usuarioservice.usuario",
+			"path": "usuarios",
+			"mensagem": "Usuário",
+			"nome": "Usuario",
+			"gerarAuditoria": true,
+			"metodos": [
+				"post",
+				"put",
+				"get",
+				"delete",
+				"pesquisa"
+			],
+			"atributos": [
+				{
+					"nome": "nmPai",
+					"mensagem": "Nome pai",
+					"tipo": "String",
+					"validadores": [
+						"notEmpty",
+						"min;value=10"
+					],
+					"web": ["get","put","post","pesquisa"]
+				},
+				{
+					"nome": "documentoCpf",
+					"mensagem": "Documento CPF",
+					"tipo": "DocumentoCpfEntity",
+					"validadores": [
+						"notNull"
+					],
+					"mapeamento": {
+						"tipoMapeamento": "oneToOne",
+						"cascade": "ALL"
+						},
+					"web": ["get","post", "pesquisa"]
+				},
+			]
+		},
+		{
+			"pacote": "br.org.ici.saude.usuario",
+			"nome": "DocumentoCpf",
+			"mensagem": "Documento CPF",
+			"gerarAuditoria": true,
+			"atributos": [
+				{
+					"nome": "cdDocumentoCpf",
+					"mensagem": "Código Documento CPF",
+					"tipo": "Integer",
+					"web": ["get"]
+				},
+				{
+					"nome": "nrCpf",
+					"mensagem": "Número CPF",
+					"tipo": "String",
+					"validadores": [
+						"notEmpty",
+						"cpf",
+						"size;max=255"
+					],
+					"web": ["post" , "pesquisa"]
+				},
+				{
+					"nome": "dtEmissao",
+					"mensagem": "Data emissão",
+					"tipo": "LocalDate",
+					"validadores": [
+						"notEmpty",
+						"pastOrPresent"
+					],
+					"web": ["post"]
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,35 @@
+
+import { Routes } from '@angular/router';
+
+<#list rotas as rota>
+
+<#if rota.existePesquisa>
+import { ${rota.nomeComponent}PesquisaComponent } from './${rota.nomeModulo}/${rota.nomeModulo}-pesquisa/${rota.nomeModulo}-pesquisa.component';
+</#if>
+<#if rota.existeForm>
+import { ${rota.nomeComponent}FormComponent } from './${rota.nomeModulo}/${rota.nomeModulo}-form/${rota.nomeModulo}-form.component';
+</#if>
+</#list>
+
+export const ${nomeRota}_ROUTES: Routes = [
+<#list rotas as rota>
+<#if rota.existePesquisa>
+  {
+    path: '${rota.path}',
+    component: ${rota.nomeComponent}PesquisaComponent,
+  },
+</#if>
+<#if rota.existeAtualizar> 
+  {
+    path: '${rota.path}/edit/:id',
+    component: ${rota.nomeComponent}FormComponent,
+  },
+</#if>
+<#if rota.existeSalvar>
+  {
+    path: '${rota.path}/new',
+    component: ${rota.nomeComponent}FormComponent,
+  },
+</#if>
+</#list>
+];

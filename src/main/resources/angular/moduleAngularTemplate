@@ -1,0 +1,65 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
+
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { InputMaskModule } from 'primeng/inputmask';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputNumberModule } from 'primeng/inputnumber';
+import {
+  DialogService,
+  DynamicDialogConfig,
+  DynamicDialogModule,
+} from 'primeng/dynamicdialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { TooltipModule } from 'primeng/tooltip';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TableModule } from 'primeng/table';
+import { CalendarModule } from 'primeng/calendar';
+
+import { SharedModule } from 'src/app/shared/shared.module';
+import { ${routesName} } from './${nomeModule}.routing';
+<#if existePesquisa>
+import { ${nomeComponente}PesquisaComponent } from './${nomeModule}/${nomeModule}-pesquisa/${nomeModule}-pesquisa.component';
+import { ${nomeComponente}PesquisaFormComponent } from './${nomeModule}-pesquisa-form/${nomeModule}-pesquisa-form.component';
+</#if>
+<#if existeForm>
+import { ${nomeComponente}FormComponent } from './${nomeModule}/${nomeModule}-form/${nomeModule}-form.component';
+</#if>
+
+
+@NgModule({
+    declarations: [<#if existePesquisa>${nomeComponente}PesquisaComponent, ${nomeComponente}PesquisaFormComponent,</#if> <#if existeForm>${nomeComponente}FormComponent</#if>],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+
+    CardModule,
+    ButtonModule,
+    TableModule,
+    InputMaskModule,
+    InputSwitchModule,
+    InputTextModule,
+    InputTextareaModule,
+    InputNumberModule,
+    DynamicDialogModule,
+    DropdownModule,
+    ConfirmDialogModule,
+    TooltipModule,
+    CalendarModule,
+
+    RouterModule.forChild(${routesName}),
+    SharedModule,
+    
+  ],
+  providers: [DialogService, DynamicDialogConfig],
+  exports: [<#if existePesquisa>${nomeComponente}PesquisaFormComponent</#if>],
+})
+export class ${nomeComponente}Module {}

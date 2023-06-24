@@ -32,7 +32,7 @@ public class BaseModel implements ArquivoModel {
     return this.nome.substring(0, 1).toLowerCase() + this.nome.substring(1, this.nome.length());
   }
 
-  public BaseModel addAtributos(Collection<AtributosModel> atributos) {
+  public BaseModel addAtributos(Collection<? extends AtributosModel> atributos) {
     this.atributos.addAll(atributos);
     this.atributos.stream().forEach(atr -> this.imports.addAll(atr.getImports(pacote)));
     return this;
