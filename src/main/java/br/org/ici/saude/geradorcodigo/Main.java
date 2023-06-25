@@ -3,12 +3,12 @@ package br.org.ici.saude.geradorcodigo;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Stream;
-import br.org.ici.saude.geradorcodigo.common.ArquivoAngularType;
+import br.org.ici.saude.geradorcodigo.angular.common.ArquivoAngularType;
 import br.org.ici.saude.geradorcodigo.common.ArquivoJavaType;
 import br.org.ici.saude.geradorcodigo.common.ArquivoUtil;
 import br.org.ici.saude.geradorcodigo.configuracao.ArquivoConfiguracao;
 import br.org.ici.saude.geradorcodigo.configuracao.ArquivoFonte;
-import br.org.ici.saude.geradorcodigo.geradores.ProcessadorArquivoAngular;
+import br.org.ici.saude.geradorcodigo.geradores.ProcessadorArquivoAngular2;
 import br.org.ici.saude.geradorcodigo.geradores.ProcessadorArquivoJava;
 import freemarker.template.Configuration;
 
@@ -21,14 +21,13 @@ public class Main {
     ArquivoConfiguracao arquivoConfiguracao = ArquivoUtil.lerJson(path, ArquivoConfiguracao.class);
 
     // gerarCodigoJava(cfg, arquivoConfiguracao);
-    gerarCodigoAngular(cfg, arquivoConfiguracao);
+    gerarCodigoAngular2(cfg, arquivoConfiguracao);
   }
 
-  private static void gerarCodigoAngular(Configuration cfg,
+  private static void gerarCodigoAngular2(Configuration cfg,
       ArquivoConfiguracao arquivoConfiguracao) {
     List<ArquivoFonte> arquivos = Stream.of(ArquivoAngularType.values())
-        .filter(value -> value.equals(ArquivoAngularType.ROUTES))
-        .map(arquivoType -> new ProcessadorArquivoAngular(cfg, arquivoConfiguracao, arquivoType)
+        .map(arquivoType -> new ProcessadorArquivoAngular2(cfg, arquivoConfiguracao, arquivoType)
             .gerarArquivos())
         .flatMap(List::stream).toList();
 
@@ -39,6 +38,7 @@ public class Main {
                 + arquivoFonte.getCaminho(),
             arquivoFonte.getNomeArquivo(), arquivoFonte.getArquivo()));
   }
+
 
   private static void gerarCodigoJava(Configuration cfg, ArquivoConfiguracao arquivoConfiguracao)
       throws IOException {

@@ -13,7 +13,6 @@ import lombok.Getter;
 public class BaseModel implements ArquivoModel {
   private final String nome;
   private final String pacote;
-
   private final String pacoteArquivo;
   private Set<String> imports = new HashSet<>();
   private List<AtributosModel> atributos = new ArrayList<>();
@@ -55,5 +54,13 @@ public class BaseModel implements ArquivoModel {
     this.pacoteArquivo =
         pacoteArquivo.substring(1, pacoteArquivo.length() - 1).replaceAll("/", ".");
   }
+
+  public BaseModel(String nome) {
+    super();
+    this.nome = nome;
+    this.pacote = "";
+    this.pacoteArquivo = "";
+  }
+
 
 }

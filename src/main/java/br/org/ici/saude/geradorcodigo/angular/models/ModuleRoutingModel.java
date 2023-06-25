@@ -1,9 +1,11 @@
-package br.org.ici.saude.geradorcodigo.angular;
+package br.org.ici.saude.geradorcodigo.angular.models;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
+@EqualsAndHashCode(of = "nomeComponent")
 @RequiredArgsConstructor
 @ToString
 @Getter
@@ -22,5 +24,9 @@ public class ModuleRoutingModel {
     return this.existeAtualizar || this.existeSalvar;
   }
 
+
+  public String getNomeVariavel() {
+    return this.nomeComponent.toLowerCase();
+  }
 
 }

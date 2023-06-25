@@ -1,0 +1,51 @@
+import { Component } from '@angular/core';
+import { BaseSearchComponent } from 'src/app/shared/components/base-components/BaseSearchComponent';
+import { SearchConfiguration } from 'src/app/shared/models/SearchConfiguration';
+import { SearchFieldConfiguration } from 'src/app/shared/models/SearchFieldConfiguration';
+import { TableButtomType } from 'src/app/shared/enums/TableButtomType';
+import { EnumUtil } from '../../../../shared/utils/EnumUtil';
+import { ${nome}PesquisaReponse } from '../interfaces/${nome}PesquisaReponse';
+import { ${nome}Service } from '../services/cidade.service';
+<#list imports as import>
+import { ${import} } from '../../types/${import}';
+</#list>
+
+
+
+@Component({
+  selector: 'app-${nomeVariavel}-pesquisa',
+  templateUrl: './${nomeVariavel}-pesquisa.component.html',
+})
+export class ${nome}PesquisaComponent extends BaseSearchComponent<${nome}PesquisaReponse> {
+  private buttons: TableButtomType[] = [];
+
+  constructor(private ${nomeVariavel}Service: ${nome}Service) {
+     super(${nomeVariavel}Service, ${mensagem}, [
+     <#if existeDelete>
+      TableButtomType.DELETE,
+     </#if> 
+     <#if existeEdit>
+      TableButtomType.EDIT,
+      </#if> 
+      <#if existeNovo>
+      TableButtomType.NEW,
+      </#if>
+    ]);
+  }
+
+ public override get searchConfiguration(): SearchConfiguration {
+    return new SearchConfiguration('cd${nomeVariavel}', 'Pesquisa ${mensagem}', [
+    <#list atributos as atributo>
+     <#if !atributo?contains("Type")>
+      new SearchFieldConfiguration('${atributo.nome}', ${atributo.mensagem}'),
+     </#if> 
+     <#if atributo?contains("Type")>
+      new SearchFieldConfiguration('${atributo.nome}', ${atributo.mensagem}', {
+        entriesType: EnumUtil.convertToComboboxValues(${atributo.tipo}),
+      }),
+     </#if> 
+    </#list>
+    ]);
+  }
+}
+

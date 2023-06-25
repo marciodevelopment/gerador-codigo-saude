@@ -1,19 +1,22 @@
-package br.org.ici.saude.geradorcodigo.angular;
+package br.org.ici.saude.geradorcodigo.angular.geradores;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import br.org.ici.saude.geradorcodigo.common.ArquivoModel;
+import br.org.ici.saude.geradorcodigo.angular.models.ModuleAngularModel;
+import br.org.ici.saude.geradorcodigo.angular.models.ModuleRoutingModel;
+import br.org.ici.saude.geradorcodigo.common.ArquivoAngularModel;
 import br.org.ici.saude.geradorcodigo.configuracao.ArquivoConfiguracao;
 import br.org.ici.saude.geradorcodigo.configuracao.EntidadeArquivo;
-import br.org.ici.saude.geradorcodigo.geradores.GeradorArquivo;
+import br.org.ici.saude.geradorcodigo.geradores.GeradorAngularArquivo;
 
 
-public class GeradorRotasAngular implements GeradorArquivo {
+public class GeradorModuleAngular implements GeradorAngularArquivo {
 
   @Override
-  public List<? extends ArquivoModel> converterParaArquivoModel(
+  public List<? extends ArquivoAngularModel> converterParaArquivoModel(
       ArquivoConfiguracao arquivoConfiguracao) {
+
 
     Map<String, List<ModuleRoutingModel>> rotas =
         arquivoConfiguracao.getEntidades().stream().filter(EntidadeArquivo::existePath)
@@ -27,11 +30,9 @@ public class GeradorRotasAngular implements GeradorArquivo {
             .collect(Collectors.groupingBy(ModuleRoutingModel::getNomeModulo));
     return rotas.entrySet().stream().map(entry -> {
       String pacoteEntidade = entry.getValue().get(0).getPacoteEntidade();
-      String nomeRota = entry.getValue().get(0).getNomeRota();
-      return new RoutingModel(arquivoConfiguracao.getPacoteProjeto(), pacoteEntidade,
-          entry.getValue(), nomeRota);
+      return new ModuleAngularModel(arquivoConfiguracao.getPacoteProjeto(), pacoteEntidade,
+          entry.getValue());
     }).toList();
-
   }
 
 }

@@ -66,10 +66,22 @@ public class EntidadeArquivo {
     return this.atributos.stream().filter(atr -> atr.isEnum()).toList();
   }
 
+  public boolean existeGet() {
+    if (this.metodos == null)
+      return false;
+    return this.metodos.stream().anyMatch(met -> met.toLowerCase().contains("get"));
+  }
+
   public boolean existePesquisa() {
     if (this.metodos == null)
       return false;
     return this.metodos.stream().anyMatch(met -> met.toLowerCase().contains("pesquisa"));
+  }
+
+  public boolean existeDelete() {
+    if (this.metodos == null)
+      return false;
+    return this.metodos.stream().anyMatch(met -> met.toLowerCase().contains("delete"));
   }
 
   public boolean existeAtualizacao() {

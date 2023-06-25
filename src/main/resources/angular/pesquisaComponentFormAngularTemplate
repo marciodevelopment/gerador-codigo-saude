@@ -1,0 +1,40 @@
+import { Component, Input, OnInit, forwardRef } from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
+
+import { ${nomeComponent}PesquisaReponse } from '../interfaces/${nomeComponent}PesquisaReponse';
+import { ${nomeComponent}Service } from '../services/${nomeVariavel}.service';
+import { ${nomeComponent}PesquisaComponent } from '../${nomeVariavel}-pesquisa/${nomeVariavel}-pesquisa.component';
+
+import { BaseSearchFormComponent } from 'src/app/shared/components/base-components/BaseSearchFormComponent';
+
+@Component({
+  selector: 'app-${nomeVariavel}-pesquisa-form',
+  templateUrl: './${nomeVariavel}-pesquisa-form.component.html',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi: true,
+      useExisting: forwardRef(() => ${nomeComponent}PesquisaFormComponent),
+    },
+  ],
+})
+export class ${nomeComponent}PesquisaFormComponent
+  extends BaseSearchFormComponent<${nomeComponent}PesquisaReponse>
+  implements OnInit
+{
+  @Input()
+  public cd${nomeComponent}?: string;
+
+  ngOnInit() {
+    super.onInit(this.cd${nomeComponent});
+  }
+
+  constructor(private ${nomeVariavel}Service: ${nomeComponent}Service) {
+    super(
+      'Pesquisar ${nomeComponent}s',
+      'cd${nomeComponent}',
+      ${nomeComponent}PesquisaComponent,
+      ${nomeVariavel}Service
+    );
+  }
+}

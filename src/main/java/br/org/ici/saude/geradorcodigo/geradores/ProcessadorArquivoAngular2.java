@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.List;
-import br.org.ici.saude.geradorcodigo.common.ArquivoAngularType;
-import br.org.ici.saude.geradorcodigo.common.ArquivoModel;
+import br.org.ici.saude.geradorcodigo.angular.common.ArquivoAngularType;
+import br.org.ici.saude.geradorcodigo.common.ArquivoAngularModel;
 import br.org.ici.saude.geradorcodigo.common.exception.ProcessadorException;
 import br.org.ici.saude.geradorcodigo.configuracao.ArquivoConfiguracao;
 import br.org.ici.saude.geradorcodigo.configuracao.ArquivoFonte;
@@ -15,7 +15,7 @@ import freemarker.template.TemplateException;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class ProcessadorArquivoAngular {
+public class ProcessadorArquivoAngular2 {
 
   private final Configuration cfg;
   private final ArquivoConfiguracao arquivoConfiguracao;
@@ -25,7 +25,7 @@ public class ProcessadorArquivoAngular {
     return this.gerarArquivo(cfg, arquivoConfiguracao);
   }
 
-  private Writer gerarTemplate(Template builderTemplate, ArquivoModel arqModel) {
+  private Writer gerarTemplate(Template builderTemplate, ArquivoAngularModel arqModel) {
     Writer writer = new StringWriter();
     try {
       builderTemplate.process(arqModel, writer);
@@ -42,7 +42,7 @@ public class ProcessadorArquivoAngular {
       return arquivoType.getGeradorArquivo().converterParaArquivoModel(arquivoConfiguracao).stream()
           .map(arqModel -> new ArquivoFonte(arqModel, arquivoType,
               gerarTemplate(builderTemplate, arqModel).toString(),
-              arquivoConfiguracao.getPacoteProjeto()))
+              ((ArquivoAngularModel) arqModel).getCaminhoArquivo()))
           .toList();
     } catch (Exception e) {
       throw new ProcessadorException(e);

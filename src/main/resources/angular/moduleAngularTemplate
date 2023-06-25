@@ -24,17 +24,25 @@ import { CalendarModule } from 'primeng/calendar';
 
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ${routesName} } from './${nomeModule}.routing';
-<#if existePesquisa>
-import { ${nomeComponente}PesquisaComponent } from './${nomeModule}/${nomeModule}-pesquisa/${nomeModule}-pesquisa.component';
-import { ${nomeComponente}PesquisaFormComponent } from './${nomeModule}-pesquisa-form/${nomeModule}-pesquisa-form.component';
-</#if>
-<#if existeForm>
-import { ${nomeComponente}FormComponent } from './${nomeModule}/${nomeModule}-form/${nomeModule}-form.component';
-</#if>
 
+<#list rotas as rota>
+<#if rota.existePesquisa>
+import { ${rota.nomeComponent}PesquisaComponent } from './${rota.nomeVariavel}/${rota.nomeVariavel}-pesquisa/${rota.nomeVariavel}-pesquisa.component';
+import { ${rota.nomeComponent}PesquisaFormComponent } from './${rota.nomeVariavel}/${rota.nomeVariavel}-pesquisa-form/${rota.nomeVariavel}-pesquisa-form.component';
+</#if>
+</#list>
+<#list rotas as rota>
+<#if rota.existeAtualizar>
+import { ${rota.nomeComponent}FormComponent } from './${rota.nomeVariavel}/${rota.nomeVariavel}-form/${rota.nomeVariavel}-form.component';
+</#if>
+</#list>
 
 @NgModule({
-    declarations: [<#if existePesquisa>${nomeComponente}PesquisaComponent, ${nomeComponente}PesquisaFormComponent,</#if> <#if existeForm>${nomeComponente}FormComponent</#if>],
+    declarations: [
+    <#list rotas as rota>
+    <#if rota.existePesquisa>${rota.nomeComponent}PesquisaComponent, ${rota.nomeComponent}PesquisaFormComponent,</#if> <#if rota.existeAtualizar>${rota.nomeComponent}FormComponent</#if>
+    </#list>
+    ],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -60,6 +68,10 @@ import { ${nomeComponente}FormComponent } from './${nomeModule}/${nomeModule}-fo
     
   ],
   providers: [DialogService, DynamicDialogConfig],
-  exports: [<#if existePesquisa>${nomeComponente}PesquisaFormComponent</#if>],
+  exports: [
+   <#list rotas as rota>
+    <#if rota.existePesquisa>${rota.nomeComponent}PesquisaComponent, ${rota.nomeComponent}PesquisaFormComponent,</#if> <#if rota.existeAtualizar>${rota.nomeComponent}FormComponent</#if>],
+   </#list>
+  ],
 })
 export class ${nomeComponente}Module {}

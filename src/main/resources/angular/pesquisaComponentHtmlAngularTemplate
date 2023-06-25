@@ -1,0 +1,9 @@
+<app-search
+  [searchConfiguration]="searchConfiguration"
+  (clickSearch)="onSearch($event)"
+  [pageResponse]="pageResponse"
+  (clickDeleteItem)="onDeleteItem($event)"
+  (clickEditItem)="onEditItem($event)"
+  (clickSelectItem)="onSelectItem($event)"
+  [showButtons]="showButtons"
+></app-search>

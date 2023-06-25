@@ -1,15 +1,16 @@
 package br.org.ici.saude.geradorcodigo.angular;
 
 import java.util.List;
-import br.org.ici.saude.geradorcodigo.common.ArquivoModel;
+import br.org.ici.saude.geradorcodigo.angular.models.ServiceAngularModel;
+import br.org.ici.saude.geradorcodigo.common.ArquivoAngularModel;
 import br.org.ici.saude.geradorcodigo.configuracao.ArquivoConfiguracao;
-import br.org.ici.saude.geradorcodigo.geradores.GeradorArquivo;
+import br.org.ici.saude.geradorcodigo.geradores.GeradorAngularArquivo;
 
 
-public class GeradorServiceAngular implements GeradorArquivo {
+public class GeradorServiceAngular implements GeradorAngularArquivo {
 
   @Override
-  public List<? extends ArquivoModel> converterParaArquivoModel(
+  public List<? extends ArquivoAngularModel> converterParaArquivoModel(
       ArquivoConfiguracao arquivoConfiguracao) {
 
     return arquivoConfiguracao.getEntidades().stream().filter(ent -> ent.existeMetodos())
