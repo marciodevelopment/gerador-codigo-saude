@@ -39,4 +39,16 @@ public class ArquivoUtil {
     }
   }
 
+  public static void escreverEmArquivoExistente(String escreverAntesDe, String caminhoApprouting,
+      String texto) {
+    Path path = Paths.get(caminhoApprouting);
+    try {
+      String arquivo = Files.readString(path);
+      Files.delete(path);
+      Files.write(path, arquivo.replace(escreverAntesDe, texto + escreverAntesDe).getBytes());
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
 }

@@ -1,0 +1,7 @@
+<#list routings as modulo> 
+ {
+    path: '${modulo.nomeVariavel}',
+    loadChildren: () =>
+      import('./modules/${modulo.nomeVariavel}/${modulo.nomeVariavel}.module').then((m) => m.${modulo.nome}Module),
+  },
+</#list>  

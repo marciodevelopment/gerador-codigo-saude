@@ -1,0 +1,300 @@
+{
+	"diretorioProjetoJava": "/home/marcio/eclipse-workspace/gc-teste-service",
+	"diretorioProjetoAngular": "/home/marcio/poc-gerador-angular",
+	"pacoteProjeto": "br.org.ici.saude.usuarioservice",
+	"entidades": [
+	{
+			"pacote": "br.org.ici.saude.usuarioservice.endereco",
+			"path": "cidades",
+			"nome": "Cidade",
+			"mensagem": "Cidade",
+			"metodos": [
+				"pesquisa"
+			],
+			"atributos": [
+				{
+					"nome": "cdCidade",
+					"mensagem": "Código Cidade",
+					"id": true,
+					"tipo": "Integer",
+					"web": ["get"]
+				},
+				{
+					"nome": "nmCidade",
+					"mensagem": "Nome Cidade",
+					"tipo": "String",
+					"validadores": [
+						"notEmpty"
+					],
+					"web": ["pesquisa"]
+				}
+			]
+		},
+		{
+			"pacote": "br.org.ici.saude.usuarioservice.endereco",
+			"path": "estados",
+			"nome": "Estado",
+			"mensagem": "Estado",
+			"gerarAuditoria": true,
+			"metodos": [
+				"pesquisa"
+			],
+			"atributos": [
+				{
+					"nome": "cdEstado",
+					"mensagem": "Código do Estado",
+					"tipo": "Integer",
+					"web": ["pesquisa"]
+				},
+				{
+					"nome": "dsSiglaEstado",
+					"mensagem": "Sigla do Estado",
+					"tipo": "String",
+					"web": ["pesquisa"]
+				},
+				{
+					"nome": "nmEstado",
+					"mensagem": "Nome do Estado",
+					"tipo": "String",
+					"web": ["pesquisa"]
+				}
+			]
+		},
+		{
+			"pacote": "br.org.ici.saude.usuarioservice.usuario",
+			"path": "usuarios",
+			"mensagem": "Usuário",
+			"nome": "Usuario",
+			"gerarAuditoria": true,
+			"metodos": [
+				"post",
+				"put",
+				"get",
+				"delete",
+				"pesquisa"
+			],
+			"atributos": [
+				{
+					"nome": "cdUsuario",
+					"mensagem": "Código usuário",
+					"id": true,
+					"tipo": "Integer",
+					"web": ["get","put","post","pesquisa"]
+				},
+				{
+					"nome": "nmUsuario",
+					"mensagem": "Nome usuário",
+					"tipo": "String",
+					"validadores": [
+						"notEmpty",
+						"min;value=10"
+					],
+					"web": ["get","put","post","pesquisa"]
+				},
+				{
+					"nome": "nmMae",
+					"mensagem": "Nome mãe",
+					"tipo": "String",
+					"validadores": [
+						"notEmpty",
+						"min;value=10"
+					],
+					"web": ["get","put","post","pesquisa"]
+				},
+				{
+					"nome": "nmPai",
+					"mensagem": "Nome pai",
+					"tipo": "String",
+					"validadores": [
+						"notEmpty",
+						"min;value=10"
+					],
+					"web": ["get","put","post","pesquisa"]
+				},
+				{
+					"nome": "nmSocial",
+					"mensagem": "Nome Social",
+					"tipo": "String",
+					"validadores": [
+						"notNull"
+					],
+					"web": ["get","put","post","pesquisa"]
+				},
+				{
+					"nome": "sexo",
+					"mensagem": "Sexo",
+					"tipo": "SexoType",
+					"type": ["1;MASCULINO;Masculino", "2;FEMININO;Feminino"],
+					"validadores": [
+						"notNull"
+					],
+					"web": ["get","put","post"]
+				},
+				{
+					"nome": "idSituacao",
+					"mensagem": "Situacao",
+					"tipo": "SituacaoType",
+					"type": ["1;ATIVO;Ativo", "0;INATIVO;Inativo"],
+					"validadores": [
+						"notNull"
+					],
+					"web": ["get","put","post", "pesquisa"]
+				},
+				{
+					"nome": "dtNascimento",
+					"mensagem": "Data de nascimento",
+					"tipo": "LocalDate",
+					"validadores": [
+						"notNull"
+					],
+					"web": ["get","put","post"]
+				},
+				{
+					"nome": "documentoCpf",
+					"mensagem": "Documento CPF",
+					"tipo": "DocumentoCpfEntity",
+					"validadores": [
+						"notNull"
+					],
+					"mapeamento": {
+						"tipoMapeamento": "oneToOne",
+						"cascade": "ALL"
+						},
+					"web": ["get","post", "pesquisa"]
+				},
+				{
+					"nome": "cidadeNascimento",
+					"mensagem": "Cidade Nascimento",
+					"tipo": "br.org.ici.saude.usuarioservice.endereco.entity.CidadeEntity",
+					"validadores": [
+						"notNull"
+					],
+					"mapeamento": {
+						"tipoMapeamento": "oneToOne",
+						"joinColumn": true
+						},
+					
+					"web": ["get","post","put", "pesquisa"]
+				}
+			]
+		},
+		{
+			"pacote": "br.org.ici.saude.usuarioservice.usuario",
+			"path": "usuarios",
+			"mensagem": "Usuário",
+			"nome": "Usuario",
+			"gerarAuditoria": true,
+			"metodos": [
+				"post",
+				"put",
+				"get",
+				"delete",
+				"pesquisa"
+			],
+			"atributos": [
+				{
+					"nome": "cdUsuario",
+					"mensagem": "Código usuário",
+					"id": true,
+					"tipo": "Integer",
+					"web": ["get","put","post","pesquisa"]
+				},
+				{
+					"nome": "nmUsuario",
+					"mensagem": "Nome usuário",
+					"tipo": "String",
+					"validadores": [
+						"notEmpty",
+						"min;value=10"
+					],
+					"web": ["get","put","post","pesquisa"]
+				},
+				{
+					"nome": "nmMae",
+					"mensagem": "Nome mãe",
+					"tipo": "String",
+					"validadores": [
+						"notEmpty",
+						"min;value=10"
+					],
+					"web": ["get","put","post","pesquisa"]
+				},
+				{
+					"nome": "nmPai",
+					"mensagem": "Nome pai",
+					"tipo": "String",
+					"validadores": [
+						"notEmpty",
+						"min;value=10"
+					],
+					"web": ["get","put","post","pesquisa"]
+				},
+				{
+					"nome": "nmSocial",
+					"mensagem": "Nome Social",
+					"tipo": "String",
+					"validadores": [
+						"notNull"
+					],
+					"web": ["get","put","post","pesquisa"]
+				},
+				{
+					"nome": "sexo",
+					"mensagem": "Sexo",
+					"tipo": "SexoType",
+					"type": ["1;MASCULINO;Masculino", "2;FEMININO;Feminino"],
+					"validadores": [
+						"notNull"
+					],
+					"web": ["get","put","post"]
+				},
+				{
+					"nome": "idSituacao",
+					"mensagem": "Situacao",
+					"tipo": "SituacaoType",
+					"type": ["1;ATIVO;Ativo", "0;INATIVO;Inativo"],
+					"validadores": [
+						"notNull"
+					],
+					"web": ["get","put","post", "pesquisa"]
+				},
+				{
+					"nome": "dtNascimento",
+					"mensagem": "Data de nascimento",
+					"tipo": "LocalDate",
+					"validadores": [
+						"notNull"
+					],
+					"web": ["get","put","post"]
+				},
+				{
+					"nome": "documentoCpf",
+					"mensagem": "Documento CPF",
+					"tipo": "DocumentoCpfEntity",
+					"validadores": [
+						"notNull"
+					],
+					"mapeamento": {
+						"tipoMapeamento": "oneToOne",
+						"cascade": "ALL"
+						},
+					"web": ["get","post", "pesquisa"]
+				},
+				{
+					"nome": "cidadeNascimento",
+					"mensagem": "Cidade Nascimento",
+					"tipo": "br.org.ici.saude.usuarioservice.endereco.entity.CidadeEntity",
+					"validadores": [
+						"notNull"
+					],
+					"mapeamento": {
+						"tipoMapeamento": "oneToOne",
+						"joinColumn": true
+						},
+					
+					"web": ["get","post","put", "pesquisa"]
+				}
+			]
+		}
+	]
+}

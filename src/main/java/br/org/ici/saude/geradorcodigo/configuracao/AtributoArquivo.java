@@ -22,6 +22,8 @@ public class AtributoArquivo {
   private List<String> type;
   private boolean id;
   private Mapeamento mapeamento;
+  private boolean semCascadeDesnomalizado = false;
+  private String tipoOrigem;
 
 
   public List<String> getValidadores() {
@@ -113,7 +115,10 @@ public class AtributoArquivo {
   }
 
   public AtributosModel toAtributoDesnormalizadoComAnotacoesModel() {
-    return new AtributosModel(nome, mensagem, tipo, this.getAnotacoes());
+    AtributosModel atributo = new AtributosModel(nome, mensagem, tipo, this.getAnotacoes());
+    atributo.setSemCascadeDesnomalizado(getSemCascadeDesnomalizado());
+    atributo.setTipoOrigem(getTipoOrigem());
+    return atributo;
   }
 
   public boolean isCascade() {
@@ -136,5 +141,17 @@ public class AtributoArquivo {
 
   public boolean isNotNull() {
     return this.getValidadores().stream().anyMatch(vl -> vl.toLowerCase().contains("notnull"));
+  }
+
+  public void setSemCascadeDesnomalizado(boolean semCascadeDesnomalizado) {
+    this.semCascadeDesnomalizado = semCascadeDesnomalizado;
+  }
+
+  public Boolean getSemCascadeDesnomalizado() {
+    return semCascadeDesnomalizado;
+  }
+
+  public void setTipoOrigem(String tipoOrigem) {
+    this.tipoOrigem = tipoOrigem;
   }
 }

@@ -90,6 +90,18 @@ public class FiltroAtributos {
         .map(ent -> getAtributosDesnormalizados(ent.getNome(), metodo)).flatMap(Collection::stream)
         .distinct().toList());
 
+    List<AtributoArquivo> atributosDesnormalizadosSemCascade = atributosDesnormalizados.stream()
+        .filter(atr -> atributosSemCascade.stream().anyMatch(atrSemCascade -> atr.getNome()
+            .toLowerCase().contains(atrSemCascade.getNome().toLowerCase())))
+        .toList();
+
+    atributosDesnormalizadosSemCascade.forEach(atr -> {
+      atr.setSemCascadeDesnomalizado(true);
+      String nomeClasseOrigem = atributosSemCascade.stream().filter(atrSemCascade -> atr.getNome()
+          .toLowerCase().contains(atrSemCascade.getNome().toLowerCase())).findAny().get().getTipo();
+      atr.setTipoOrigem(nomeClasseOrigem);
+    });
+
     return atributosDesnormalizados;
 
   }

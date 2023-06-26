@@ -3,6 +3,8 @@ package br.org.ici.saude.geradorcodigo.angular.common;
 import br.org.ici.saude.geradorcodigo.angular.GeradorServiceAngular;
 import br.org.ici.saude.geradorcodigo.angular.geradores.GeradorAngularType;
 import br.org.ici.saude.geradorcodigo.angular.geradores.GeradorAtualizacaoAngularRequest;
+import br.org.ici.saude.geradorcodigo.angular.geradores.GeradorComponentFormAngular;
+import br.org.ici.saude.geradorcodigo.angular.geradores.GeradorComponentFormHtmlAngular;
 import br.org.ici.saude.geradorcodigo.angular.geradores.GeradorGetAngularResponse;
 import br.org.ici.saude.geradorcodigo.angular.geradores.GeradorModuleAngular;
 import br.org.ici.saude.geradorcodigo.angular.geradores.GeradorNovoAngularRequest;
@@ -42,6 +44,12 @@ public enum ArquivoAngularType {
 
   PESQUISA_F0RM_COMPONENT("-pesquisa-form.component", "", ".ts",
       "angular/pesquisaComponentFormAngularTemplate", new GeradorPesquisaComponentFormAngular()),
+
+  F0RM_COMPONENT("-form.component", "", ".ts", "angular/componentFormAngularTemplate",
+      new GeradorComponentFormAngular()),
+
+  F0RM_COMPONENT_HTML("-form.component", "", ".html", "angular/componentFormAngularHtmlTemplate",
+      new GeradorComponentFormHtmlAngular()),
 
   PESQUISA_F0RM_COMPONENT_HTML("-pesquisa-form.component", "", ".html",
       "angular/pesquisaComponentFormHtmlAngularTemplate",

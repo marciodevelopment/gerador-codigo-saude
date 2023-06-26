@@ -37,6 +37,10 @@ import { ${rota.nomeComponent}FormComponent } from './${rota.nomeVariavel}/${rot
 </#if>
 </#list>
 
+<#list atributosImports as imports>
+import { ${imports.nomeModuloImportacao} } from '../${imports.pacoteModuloImportacao}/${imports.pacoteModuloImportacao}.module';
+</#list>
+
 @NgModule({
     declarations: [
     <#list rotas as rota>
@@ -65,7 +69,9 @@ import { ${rota.nomeComponent}FormComponent } from './${rota.nomeVariavel}/${rot
 
     RouterModule.forChild(${routesName}),
     SharedModule,
-    
+    <#list atributosImports as imports>
+    ${imports.nomeModuloImportacao},
+	</#list>
   ],
   providers: [DialogService, DynamicDialogConfig],
   exports: [

@@ -10,7 +10,7 @@ public class PesquisaComponentFormModel extends BaseAngularModel {
       Collection<? extends AtributosModel> atributos, String mensagem, boolean existeNovo,
       boolean existeEdit, boolean existeDelete) {
     super(nome.toLowerCase(),
-        ArquivoAngularType.PESQUISA_F0RM_COMPONENT.caminhoArquivo(pacoteProjeto, pacote) + "/"
+        ArquivoAngularType.F0RM_COMPONENT.caminhoArquivo(pacoteProjeto, pacote) + "/"
             + nome.toLowerCase() + "-pesquisa-form/");
     super.addAtributos(atributos);
   }

@@ -1,8 +1,12 @@
 package br.org.ici.saude.geradorcodigo.angular.models;
 
+import java.util.ArrayList;
+import java.util.List;
+import br.org.ici.saude.geradorcodigo.angular.AtributosAngularModel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @EqualsAndHashCode(of = "nomeComponent")
@@ -19,6 +23,8 @@ public class ModuleRoutingModel {
   private final String nomeRota;
 
   private final String pacoteEntidade;
+  @Setter
+  private List<AtributosAngularModel> atributosGeradoresDeImport = new ArrayList<>();
 
   public Boolean getExisteForm() {
     return this.existeAtualizar || this.existeSalvar;

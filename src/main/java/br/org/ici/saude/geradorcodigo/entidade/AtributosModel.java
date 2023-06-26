@@ -20,8 +20,8 @@ public class AtributosModel {
   private final List<AnotacaoModel> anotacoes;
   private MapeamentoModel mapeamento;
   private String nomeVariavel;
-
-
+  private boolean semCascadeDesnomalizado = false;
+  private String tipoOrigem;
 
   public void setNomeVariavel(String nomeVariavel) {
     this.nomeVariavel = nomeVariavel;
@@ -147,8 +147,45 @@ public class AtributosModel {
     return this.anotacoes.stream().anyMatch(AnotacaoModel::isNotNull);
   }
 
+  public boolean isNotBlank() {
+    return this.anotacoes.stream().anyMatch(AnotacaoModel::naoNulo);
+  }
+
+  public boolean getRequired() {
+    return this.anotacoes.stream().anyMatch(AnotacaoModel::naoNulo);
+  }
+
   public boolean getExisteAnotacaoConverter() {
     return this.anotacoes.stream().anyMatch(AnotacaoModel::isConverter);
 
+  }
+
+  public Boolean getTipoData() {
+    return this.tipo.toLowerCase().contains("date");
+  }
+
+
+  public void setSemCascadeDesnomalizado(boolean semCascadeDesnomalizado) {
+    this.semCascadeDesnomalizado = semCascadeDesnomalizado;
+  }
+
+  public Boolean getSemCascadeDesnomalizado() {
+    return semCascadeDesnomalizado;
+  }
+
+  public void setTipoOrigem(String tipoOrigem) {
+    this.tipoOrigem = tipoOrigem;
+  }
+
+  public String getTipoOrigem() {
+    return tipoOrigem;
+  }
+
+  public String getTipoOrigemComponente() {
+    String tipoOrigemComponente = this.tipoOrigem.replace("Entity", "");
+    tipoOrigemComponente = tipoOrigemComponente.substring(tipoOrigemComponente.lastIndexOf(".") + 1,
+        tipoOrigemComponente.length());
+    return tipoOrigemComponente.substring(0, 1).toLowerCase()
+        + tipoOrigemComponente.substring(1, tipoOrigemComponente.length());
   }
 }

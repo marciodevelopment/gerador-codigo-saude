@@ -1,0 +1,109 @@
+<p-card styleClass="mt-2">
+  <form [formGroup]="${nome}Form" (ngSubmit)="onClickSubmit()">
+    <div class="formgrid grid">
+      <#list atributos as atributo>
+      <div class="field col-12 md:col-12">
+        <label for="${atributo.nome}">${atributo.mensagem}</label>
+        <#if atributo.tipo?contains("Type")>
+        <p-dropdown
+          [options]="${atributo.nome}s"
+          formControlName="${atributo.nome}"
+          placeholder="${atributo.mensagem}"
+          styleClass="w-full"
+        ></p-dropdown>
+        <#elseif atributo.tipoData>
+         <app-calendar
+          formControlName="${atributo.nome}"
+          dateFormat="dd/mm/yy"
+         />
+        <#elseif atributo.semCascadeDesnomalizado>
+        <app-${atributo.tipoOrigemComponente}-pesquisa-form formControlName="cdCidadeNascimento" />
+        <#else>  
+        <input
+          pInputText
+          formControlName="${atributo.nome}"
+          class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+        />
+        </#if>
+      </div>  
+      </#list>
+      
+      ------ fim -------
+      
+      <div class="field col-12 md:col-12">
+        <label for="nmUsuario">Nome</label>
+        <input
+          pInputText
+          formControlName="nmUsuario"
+          class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+        />
+      </div>
+      <div class="field col-12 md:col-12">
+        <label for="dtNascimento">Data nascimento</label>
+        <app-calendar formControlName="dtNascimento" dateFormat="dd/mm/yy" />
+      </div>
+      <div class="field col-12 md:col-12">
+        <label for="nmMae">Mãe</label>
+        <input
+          pInputText
+          formControlName="nmMae"
+          class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+        />
+      </div>
+      <div class="field col-12 md:col-12">
+        <label>Cidade de Nascimento</label>
+        <app-cidade-pesquisa-form formControlName="cdCidadeNascimento" />
+      </div>
+      <div class="field col-12 md:col-12">
+        <label>Sexo</label>
+        <p-dropdown
+          [options]="sexos"
+          formControlName="sexo"
+          placeholder="Sexo"
+          styleClass="w-full"
+        ></p-dropdown>
+      </div>
+    </div>
+    <div class="field col-12 md:col-12">
+      <label for="nmSocial">Nome Social</label>
+      <input
+        pInputText
+        formControlName="nmSocial"
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+      />
+    </div>
+    <div class="field col-12 md:col-12">
+      <label for="nmPai">Nome Pai</label>
+      <input
+        pInputText
+        formControlName="nmPai"
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+      />
+    </div>
+    <div class="field col-12 md:col-12">
+      <label for="nrCpf">Nr. CPF</label>
+      <input
+        pInputText
+        placeholder="Nr. CPF"
+        formControlName="nrCpf"
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+      />
+    </div>
+    <div class="field col-12 md:col-12">
+      <label>Dt. emissão</label>
+      <app-calendar
+        formControlName="dtEmissaoCpf"
+        placeholder="Data Emissão"
+        dateFormat="dd/mm/yy"
+      />
+    </div>
+  </form>
+
+  <div class="card flex flex-column md:flex-column gap-3">
+    <app-buttons-bar
+      [showSaveSubmit]="true"
+      [disabledSave]="!${nome}Form.valid"
+      (clickBack)="clickBack()"
+    />
+  </div>
+</p-card>

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Stream;
 import br.org.ici.saude.geradorcodigo.angular.common.ArquivoAngularType;
+import br.org.ici.saude.geradorcodigo.angular.geradores.GeradorAppRoutingAngular;
 import br.org.ici.saude.geradorcodigo.common.ArquivoJavaType;
 import br.org.ici.saude.geradorcodigo.common.ArquivoUtil;
 import br.org.ici.saude.geradorcodigo.configuracao.ArquivoConfiguracao;
@@ -25,7 +26,7 @@ public class Main {
   }
 
   private static void gerarCodigoAngular2(Configuration cfg,
-      ArquivoConfiguracao arquivoConfiguracao) {
+      ArquivoConfiguracao arquivoConfiguracao) throws Exception {
     List<ArquivoFonte> arquivos = Stream.of(ArquivoAngularType.values())
         .map(arquivoType -> new ProcessadorArquivoAngular2(cfg, arquivoConfiguracao, arquivoType)
             .gerarArquivos())
@@ -37,6 +38,12 @@ public class Main {
             arquivoConfiguracao.getDiretorioProjetoAngular() + diretorioClasse
                 + arquivoFonte.getCaminho(),
             arquivoFonte.getNomeArquivo(), arquivoFonte.getArquivo()));
+    String declaraRoutingAppRouting =
+        new GeradorAppRoutingAngular().converterParaArquivoModel(cfg, arquivoConfiguracao);
+    String caminhoApprouting = arquivoConfiguracao.getDiretorioProjetoAngular() + diretorioClasse
+        + "/app-routing.module.ts";
+    ArquivoUtil.escreverEmArquivoExistente("];", caminhoApprouting, declaraRoutingAppRouting);
+
   }
 
 

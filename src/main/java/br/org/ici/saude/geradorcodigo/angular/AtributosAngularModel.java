@@ -8,13 +8,11 @@ import lombok.ToString;
 
 @ToString
 @Getter
-
 public class AtributosAngularModel extends AtributosModel {
   public AtributosAngularModel(String nome, String mensagem, String tipo,
       List<AnotacaoModel> anotacoes) {
     super(nome, mensagem, tipo, anotacoes);
   }
-
 
   @Override
   public String getTipo() {
@@ -29,6 +27,27 @@ public class AtributosAngularModel extends AtributosModel {
       return "string";
     }
     return tipoAtributo;
+  }
+
+  public String getNomeModuloImportacao() {
+    if (!super.getSemCascadeDesnomalizado().booleanValue()) {
+      return null;
+    }
+    String nomeModulo =
+        super.getTipoOrigem().substring(1, super.getTipoOrigem().indexOf("entity") - 1);
+    nomeModulo = nomeModulo.substring(nomeModulo.lastIndexOf(".") + 1, nomeModulo.length());
+    nomeModulo =
+        nomeModulo.substring(0, 1).toUpperCase() + nomeModulo.substring(1, nomeModulo.length());
+    return nomeModulo + "Module";
+  }
+
+  public String getPacoteModuloImportacao() {
+    if (!super.getSemCascadeDesnomalizado().booleanValue()) {
+      return null;
+    }
+    String nomeModulo =
+        super.getTipoOrigem().substring(1, super.getTipoOrigem().indexOf("entity") - 1);
+    return nomeModulo.substring(nomeModulo.lastIndexOf(".") + 1, nomeModulo.length());
   }
 
 }

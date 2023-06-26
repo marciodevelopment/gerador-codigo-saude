@@ -1,0 +1,54 @@
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BaseFormComponent } from 'src/app/shared/components/base-components/BaseFormComponent';
+
+import {${nomeComponent}Service } from '../../services/${nome}.service';
+
+import {${nomeComponent}AtualizacaoRequest } from '../../interfaces/request/${nomeComponent}AtualizacaoRequest';
+import {${nomeComponent}NovoRequest } from '../../interfaces/request/${nomeComponent}NovoRequest';
+import {${nomeComponent}Response } from '../../interfaces/response/${nomeComponent}Response';
+<#if existeType>
+import { EnumUtil } from '../../../../shared/utils/EnumUtil';
+</#if>
+<#list types as type>
+import { ${type.tipo} } from '../../types/${type.tipo}';
+</#list>
+
+@Component({
+  selector: 'app-${nome}-form',
+  templateUrl: './${nome}-form.component.html',
+})
+export class${nomeComponent}FormComponent
+  extends BaseFormComponent<
+   ${nomeComponent}NovoRequest,
+   ${nomeComponent}AtualizacaoRequest,
+   ${nomeComponent}Response
+  >
+  implements OnInit
+{
+  public ${nome}Form = this.formBuilder.group({
+  <#list atributos as atributo>
+    ${atributo.nome}: ['' <#if atributo.required>, Validators.required</#if>],
+  </#list>
+  });
+
+<#list types as type>
+  public ${type.nome}s = EnumUtil.convertToComboboxValues(${type.tipo});
+</#list>	
+  
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private ${nome}Service:${nomeComponent}Service
+  ) {
+    super('${mensagem}', ${nome}Service);
+  }
+
+  ngOnInit(): void {
+    super.OnInit();
+  }
+
+  get form(): FormGroup {
+    return this.${nome}Form;
+  }
+}

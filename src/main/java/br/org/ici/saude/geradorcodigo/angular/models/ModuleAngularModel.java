@@ -3,6 +3,7 @@ package br.org.ici.saude.geradorcodigo.angular.models;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import br.org.ici.saude.geradorcodigo.angular.AtributosAngularModel;
 import br.org.ici.saude.geradorcodigo.angular.common.ArquivoAngularType;
 import br.org.ici.saude.geradorcodigo.common.BaseAngularModel;
 import lombok.Getter;
@@ -27,6 +28,14 @@ public class ModuleAngularModel extends BaseAngularModel {
     this.routesName = nomeModule.toUpperCase() + "_ROUTES";
     this.nomeComponente = super.getNome().substring(0, 1).toUpperCase()
         + super.getNome().substring(1, super.getNome().length());
-
   }
+
+  public Set<AtributosAngularModel> getAtributosImports() {
+    Set<AtributosAngularModel> atributos = new HashSet<>();
+    List<ModuleRoutingModel> rotasComAtributosImport = this.rotas.stream()
+        .filter(rota -> !rota.getAtributosGeradoresDeImport().isEmpty()).toList();
+    rotasComAtributosImport.forEach(rota -> atributos.addAll(rota.getAtributosGeradoresDeImport()));
+    return atributos;
+  }
+
 }
