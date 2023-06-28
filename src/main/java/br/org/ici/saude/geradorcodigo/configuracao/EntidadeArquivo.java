@@ -1,5 +1,6 @@
 package br.org.ici.saude.geradorcodigo.configuracao;
 
+import java.util.Collection;
 import java.util.List;
 import br.org.ici.saude.geradorcodigo.entidade.AtributosModel;
 import br.org.ici.saude.geradorcodigo.entidade.EntidadeModel;
@@ -102,12 +103,19 @@ public class EntidadeArquivo {
   }
 
   public String getQueryPesquisa() {
-    String queryAnd =
-        this.atributos.stream().filter(atr -> atr.isPesquisa()).map(atr -> atr.getNome()).reduce("",
-            (query, coluna) -> query + " and e." + coluna + " = :" + coluna + "\n");
-
+    Collection<AtributoArquivo> atributosPesquisa =
+        this.atributos.stream().filter(atr -> atr.isPesquisa()).toList();
+    StringBuilder queryAnd = new StringBuilder();
+    for (AtributoArquivo atr : atributosPesquisa) {
+      if (atr.isString()) {
+        queryAnd.append("\n" + atr.getNome() + " like :" + atr.getNome());
+      } else {
+        queryAnd.append("\n" + atr.getNome() + " = :" + atr.getNome());
+      }
+    }
     StringBuilder query = new StringBuilder();
-    query.append(" from ").append(this.nome + "Entity e").append(" where  1 = 1 ").append(queryAnd);
+    query.append("\nfrom ").append(this.nome + "Entity e\n").append("where  1 = 1")
+        .append(queryAnd);
 
     return query.toString();
   }

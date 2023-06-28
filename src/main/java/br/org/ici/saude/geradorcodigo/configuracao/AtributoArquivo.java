@@ -156,4 +156,8 @@ public class AtributoArquivo {
   public void setTipoOrigem(String tipoOrigem) {
     this.tipoOrigem = tipoOrigem;
   }
+
+  public boolean isString() {
+    return this.tipo.toLowerCase().contains("string");
+  }
 }
