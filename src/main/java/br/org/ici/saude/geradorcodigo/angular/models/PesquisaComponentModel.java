@@ -17,18 +17,20 @@ public class PesquisaComponentModel extends BaseAngularModel {
   private Boolean existeNovo;
   @Getter
   private String mensagem;
+  @Getter
+  private String nomeComponent;
 
   public PesquisaComponentModel(String nome, String pacoteProjeto, String pacote,
       Collection<? extends AtributosModel> atributos, String mensagem, boolean existeNovo,
       boolean existeEdit, boolean existeDelete) {
-    super(nome.toLowerCase(),
-        ArquivoAngularType.PESQUISA_COMPONENT.caminhoArquivo(pacoteProjeto, pacote) + "/"
-            + nome.toLowerCase() + "-pesquisa/");
+    super(nome.toLowerCase(), ArquivoAngularType.PESQUISA_COMPONENT.caminhoArquivo(pacoteProjeto,
+        pacote, nome.toLowerCase()) + "/" + nome.toLowerCase() + "-pesquisa/");
     super.addAtributos(atributos);
     this.existeDelete = existeDelete;
     this.existeEdit = existeEdit;
     this.existeNovo = existeNovo;
     this.mensagem = mensagem;
+    this.nomeComponent = nome;
   }
 
   @Override

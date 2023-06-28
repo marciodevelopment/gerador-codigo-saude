@@ -59,6 +59,8 @@ public class AtributoArquivo {
 
 
   private String getNomeAnotacaoValidador(String validador) {
+    if (validador == null)
+      return "";
     return validador.split(";")[0];
   }
 

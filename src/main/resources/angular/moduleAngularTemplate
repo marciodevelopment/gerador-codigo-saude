@@ -14,6 +14,7 @@ import {
   DialogService,
   DynamicDialogConfig,
   DynamicDialogModule,
+  DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -44,7 +45,7 @@ import { ${imports.nomeModuloImportacao} } from '../${imports.pacoteModuloImport
 @NgModule({
     declarations: [
     <#list rotas as rota>
-    <#if rota.existePesquisa>${rota.nomeComponent}PesquisaComponent, ${rota.nomeComponent}PesquisaFormComponent,</#if> <#if rota.existeAtualizar>${rota.nomeComponent}FormComponent</#if>
+    <#if rota.existePesquisa>${rota.nomeComponent}PesquisaComponent, ${rota.nomeComponent}PesquisaFormComponent,</#if> <#if rota.existeAtualizar>${rota.nomeComponent}FormComponent,</#if>
     </#list>
     ],
   imports: [
@@ -73,10 +74,10 @@ import { ${imports.nomeModuloImportacao} } from '../${imports.pacoteModuloImport
     ${imports.nomeModuloImportacao},
 	</#list>
   ],
-  providers: [DialogService, DynamicDialogConfig],
+  providers: [DialogService, DynamicDialogConfig, DynamicDialogRef],
   exports: [
    <#list rotas as rota>
-    <#if rota.existePesquisa>${rota.nomeComponent}PesquisaComponent, ${rota.nomeComponent}PesquisaFormComponent,</#if> <#if rota.existeAtualizar>${rota.nomeComponent}FormComponent</#if>],
+    <#if rota.existePesquisa>${rota.nomeComponent}PesquisaComponent, ${rota.nomeComponent}PesquisaFormComponent,</#if> <#if rota.existeAtualizar>${rota.nomeComponent}FormComponent,</#if>
    </#list>
   ],
 })

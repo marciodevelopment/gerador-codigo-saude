@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { ${nomeComponent}PesquisaReponse } from '../interfaces/${nomeComponent}PesquisaReponse';
-import { ${nomeComponent}Service } from '../services/${nomeVariavel}.service';
+import { ${nomeComponent}PesquisaResponse } from '../../interfaces/response/${nomeComponent}PesquisaResponse';
+import { ${nomeComponent}Service } from '../../services/${nomeVariavel}.service';
 import { ${nomeComponent}PesquisaComponent } from '../${nomeVariavel}-pesquisa/${nomeVariavel}-pesquisa.component';
 
 import { BaseSearchFormComponent } from 'src/app/shared/components/base-components/BaseSearchFormComponent';
@@ -19,7 +19,7 @@ import { BaseSearchFormComponent } from 'src/app/shared/components/base-componen
   ],
 })
 export class ${nomeComponent}PesquisaFormComponent
-  extends BaseSearchFormComponent<${nomeComponent}PesquisaReponse>
+  extends BaseSearchFormComponent<${nomeComponent}PesquisaResponse>
   implements OnInit
 {
   @Input()

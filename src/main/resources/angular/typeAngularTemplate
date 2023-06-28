@@ -1,6 +1,5 @@
 export enum ${nome}Type {
   <#list valores as valor>
-   ${valor.nome}=${valor.descricao}
+   ${valor.nome}='${valor.descricao}',
   </#list>
-  
 }

@@ -17,11 +17,15 @@ public class Main {
   public static void main(String[] args) throws Exception {
 
     Configuration cfg = ConfiguracaoTemplate.getConfiguracao();
+    // String path =
+    // "/home/marcio/eclipse-workspace/geradorcodigo/src/main/resources/configuracao.json";
+
     String path =
-        "/home/marcio/eclipse-workspace/geradorcodigo/src/main/resources/configuracao.json";
+        "/home/marcio/eclipse-workspace/geradorcodigo/src/main/resources/configuracao-angular.json";
+
     ArquivoConfiguracao arquivoConfiguracao = ArquivoUtil.lerJson(path, ArquivoConfiguracao.class);
 
-    // gerarCodigoJava(cfg, arquivoConfiguracao);
+    gerarCodigoJava(cfg, arquivoConfiguracao);
     gerarCodigoAngular2(cfg, arquivoConfiguracao);
   }
 
@@ -40,8 +44,8 @@ public class Main {
             arquivoFonte.getNomeArquivo(), arquivoFonte.getArquivo()));
     String declaraRoutingAppRouting =
         new GeradorAppRoutingAngular().converterParaArquivoModel(cfg, arquivoConfiguracao);
-    String caminhoApprouting = arquivoConfiguracao.getDiretorioProjetoAngular() + diretorioClasse
-        + "/app-routing.module.ts";
+    String caminhoApprouting =
+        arquivoConfiguracao.getDiretorioProjetoAngular() + "/src/app/" + "/app-routing.module.ts";
     ArquivoUtil.escreverEmArquivoExistente("];", caminhoApprouting, declaraRoutingAppRouting);
 
   }

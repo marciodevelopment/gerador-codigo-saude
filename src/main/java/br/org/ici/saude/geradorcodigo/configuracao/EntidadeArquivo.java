@@ -107,7 +107,7 @@ public class EntidadeArquivo {
             (query, coluna) -> query + " and e." + coluna + " = :" + coluna + "\n");
 
     StringBuilder query = new StringBuilder();
-    query.append(" from ").append(this.nome + "Entity e").append(" where  ").append(queryAnd);
+    query.append(" from ").append(this.nome + "Entity e").append(" where  1 = 1 ").append(queryAnd);
 
     return query.toString();
   }

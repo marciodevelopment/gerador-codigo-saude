@@ -21,7 +21,7 @@ import lombok.Getter;
 @Getter
 public enum ArquivoAngularType {
 
-  SERVICE("Service", "/service/", ".ts", "angular/serviceAngularTemplate",
+  SERVICE(".service", "/services/", ".ts", "angular/serviceAngularTemplate",
       new GeradorServiceAngular()),
 
   GET_RESPONSE("Response", ArquivoAngularType.INTERFACES_RESPONSE, ".ts",
@@ -88,6 +88,11 @@ public enum ArquivoAngularType {
   public String caminhoArquivo(String pacoteProjeto, String pacote) {
     return ArquivoUtil.converterPacoteParaPathArquivo(pacote.replace(pacoteProjeto, ""))
         + this.caminho;
+  }
+
+  public String caminhoArquivo(String pacoteProjeto, String pacote, String nomeClasse) {
+    return ArquivoUtil.converterPacoteParaPathArquivo(pacote.replace(pacoteProjeto, ""))
+        + this.caminho + "/" + nomeClasse;
   }
 
 }

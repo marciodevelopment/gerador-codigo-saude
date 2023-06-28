@@ -8,7 +8,7 @@ import {${nomeComponent}AtualizacaoRequest } from '../../interfaces/request/${no
 import {${nomeComponent}NovoRequest } from '../../interfaces/request/${nomeComponent}NovoRequest';
 import {${nomeComponent}Response } from '../../interfaces/response/${nomeComponent}Response';
 <#if existeType>
-import { EnumUtil } from '../../../../shared/utils/EnumUtil';
+import { EnumUtil } from 'src/app/shared/utils/EnumUtil';
 </#if>
 <#list types as type>
 import { ${type.tipo} } from '../../types/${type.tipo}';
@@ -18,7 +18,7 @@ import { ${type.tipo} } from '../../types/${type.tipo}';
   selector: 'app-${nome}-form',
   templateUrl: './${nome}-form.component.html',
 })
-export class${nomeComponent}FormComponent
+export class ${nomeComponent}FormComponent
   extends BaseFormComponent<
    ${nomeComponent}NovoRequest,
    ${nomeComponent}AtualizacaoRequest,

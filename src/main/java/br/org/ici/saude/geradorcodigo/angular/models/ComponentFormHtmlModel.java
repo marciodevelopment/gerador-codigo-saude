@@ -14,8 +14,8 @@ public class ComponentFormHtmlModel extends BaseAngularModel {
   public ComponentFormHtmlModel(String nome, String pacoteProjeto, String pacote,
       Collection<? extends AtributosModel> atributos, String mensagem) {
     super(nome.toLowerCase(),
-        ArquivoAngularType.F0RM_COMPONENT.caminhoArquivo(pacoteProjeto, pacote) + "/"
-            + nome.toLowerCase() + "-form/");
+        ArquivoAngularType.F0RM_COMPONENT.caminhoArquivo(pacoteProjeto, pacote, nome.toLowerCase())
+            + "/" + nome.toLowerCase() + "-form/");
     super.addAtributos(atributos.stream().filter(atr -> !atr.isId(nome)).toList());
     this.mensagem = mensagem;
 

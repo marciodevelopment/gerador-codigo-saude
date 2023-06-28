@@ -1,41 +1,41 @@
 import { Injectable } from '@angular/core';
 <#if gerarPesquisar>
-import { ${nome}PesquisaResponse } from '../interfaces/response/${nome}PesquisaResponse';
+import { ${nomeComponente}PesquisaResponse } from '../interfaces/response/${nomeComponente}PesquisaResponse';
 </#if>  
 <#if gerarBuscarPorId>
-import { ${nome}Response } from '../interfaces/response/${nome}Response';
+import { ${nomeComponente}Response } from '../interfaces/response/${nomeComponente}Response';
 </#if>
 <#if gerarAtualizar>  
-import { ${nome}AtualizacaoRequest } from '../interfaces/request/${nome}AtualizacaoRequest';
+import { ${nomeComponente}AtualizacaoRequest } from '../interfaces/request/${nomeComponente}AtualizacaoRequest';
 </#if>
 <#if gerarSalvar>
-import { ${nome}NovoRequest } from '../interfaces/request/${nome}NovoRequest';
+import { ${nomeComponente}NovoRequest } from '../interfaces/request/${nomeComponente}NovoRequest';
 </#if>
 import { CrudService } from 'src/app/shared/services/CrudService';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ${nome}Service extends CrudService<
+export class ${nomeComponente}Service extends CrudService<
   <#if gerarPesquisar>
-  ${nome}PesquisaResponse,
+  ${nomeComponente}PesquisaResponse,
   <#else>
   null,
   </#if>
   <#if gerarBuscarPorId>
-  ${nome}Response,
+  ${nomeComponente}Response,
   <#else>
   null,
   </#if>
   <#if gerarSalvar>
-  ${nome}NovoRequest,
+  ${nomeComponente}NovoRequest,
   <#else>
   null,
   </#if>
   <#if gerarAtualizar>  
-  ${nome}AtualizacaoRequest,
+  ${nomeComponente}AtualizacaoRequest
   <#else>
-  null,
+  null
   </#if>
 > {
   constructor() {

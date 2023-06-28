@@ -14,5 +14,6 @@ public class ValorType {
   public static ValorType of(String valor) {
     return new ValorType(Integer.valueOf(valor.split(";")[0]), valor.split(";")[1],
         valor.split(";")[2]);
+
   }
 }

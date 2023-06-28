@@ -35,6 +35,8 @@ public class ModuleAngularModel extends BaseAngularModel {
     List<ModuleRoutingModel> rotasComAtributosImport = this.rotas.stream()
         .filter(rota -> !rota.getAtributosGeradoresDeImport().isEmpty()).toList();
     rotasComAtributosImport.forEach(rota -> atributos.addAll(rota.getAtributosGeradoresDeImport()));
+    atributos.removeIf(item -> item.getNomeModuloImportacao().toLowerCase()
+        .contains(this.nomeComponente.toLowerCase()));
     return atributos;
   }
 

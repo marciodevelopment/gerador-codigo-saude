@@ -1,10 +1,11 @@
+<#if !sufixo?contains("PesquisaResponse")>
 <#list imports as import>
 import { ${import} } from '../../types/${import}';
 </#list>
-
+</#if>
 
 export interface ${nome}${sufixo} {
 <#list atributos as atributo>
-   ${atributo.nome}: <#if atributo.tipo?contains("Type") && sufixo?contains("PesquisaResponse")> string<#else>${atributo.tipo}</#if>;
+  ${atributo.nome}: <#if atributo.tipo?contains("Type") && sufixo?contains("PesquisaResponse")> string<#else>${atributo.tipo}</#if>;
 </#list>
 }

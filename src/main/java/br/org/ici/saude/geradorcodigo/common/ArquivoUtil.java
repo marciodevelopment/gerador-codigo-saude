@@ -44,6 +44,10 @@ public class ArquivoUtil {
     Path path = Paths.get(caminhoApprouting);
     try {
       String arquivo = Files.readString(path);
+      if (arquivo.replaceAll(" ", "").toLowerCase()
+          .contains(texto.replace(" ", "").toLowerCase())) {
+        return;
+      }
       Files.delete(path);
       Files.write(path, arquivo.replace(escreverAntesDe, texto + escreverAntesDe).getBytes());
     } catch (IOException e) {

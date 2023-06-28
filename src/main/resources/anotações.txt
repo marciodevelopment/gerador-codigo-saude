@@ -34,4 +34,8 @@ PesquisaResponse
  
  No teste colocar datas conforme antocaoes @past, @future
  
+ 
+ Colcoar os atributos que serão manipulados pela classe pai no mapeamento.
+ 
+ 
   

@@ -69,7 +69,7 @@ public class ${nome}Controller {
 </#if>
 <#if gerarBuscarPorId>
   @GetMapping(path = "/{id}")
-  public UsuarioResponse buscarPorId(@NotNull @PathVariable("id") Integer id) {
+  public ${nome}Response buscarPorId(@NotNull @PathVariable("id") Integer id) {
     return ${nomeVariavel}Mapper.toResponse(${nomeVariavel}Service.buscarPorIdOuThrow(id));
   }
   

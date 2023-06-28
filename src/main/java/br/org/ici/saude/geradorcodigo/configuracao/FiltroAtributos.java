@@ -1,6 +1,7 @@
 package br.org.ici.saude.geradorcodigo.configuracao;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import br.org.ici.saude.geradorcodigo.entidade.AnotacaoModel;
@@ -56,7 +57,7 @@ public class FiltroAtributos {
 
   public Collection<AtributoArquivo> getAtributosDesnormalizados(String nomeEntidade,
       MetodoType metodo, int nivel) {
-    if (nivel > 1)
+    if (nivel > 2)
       return new ArrayList<>();
     EntidadeArquivo entidadeParaDesnormalizacao = arquivoConfiguracao.getEntidades().stream()
         .filter(ent -> ent.getNome().equals(nomeEntidade)).findFirst().orElseThrow();
@@ -82,8 +83,10 @@ public class FiltroAtributos {
     atributosDesnormalizados.addAll(atributos);
 
     atributosDesnormalizados
-        .addAll(atributosSemCascade.stream().map(atr -> new AtributoArquivo(atr.getNomeAtributoId(),
-            atr.getMensagem(), "Integer", List.of(atr.isNotNull() ? "notnull" : null))).toList());
+        .addAll(atributosSemCascade
+            .stream().map(atr -> new AtributoArquivo(atr.getNomeAtributoId(), atr.getMensagem(),
+                "Integer", atr.isNotNull() ? Arrays.asList("notnull") : new ArrayList<>()))
+            .toList());
 
 
     atributosDesnormalizados.addAll(entidadesParaDesnomalizacao.stream()

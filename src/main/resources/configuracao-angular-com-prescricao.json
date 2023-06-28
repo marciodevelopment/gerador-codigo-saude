@@ -1,10 +1,10 @@
 {
-   "diretorioProjetoJava":"/home/marcio/eclipse-workspace/usuario-service",
+   "diretorioProjetoJava":"/home/marcio/eclipse-workspace/gc-teste-service",
    "diretorioProjetoAngular":"/home/marcio/poc-gerador-angular",
-   "pacoteProjeto":"br.org.curitiba.ici.saude.usuario",
+   "pacoteProjeto":"br.org.ici.saude.usuarioservice",
    "entidades":[
       {
-         "pacote":"br.org.curitiba.ici.saude.usuario.paciente",
+         "pacote":"br.org.ici.saude.usuarioservice.paciente",
          "path":"pacientes",
          "mensagem":"Paciente",
          "nome":"Paciente",
@@ -33,7 +33,7 @@
                "tipo":"String",
                "validadores":[
                   "notEmpty",
-                  "Size;min=5, max=255"
+                  "min;value=10"
                ],
                "web":[
                   "get",
@@ -48,7 +48,7 @@
                "tipo":"String",
                "validadores":[
                   "notEmpty",
-                  "Size;min=5, max=255"
+                  "min;value=10"
                ],
                "web":[
                   "get",
@@ -63,7 +63,7 @@
                "tipo":"String",
                "validadores":[
                   "notEmpty",
-                  "Size;min=5, max=255"
+                  "min;value=10"
                ],
                "web":[
                   "get",
@@ -77,7 +77,7 @@
                "mensagem":"Nome Social",
                "tipo":"String",
                "validadores":[
-                  "Size;min=5, max=255"
+                  "notNull"
                ],
                "web":[
                   "get",
@@ -117,6 +117,7 @@
                "web":[
                   "get",
                   "put",
+                  "post",
                   "pesquisa"
                ]
             },
@@ -125,8 +126,7 @@
                "mensagem":"Data de nascimento",
                "tipo":"LocalDate",
                "validadores":[
-                  "notNull",
-                  "Past"
+                  "notNull"
                ],
                "web":[
                   "get",
@@ -137,21 +137,22 @@
             {
                "nome":"planoSaude",
                "mensagem":"Plano de Saúde",
-               "tipo":"br.org.curitiba.ici.saude.usuario.paciente.entity.PlanoSaudeEntity",
+               "tipo":"br.org.ici.saude.usuarioservice.paciente.entity.PlanoSaudeEntity",
                "mapeamento":{
                   "tipoMapeamento":"oneToOne",
-                  "cascade":"ALL",
-                  "joinColumn":true
+                  "cascade":"ALL"
                },
                "web":[
+                  "get",
                   "post",
-                  "put"
+                  "put",
+                  "pesquisa"
                ]
             }
          ]
       },
       {
-         "pacote":"br.org.curitiba.ici.saude.usuario.paciente",
+         "pacote":"br.org.ici.saude.usuarioservice.paciente",
          "nome":"PlanoSaude",
          "mensagem":"Plano de Saúde",
          "atributos":[
@@ -169,8 +170,7 @@
                "mensagem":"Número do Plano de Saúde",
                "tipo":"String",
                "validadores":[
-                  "notEmpty",
-                  "Size;min=5, max=20"
+                  "notEmpty"
                ],
                "web":[
                   "get",
@@ -181,7 +181,7 @@
          ]
       },
       {
-         "pacote":"br.org.curitiba.ici.saude.usuario.medicamento",
+         "pacote":"br.org.ici.saude.usuarioservice.medicamento",
          "path":"medicamentos",
          "nome":"Medicamento",
          "mensagem":"Medicamento",
@@ -200,7 +200,7 @@
                "tipo":"Integer",
                "web":[
                   "get",
-                  "pesquisa"
+                  "pesquisar"
                ]
             },
             {
@@ -208,8 +208,7 @@
                "mensagem":"Nome Medicamento",
                "tipo":"String",
                "validadores":[
-                  "notEmpty",
-                  "Size;min=10, max=255"
+                  "notEmpty"
                ],
                "web":[
                   "pesquisa",
@@ -258,11 +257,7 @@
             {
                "nome":"fabricante",
                "mensagem":"Fabricante",
-               "tipo":"br.org.curitiba.ici.saude.usuario.medicamento.entity.FabricanteEntity",
-               "mapeamento":{
-                  "tipoMapeamento":"manyToOne",
-                  "joinColumn":true
-               },
+               "tipo":"br.org.ici.saude.usuarioservice.medicamento.entity.FabricanteEntity",
                "web":[
                   "get",
                   "post",
@@ -273,7 +268,7 @@
          ]
       },
       {
-         "pacote":"br.org.curitiba.ici.saude.usuario.medicamento",
+         "pacote":"br.org.ici.saude.usuarioservice.medicamento",
          "path":"medicamentos/fabricantes",
          "nome":"Fabricante",
          "mensagem":"Fabricante",
@@ -292,7 +287,7 @@
                "tipo":"Integer",
                "web":[
                   "get",
-                  "pesquisa"
+                  "pesquisar"
                ]
             },
             {
@@ -300,8 +295,7 @@
                "mensagem":"Nome Fabricante",
                "tipo":"String",
                "validadores":[
-                  "notEmpty",
-                  "Size;min=5, max=255"
+                  "notEmpty"
                ],
                "web":[
                   "pesquisa",
@@ -320,6 +314,12 @@
                ],
                "validadores":[
                   "notNull"
+               ],
+               "web":[
+                  "get",
+                  "put",
+                  "post",
+                  "pesquisa"
                ]
             },
             {
@@ -338,6 +338,146 @@
                   "put",
                   "post",
                   "pesquisa"
+               ]
+            }
+         ]
+      },
+      {
+         "pacote":"br.org.ici.saude.usuarioservice.medicamento",
+         "path":"prescricoes",
+         "nome":"Prescricao",
+         "mensagem":"Prescrição",
+         "metodos":[
+            "post",
+            "put",
+            "get",
+            "delete",
+            "pesquisa"
+         ],
+         "atributos":[
+            {
+               "nome":"cdPrescricao",
+               "mensagem":"Código Prescrição",
+               "id":true,
+               "tipo":"Integer",
+               "web":[
+                  "get",
+                  "pesquisar"
+               ]
+            },
+            {
+               "nome":"nmPrescricao",
+               "mensagem":"Nome Prescrição",
+               "tipo":"String",
+               "validadores":[
+                  "notEmpty"
+               ],
+               "web":[
+                  "pesquisa",
+                  "put",
+                  "get",
+                  "post"
+               ]
+            },
+            {
+               "nome":"dsPrescricao",
+               "mensagem":"Nome Prescrição",
+               "tipo":"String",
+               "validadores":[
+                  "notEmpty"
+               ],
+               "web":[
+                  "pesquisa",
+                  "put",
+                  "get",
+                  "post"
+               ]
+            },
+            {
+               "nome":"idSituacao",
+               "mensagem":"Situacao",
+               "tipo":"SituacaoType",
+               "type":[
+                  "1;ATIVO;Ativo",
+                  "0;INATIVO;Inativo"
+               ],
+               "validadores":[
+                  "notNull"
+               ],
+               "web":[
+                  "get",
+                  "put",
+                  "post",
+                  "pesquisa"
+               ]
+            },
+            {
+               "nome":"medicamento",
+               "mensagem":"Medicamento",
+               "tipo":"br.org.ici.saude.usuarioservice.medicamento.entity.PrescricaoMedicamentoEntity",
+               "mapeamento":{
+                  "tipoMapeamento":"OneToMany",
+                  "cascade":"ALL"
+               },
+               "validadores":[
+                  "notNull"
+               ],
+               "web":[
+                  "get",
+                  "post",
+                  "put",
+                  "pesquisa"
+               ]
+            }
+         ]
+      },
+      {
+         "pacote":"br.org.ici.saude.usuarioservice.medicamento",
+         "nome":"PrescricaoMedicamento",
+         "mensagem":"Prescrição Medicamento",
+         "atributos":[
+            {
+               "nome":"cdPrescricaoMedicamento",
+               "mensagem":"Código Prescrição Medicamento",
+               "id":true,
+               "tipo":"Integer",
+               "web":[
+                  "get",
+                  "pesquisar"
+               ]
+            },
+            {
+               "nome":"idSituacao",
+               "mensagem":"Situacao",
+               "tipo":"SituacaoType",
+               "type":[
+                  "1;ATIVO;Ativo",
+                  "0;INATIVO;Inativo"
+               ],
+               "validadores":[
+                  "notNull"
+               ]
+            },
+            {
+               "nome":"medicamento",
+               "mensagem":"Medicamento",
+               "tipo":"br.org.ici.saude.usuarioservice.medicamento.entity.MedicamentoEntity",
+               "mapeamento":{
+                  "tipoMapeamento":"ManyToOne"
+               },
+               "validadores":[
+                  "notNull"
+               ]
+            },
+            {
+               "nome":"prescricao",
+               "mensagem":"Medicamento",
+               "tipo":"br.org.ici.saude.usuarioservice.medicamento.entity.MedicamentoEntity",
+               "mapeamento":{
+                  "tipoMapeamento":"ManyToOne"
+               },
+               "validadores":[
+                  "notNull"
                ]
             }
          ]

@@ -4,10 +4,10 @@ import { Routes } from '@angular/router';
 <#list rotas as rota>
 
 <#if rota.existePesquisa>
-import { ${rota.nomeComponent}PesquisaComponent } from './${rota.nomeModulo}/${rota.nomeVariavel}/${rota.nomeVariavel}-pesquisa/${rota.nomeVariavel}-pesquisa.component';
+import { ${rota.nomeComponent}PesquisaComponent } from './${rota.nomeVariavel}/${rota.nomeVariavel}-pesquisa/${rota.nomeVariavel}-pesquisa.component';
 </#if>
 <#if rota.existeForm>
-import { ${rota.nomeComponent}FormComponent } from './${rota.nomeModulo}/${rota.nomeVariavel}/${rota.nomeVariavel}-form/${rota.nomeVariavel}-form.component';
+import { ${rota.nomeComponent}FormComponent } from './${rota.nomeVariavel}/${rota.nomeVariavel}-form/${rota.nomeVariavel}-form.component';
 </#if>
 </#list>
 
