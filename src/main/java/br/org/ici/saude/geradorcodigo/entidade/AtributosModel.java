@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import br.org.ici.saude.geradorcodigo.imports.GeradorImports;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @ToString
@@ -22,6 +23,8 @@ public class AtributosModel {
   private String nomeVariavel;
   private boolean semCascadeDesnomalizado = false;
   private String tipoOrigem;
+  @Setter
+  private boolean editavel;
 
   public void setNomeVariavel(String nomeVariavel) {
     this.nomeVariavel = nomeVariavel;
@@ -93,7 +96,7 @@ public class AtributosModel {
   }
 
   public boolean atributoNaoPodeSerNulo() {
-    return this.getAnotacoes().stream().filter(anotacao -> anotacao.naoNulo()).count() > 0;
+    return this.getAnotacoes().stream().anyMatch(AnotacaoModel::naoNulo);
   }
 
   public String getNomeGet() {
@@ -101,17 +104,25 @@ public class AtributosModel {
         + this.nome.substring(1, this.nome.length()) + "()";
   }
 
+  public String getNomeSet() {
+    return "set" + this.nome.substring(0, 1).toUpperCase()
+        + this.nome.substring(1, this.nome.length());
+  }
+
   public Boolean getExisteAnotacaoGet() {
-    return this.getAnotacoes().stream().filter(anotacao -> anotacao.anotacaoGet()).count() > 0;
+    return this.getAnotacoes().stream().anyMatch(AnotacaoModel::anotacaoGet);
   }
 
 
   public Boolean getAtributoDeveEstarNoConstrutor() {
-    return this.getAnotacoes().stream().filter(anotacao -> anotacao.anotacaoDeveEstarNoConstrutor())
-        .findFirst().isPresent();
+    return this.getAnotacoes().stream().anyMatch(AnotacaoModel::anotacaoDeveEstarNoConstrutor);
   }
 
 
+  public Boolean getAtributoDeveEstarNaAtualizacao() {
+    return this.editavel
+        && this.getAnotacoes().stream().anyMatch(AnotacaoModel::anotacaoDeveEstarNoConstrutor);
+  }
 
   public List<String> getAnotacoesConstrutor() {
     return this.anotacoes.stream().filter(AnotacaoModel::anotacaoDeveEstarNoConstrutor)

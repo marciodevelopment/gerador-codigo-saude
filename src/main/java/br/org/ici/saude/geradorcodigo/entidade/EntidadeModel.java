@@ -25,6 +25,11 @@ public class EntidadeModel extends BaseModel {
   }
 
 
+  public List<AtributosModel> getAtributosUpdate() {
+    return this.getAtributos().stream().filter(AtributosModel::getAtributoDeveEstarNaAtualizacao)
+        .toList();
+  }
+
   public Boolean getExisteBuilderConstrutor() {
     return this.getAtributosConstrutor().size() > 7;
   }

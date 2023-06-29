@@ -12,7 +12,6 @@ public class AnotacaoModel {
   private String complemento;
 
 
-
   private boolean existeMensagemParaAnotacao(String anotacao) {
     if (anotacao != null
         && (anotacao.toLowerCase().contains("getter") || anotacao.toLowerCase().contains("setter")

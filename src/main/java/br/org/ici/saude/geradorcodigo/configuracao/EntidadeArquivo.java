@@ -58,6 +58,7 @@ public class EntidadeArquivo {
         atributo.addMapeamento(
             GeradorImports.get(atributoArq.getMapeamento().getTipoMapeamento()).getAnotacao(),
             atributoArq.getMapeamento().isJoinColumn(), atributoArq.getMapeamento().getCascade());
+        atributo.setEditavel(atributoArq.existeMetodo(MetodoType.PUT));
       }
       return atributo;
     }).toList();

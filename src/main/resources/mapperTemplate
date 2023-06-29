@@ -29,13 +29,13 @@ public abstract class ${nome}Mapper {
 
 <#if gerarSalvar>  
   public ${nome}Entity toEntity(${nome}NovoRequest request) {
-    return null;
+  	return new ${nome}Entity(<#list atributosConstrutor as atributo>request.${atributo.nomeGet}<#if atributo_has_next>, </#if></#list>)<#list atributosSetNovo as atributo>.${atributo.nomeSet}(request.${atributo.nomeGet})</#list>;
   }
   
 </#if>
 <#if gerarAtualizar>
   public ${nome}Entity toEntity(${nome}Entity ${nomeVariavel}, ${nome}AtualizacaoRequest request) {
-    return null;
+    return ${nomeVariavel}.atualizar(<#list atributosUpdate as atributo>request.${atributo.nomeGet}<#if atributo_has_next>, </#if></#list>)<#list atributosSetUpdate as atributo>.${atributo.nomeSet}(request.${atributo.nomeGet})</#list>;
   }
   
 </#if>

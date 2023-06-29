@@ -51,7 +51,7 @@ public class ${nome}Entity {
   }
 </#if>
 <#if existeBuilderConstrutor>
-  public UsuarioEntity(@NotNull ${nome}NovoBuilder builder) {
+  public ${nome}Entity(@NotNull ${nome}NovoBuilder builder) {
     super();
    <#list atributosConstrutor as atributo>
     this.${atributo.nome} = builder.${atributo.nome}();
@@ -63,6 +63,13 @@ public class ${nome}Entity {
   }
   
 </#if>
+
+  public ${nome} atualizar(<#list atributosUpdate as atributo><#list atributo.anotacoesConstrutor as anotacao>${anotacao}</#list> ${atributo.tipo} ${atributo.nome}<#if atributo_has_next>, </#if></#list>) {
+  <#list atributosUpdate as atributo>
+    this.${atributo.nome} = ${atributo.nome};
+  </#list>
+    return this;	 	
+  }
 
 <#list atributos as atributo>
 <#if atributo.tipoCollection>
